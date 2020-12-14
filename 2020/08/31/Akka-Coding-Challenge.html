@@ -86,9 +86,9 @@ window.onload = wrap_img;
     </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <h1 id="objective">Objective</h1>
-
-<p><img src="../assets/img/akka/ProblemExplanation.png" alt="Problem_snap" /></p>
+    <h3 id="objective">Objective</h3>
+<hr />
+<p><img src="../images/akka/ProblemExplanation.png" alt="Problem_snap" /></p>
 
 <p>To find the 2000th such number in the spiral arrangement of hexagons as seen above, which can divide the product of 6 neighbouring numbers perfectly i.e, the number in the central hexagon should be a factor of the product of the adjacent 6 numbers.</p>
 
@@ -96,31 +96,31 @@ window.onload = wrap_img;
 <span class="p">(</span><span class="mi">20</span> <span class="o">*</span> <span class="mi">37</span> <span class="o">*</span> <span class="mi">19</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="mi">9</span> <span class="o">*</span> <span class="mi">21</span><span class="p">)</span> <span class="o">%</span> <span class="mi">8</span> <span class="o">=</span> <span class="mi">0</span>
 </code></pre></div></div>
 
-<h1 id="logic-behind-the-solution">Logic behind the solution</h1>
-
+<h3 id="logic-behind-the-solution">Logic behind the solution</h3>
+<hr />
 <ul>
   <li>
     <p>As there seems to be no pattern among the numbers distribution around any given hexagon which can be leveraged to find the neighbouring numbers of every hexagon. We resort to reproduce the hexagonal arrangement of numbers as per the problem statement in order to actually determine the neighbouring 6 numbers of any number we are interested in.</p>
 
-    <p><img src="../assets/img/akka/PointsandHex.png" alt="hex arrangement" /></p>
+    <p><img src="../images/akka/PointsandHex.png" alt="hex arrangement" /></p>
   </li>
   <li>
     <p>The next important step is to identify the 6 neighbouring numbers of all the numbers based on the euclidean distance of nearest 6 numbers</p>
 
-    <p><img src="../assets/img/akka/Neighbours.png" alt="factors" /></p>
+    <p><img src="../images/akka/Neighbours.png" alt="factors" /></p>
   </li>
   <li>
     <p>Next, we start to check if the center number is a factor of the product of the 6 neighbouring numbers. Trying to actually multiply and then divide will eventually bring us to the point where a double or float64 can preceisely store the value of multiplication and hence we need to solve this problem in a smart way. My approach to solving this was based on <strong>Prime factorisation</strong></p>
 
-    <ul>
+    <ol>
       <li>First, we find the prime factors of the center number and the surronding numbers</li>
       <li>If all the prime factors of the center are present in the prime factors of all the 6 	  	 neighbouring numbers. Then the center number is a factor of the 6 other numbers</li>
-    </ul>
+    </ol>
   </li>
   <li>
     <p>Finally, stop the program when the 2000th number meeting our criteria is found</p>
 
-    <p><img src="../assets/img/akka/FinalSolution.png" alt="solution" /></p>
+    <p><img src="../images/akka/FinalSolution.png" alt="solution" /></p>
   </li>
 </ul>
 

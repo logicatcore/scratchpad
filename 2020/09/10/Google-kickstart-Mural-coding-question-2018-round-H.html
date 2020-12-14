@@ -88,10 +88,9 @@ window.onload = wrap_img;
   <div class="post-content e-content" itemprop="articleBody">
     <h1 id="importance-of-reusing-the-results-dynamic-programming">Importance of reusing the results (Dynamic programming)</h1>
 
-<h2 id="problem-statement">Problem statement</h2>
-<h3 id="summary">Summary</h3>
-
-<p><img src="../assets/img/google_kickstart/mural/mural.png" alt="Problem_explanation" />
+<h2 id="problem-statement-summary">Problem statement: Summary</h2>
+<hr />
+<p><img src="../images/google_kickstart/mural/mural.png" alt="Problem_explanation" />
 There are <strong>N</strong> sections on a wall and you can paint only one of the sections in a day, the next day 
 you are allowed to paint the section which is adjacent to a painted one only. Also, everyday one section gets destroyed
 and the section which gets destroyed are <strong>always at the ends</strong> (adjacent to unpainted ones)</p>
@@ -99,11 +98,10 @@ and the section which gets destroyed are <strong>always at the ends</strong> (ad
 <p>In the above figure you will see one of the many possibilities.</p>
 <ul>
   <li>P# -&gt; Painted section on day #</li>
-  <li>D# -&gt; Destroyed section on day #
-    <h3 id="full-explanation">Full explanation</h3>
-  </li>
+  <li>D# -&gt; Destroyed section on day #</li>
 </ul>
 
+<h3 id="problem-description">Problem description</h3>
 <p>Thanh wants to paint a wonderful mural on a wall that is N sections long. Each section of the wall has a beauty score, which indicates how beautiful it will look if it is painted. Unfortunately, the wall is starting to crumble due to a recent flood, so he will need to work fast!
 At the beginning of each day, Thanh will paint one of the sections of the wall. On the first day, he is free to paint any section he likes. On each subsequent day, he must paint a new section that is next to a section he has already painted, since he does not want to split up the mural.
 At the end of each day, one section of the wall will be destroyed. It is always a section of wall that is adjacent to only one other section and is unpainted (Thanh is using a waterproof paint, so painted sections can’t be destroyed).
@@ -196,6 +194,7 @@ Sample</p>
 </ul>
 
 <h2 id="solution">Solution</h2>
+<hr />
 <p>Looking at the problem and the sample solutions, it is clear that the painted sections are always contiguous(next to each other as chain link)
 and the length of the painted sections is <em>ceil(N/2)</em>.</p>
 
@@ -211,6 +210,7 @@ in a pandas Series-</p>
 </code></pre></div></div>
 
 <h3 id="read-the-data">Read the data</h3>
+<hr />
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">wall_sections</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">beauty_scores</span> <span class="o">=</span> <span class="p">[]</span>
 
@@ -222,6 +222,7 @@ in a pandas Series-</p>
 </code></pre></div></div>
 
 <h3 id="solve-the-test-case-one-by-one">Solve the test case one by one</h3>
+<hr />
 <p>We first calculate the roll length and then calculate the roll sums of the beauty scores</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">solve_a</span><span class="p">(</span><span class="n">sections</span><span class="p">,</span> <span class="n">bs</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">sections</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -244,13 +245,13 @@ in a pandas Series-</p>
 </ul>
 
 <p>i.e., O(roll_windows + summations + comparisons)
-<img src="../assets/img/google_kickstart/mural/mural_ops.png" alt="operations_vs_sections" />
+<img src="../images/google_kickstart/mural/mural_ops.png" alt="operations_vs_sections" />
 <strong>Note: The scales are in log</strong></p>
 
 <h3 id="improved-solution-making-use-of-previous-results">Improved solution, making use of previous results</h3>
 <p>Based on the operations breakdown we have seen just now, I see that a substantial number of summations can be avoided by
 utilizing the concept that every successive roll window overlaps the previous roll window except one element/beauty score
-<img src="../assets/img/google_kickstart/mural/roll_window.png" alt="roll_window" />
+<img src="../images/google_kickstart/mural/roll_window.png" alt="roll_window" />
 To save on computations, we just have to add the beauty score of the new section and subtract which we do not want anymore.</p>
 
 <p>Let us have a look at the number of operations involved-</p>
@@ -261,7 +262,7 @@ To save on computations, we just have to add the beauty score of the new section
 </ul>
 
 <p>i.e., O(roll_windows + summations + comparisons)
-<img src="../assets/img/google_kickstart/mural/mural_ops_improved.png" alt="operations_vs_sections" /></p>
+<img src="../images/google_kickstart/mural/mural_ops_improved.png" alt="operations_vs_sections" /></p>
 
 <p>Based on the graphs it is clear that we see an improvement from
 <strong>O(10^(2log(N))) to O(10^log(N))</strong></p>
@@ -287,72 +288,72 @@ To save on computations, we just have to add the beauty score of the new section
 </code></pre></div></div>
 
 <h3 id="time-comparisons">Time comparisons</h3>
-<p><img src="../assets/img/google_kickstart/mural/runtimes.png" alt="time comparisons" />
-For comparison</p>
+<hr />
+<p><img src="../images/google_kickstart/mural/runtimes.png" alt="time comparisons" /></p>
 
 <table>
   <thead>
     <tr>
-      <th style="text-align: right">Slow</th>
-      <th style="text-align: right">Fast</th>
-      <th style="text-align: left">Improvement factor (times X)</th>
-      <th style="text-align: left">Wall sections</th>
+      <th style="text-align: center">Slow(time in seconds)</th>
+      <th style="text-align: center">Fast(time in seconds)</th>
+      <th style="text-align: center">Improvement factor (times x)</th>
+      <th style="text-align: center">Wall sections</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: right">7.915496826171875e-05</td>
-      <td style="text-align: right">6.4849853515625e-05</td>
-      <td style="text-align: left">1.22X</td>
-      <td style="text-align: left">4</td>
+      <td style="text-align: center">7.91e-05</td>
+      <td style="text-align: center">6.48e-05</td>
+      <td style="text-align: center">1.22x</td>
+      <td style="text-align: center">4</td>
     </tr>
     <tr>
-      <td style="text-align: right">4.2438507080078125e-05</td>
-      <td style="text-align: right">3.9577484130859375e-05</td>
-      <td style="text-align: left">1.07X</td>
-      <td style="text-align: left">4</td>
+      <td style="text-align: center">4.24e-05</td>
+      <td style="text-align: center">3.95e-05</td>
+      <td style="text-align: center">1.07x</td>
+      <td style="text-align: center">4</td>
     </tr>
     <tr>
-      <td style="text-align: right">4.363059997558594e-05</td>
-      <td style="text-align: right">4.315376281738281e-05</td>
-      <td style="text-align: left">1.01X</td>
-      <td style="text-align: left">3</td>
+      <td style="text-align: center">4.36e-05</td>
+      <td style="text-align: center">4.31e-05</td>
+      <td style="text-align: center">1.01x</td>
+      <td style="text-align: center">3</td>
     </tr>
     <tr>
-      <td style="text-align: right">4.38690185546875e-05</td>
-      <td style="text-align: right">9.083747863769531e-05</td>
-      <td style="text-align: left">0.48X</td>
-      <td style="text-align: left">10</td>
+      <td style="text-align: center">4.38e-05</td>
+      <td style="text-align: center">9.08e-05</td>
+      <td style="text-align: center">0.48x</td>
+      <td style="text-align: center">10</td>
     </tr>
     <tr>
-      <td style="text-align: right">0.0012197494506835938</td>
-      <td style="text-align: right">0.0014650821685791016</td>
-      <td style="text-align: left">0.83X</td>
-      <td style="text-align: left">500</td>
+      <td style="text-align: center">0.00121</td>
+      <td style="text-align: center">0.00146</td>
+      <td style="text-align: center">0.83x</td>
+      <td style="text-align: center">500</td>
     </tr>
     <tr>
-      <td style="text-align: right">0.07842898368835449</td>
-      <td style="text-align: right">0.015875577926635742</td>
-      <td style="text-align: left">4.94X</td>
-      <td style="text-align: left">5000</td>
+      <td style="text-align: center">0.0784</td>
+      <td style="text-align: center">0.0158</td>
+      <td style="text-align: center">4.94x</td>
+      <td style="text-align: center">5000</td>
     </tr>
     <tr>
-      <td style="text-align: right">6.8060572147369385</td>
-      <td style="text-align: right">0.15276503562927246</td>
-      <td style="text-align: left">44.55X</td>
-      <td style="text-align: left">50000</td>
+      <td style="text-align: center">6.80</td>
+      <td style="text-align: center">0.15</td>
+      <td style="text-align: center">44.55x</td>
+      <td style="text-align: center">50000</td>
     </tr>
     <tr>
-      <td style="text-align: right">712.755081653595</td>
-      <td style="text-align: right">1.490739107131958</td>
-      <td style="text-align: left">478.12X</td>
-      <td style="text-align: left">500000</td>
+      <td style="text-align: center">712.75</td>
+      <td style="text-align: center">1.49</td>
+      <td style="text-align: center">478.12x</td>
+      <td style="text-align: center">500000</td>
     </tr>
   </tbody>
 </table>
 
 <h3 id="try-it-out">Try it out</h3>
-
+<hr />
 <p>If you feel like working out or if you have a much simpler and faster approach to solving this problem, I would like to
 see and learn!!</p>
 

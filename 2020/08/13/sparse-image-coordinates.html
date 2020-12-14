@@ -90,29 +90,33 @@ window.onload = wrap_img;
 
 <p>To begin with, we will look at an example image/matrix, the output we need and the main take aways from this post.</p>
 
-<p><img src="/assets/img/sparse_coords/intro_sparse.png" alt="summary image" /></p>
+<p><img src="../images/sparse_coords/intro_sparse.png" alt="summary image" /></p>
 
 <p><strong>Task:</strong> To determine the (row, column) values of all the non zero pixels in a matrix or an image. Typical example
 would be text in a image. If you are familiar with the well known MNIST Handwritten digits dataset, that could be 
 another good example of a sparse image</p>
 
-<p><em>Note:</em> The threshold need not be zero and can be any arbitrary value of interest</p>
+<div class="Toast Toast--warning googoo">
+   <span class="Toast-icon"><svg class="octicon octicon-alert octicon octicon-alert" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z"></path></svg></span>
+   <span class="Toast-content">The threshold need not be zero and can be any arbitrary value of interest</span>
+</div>
 
-<h1 id="example-images-that-we-will-be-working-with">Example images that we will be working with</h1>
+<h3 id="example-images-that-we-will-be-working-with">Example images that we will be working with</h3>
+<hr />
+<p><img src="../images/sparse_coords/sparse_image.png" alt="10x10 sparse image" /></p>
 
-<p><img src="../assets/img/sparse_coords/sparse_image.png" alt="10x10 sparse image" /></p>
+<p><img src="../images/sparse_coords/sparse_image_100.png" alt="100x100 sparse image" /></p>
 
-<p><img src="../assets/img/sparse_coords/sparse_image_100.png" alt="100x100 sparse image" /></p>
-
-<p><img src="../assets/img/sparse_coords/sparse_image_1000.png" alt="1000x1000 sparse image" /></p>
+<p><img src="../images/sparse_coords/sparse_image_1000.png" alt="1000x1000 sparse image" /></p>
 
 <p>We will be going through two approaches in this short tutorial and also see how the methods compare in execution time</p>
 
-<p>Method 1: The traditional and the first approach that comes to mind through <em>for loops</em></p>
+<p><strong>Method 1:</strong> The traditional and the first approach that comes to mind through <em>for loops</em></p>
 
-<p>Method 2: We can leverage the broadcasting properties of numpy and find a work around to reach the same result</p>
+<p><strong>Method 2:</strong> We can leverage the broadcasting properties of numpy and find a work around to reach the same result</p>
 
-<h2 id="libraries-used">Libraries used</h2>
+<h3 id="libraries-used">Libraries used</h3>
+<hr />
 <ul>
   <li>matplotlib</li>
   <li>time</li>
@@ -120,7 +124,7 @@ another good example of a sparse image</p>
 </ul>
 
 <h3 id="pre-prep">Pre Prep</h3>
-
+<hr />
 <p>First we need to create a sparse image to work with</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
@@ -136,9 +140,8 @@ another good example of a sparse image</p>
 </span><span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="p">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">uint8</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="s">f"sparsity: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">img</span><span class="p">[</span><span class="n">img</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="mi">100</span> <span class="o">/</span> <span class="n">np</span><span class="p">.</span><span class="n">cumproduct</span><span class="p">(</span><span class="n">img</span><span class="p">.</span><span class="n">shape</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s"> %"</span><span class="p">)</span>
 </code></pre></div></div>
-<p><img src="" alt="sparse_image" /></p>
-<h1 id="method-1">Method 1</h1>
-
+<h3 id="method-1">Method 1</h3>
+<hr />
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x_coords</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([])</span> <span class="c1"># To store column values
 </span><span class="n">y_coords</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([])</span> <span class="c1"># To store row values
 </span><span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span>
@@ -153,7 +156,8 @@ another good example of a sparse image</p>
 <span class="k">print</span><span class="p">(</span><span class="s">"Finding non zero pixels coordinates with for loops took: "</span><span class="p">,</span> <span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span><span class="p">,</span> <span class="s">" seconds"</span><span class="p">)</span>
 </code></pre></div></div>
 
-<h1 id="method-2">Method 2</h1>
+<h3 id="method-2">Method 2</h3>
+<hr />
 <p>First we create a template to go with our image dimension and make a boolean mask which we use to find the 
 non zero pixel coordinates</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">coordinates_grid</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="n">rows</span><span class="p">,</span> <span class="n">columns</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">int16</span><span class="p">)</span>
@@ -170,26 +174,27 @@ non zero pixel coordinates</p>
 <span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div></div>
 
-<h1 id="results">Results</h1>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sai@sai:~/****/scripts$ python coordinates.py 10 10
+<h3 id="results">Results</h3>
+<hr />
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sai@sai:~/<span class="k">****</span>/scripts<span class="nv">$ </span>python coordinates.py 10 10
 information: 13.0 %
-Finding non zero pixels coordinates with for loops took:  0.0003330707550048828  seconds
+Finding non zero pixels coordinates with <span class="k">for </span>loops took:  0.0003330707550048828  seconds
 Finding non zero pixels coordinates using broadcasting took:  3.4809112548828125e-05  seconds
 
-sai@sai:~/****/scripts$ python coordinates.py 100 100
+sai@sai:~/<span class="k">****</span>/scripts<span class="nv">$ </span>python coordinates.py 100 100
 information: 13.43 %
-Finding non zero pixels coordinates with for loops took:  0.024660587310791016  seconds
+Finding non zero pixels coordinates with <span class="k">for </span>loops took:  0.024660587310791016  seconds
 Finding non zero pixels coordinates using broadcasting took:  0.00010442733764648438  seconds
 
-sai@sai:~/****/scripts$ python coordinates.py 1000 1000
+sai@sai:~/<span class="k">****</span>/scripts<span class="nv">$ </span>python coordinates.py 1000 1000
 information: 13.7047 %
-Finding non zero pixels coordinates with for loops took:  8.874347448348999  seconds
+Finding non zero pixels coordinates with <span class="k">for </span>loops took:  8.874347448348999  seconds
 Finding non zero pixels coordinates using broadcasting took:  0.007306575775146484  seconds
 </code></pre></div></div>
 
-<h1 id="conclusions">Conclusions</h1>
-
-<p>It is clear that the execution times differ significantly and the benefits become more dominant as the input data grows.</p>
+<h3 id="conclusions">Conclusions</h3>
+<hr />
+<p>It is clear that the execution times differ significantly and the benefits of vectorization becomes more dominant as the input data grows.</p>
 
   </div><!-- from https://github.com/utterance/utterances -->
 <script src="https://utteranc.es/client.js"
