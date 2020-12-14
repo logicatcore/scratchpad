@@ -1,0 +1,1 @@
+Sitemap: https://logicatcore.github.io/scratchpad/sitemap.xml
