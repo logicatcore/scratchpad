@@ -1,9 +1,9 @@
 ---
 layout: post
 title: Finding the coordinates of non-zero pixels in sparse images/matrices
-subtitle: Smart way and dumb way
-thumbnail-img: /assets/img/sparse_coords/sparse_image.png
-share-img: /assets/img/sparse_coords/intro_sparse.png
+subtitle: Nested for loop v/s vectorization
+thumbnail-img: /images/sparse_coords/sparse_image.png
+share-img: /images/sparse_coords/intro_sparse.png
 comments: true
 tags: [python, algorithms]
 ---
@@ -12,35 +12,36 @@ Sparse images/matrices are those in which the contained useful information is le
 
 To begin with, we will look at an example image/matrix, the output we need and the main take aways from this post.
 
-![summary image](/assets/img/sparse_coords/intro_sparse.png)
+![summary image](../images/sparse_coords/intro_sparse.png)
 
 __Task:__ To determine the (row, column) values of all the non zero pixels in a matrix or an image. Typical example
 would be text in a image. If you are familiar with the well known MNIST Handwritten digits dataset, that could be 
 another good example of a sparse image
 
-_Note:_ The threshold need not be zero and can be any arbitrary value of interest
+{% include alert.html text="The threshold need not be zero and can be any arbitrary value of interest" %}
 
-# Example images that we will be working with
+### Example images that we will be working with
+***
+![10x10 sparse image](../images/sparse_coords/sparse_image.png)
 
-![10x10 sparse image](../assets/img/sparse_coords/sparse_image.png)
+![100x100 sparse image](../images/sparse_coords/sparse_image_100.png)
 
-![100x100 sparse image](../assets/img/sparse_coords/sparse_image_100.png)
-
-![1000x1000 sparse image](../assets/img/sparse_coords/sparse_image_1000.png)
+![1000x1000 sparse image](../images/sparse_coords/sparse_image_1000.png)
 
 We will be going through two approaches in this short tutorial and also see how the methods compare in execution time
 
-Method 1: The traditional and the first approach that comes to mind through _for loops_ 
+**Method 1:** The traditional and the first approach that comes to mind through _for loops_ 
 
-Method 2: We can leverage the broadcasting properties of numpy and find a work around to reach the same result
+**Method 2:** We can leverage the broadcasting properties of numpy and find a work around to reach the same result
 
-## Libraries used
+### Libraries used
+***
 * matplotlib
 * time
 * numpy
 
 ### Pre Prep
-
+***
 First we need to create a sparse image to work with
 ```python
 import time
@@ -57,9 +58,8 @@ img[img < 220] = 0 # this is optional and can be skipped to handle any threshold
 img = img.astype(np.uint8)
 print(f"sparsity: {len(img[img != 0]) * 100 / np.cumproduct(img.shape)[-1]} %")
 ```
-![sparse_image]()
-# Method 1
-
+### Method 1
+***
 ```python
 x_coords = np.array([]) # To store column values
 y_coords = np.array([]) # To store row values
@@ -75,7 +75,8 @@ coords = np.hstack((y_coords, x_coords))
 print("Finding non zero pixels coordinates with for loops took: ", time.time() - start, " seconds")
 ```
 
-# Method 2
+### Method 2
+***
 First we create a template to go with our image dimension and make a boolean mask which we use to find the 
 non zero pixel coordinates
 ```python
@@ -93,8 +94,9 @@ plt.imshow(img)
 plt.show()
 ```
 
-# Results
-```
+### Results
+***
+```shell
 sai@sai:~/****/scripts$ python coordinates.py 10 10
 information: 13.0 %
 Finding non zero pixels coordinates with for loops took:  0.0003330707550048828  seconds
@@ -111,6 +113,6 @@ Finding non zero pixels coordinates with for loops took:  8.874347448348999  sec
 Finding non zero pixels coordinates using broadcasting took:  0.007306575775146484  seconds
 ```
 
-# Conclusions
-
-It is clear that the execution times differ significantly and the benefits become more dominant as the input data grows.
+### Conclusions
+***
+It is clear that the execution times differ significantly and the benefits of vectorization becomes more dominant as the input data grows.
