@@ -2,16 +2,16 @@
 layout: post
 title: Google kickstart Mural coding question(2018 RoundH)
 subtitle: Reusing the results to speed up the calculations
-thumbnail-img: ../images/google_kickstart/mural/mural.png)
-share-img: ../images/google_kickstart/mural/mural.png)
+image: /images/google_kickstart/mural/mural.png)
 comments: true
+search_exclude: false
 tags: [python, coding competition]
 ---
 # Importance of reusing the results (Dynamic programming)
 
 ## Problem statement: Summary
 *** 
-![Problem_explanation](../images/google_kickstart/mural/mural.png)
+![Problem_explanation]({{ site.baseurl }}/images/google_kickstart/mural/mural.png "Problem visualisation")
 There are **N** sections on a wall and you can paint only one of the sections in a day, the next day 
 you are allowed to paint the section which is adjacent to a painted one only. Also, everyday one section gets destroyed
 and the section which gets destroyed are **always at the ends** (adjacent to unpainted ones)
@@ -114,13 +114,14 @@ Let us have a look at the number of operations involved-
 * comparisons = roll_windows
 
 i.e., O(roll_windows + summations + comparisons)
-![operations_vs_sections](../images/google_kickstart/mural/mural_ops.png)
+![operations_vs_sections](search_exclude: false
+/images/google_kickstart/mural/mural_ops.png "Number of operations and log formula comparision")
 **Note: The scales are in log**
 
 ### Improved solution, making use of previous results
 Based on the operations breakdown we have seen just now, I see that a substantial number of summations can be avoided by
 utilizing the concept that every successive roll window overlaps the previous roll window except one element/beauty score
-![roll_window](../images/google_kickstart/mural/roll_window.png)
+![roll_window]({{ site.baseurl }}/images/google_kickstart/mural/roll_window.png "Rolling window visualised")
 To save on computations, we just have to add the beauty score of the new section and subtract which we do not want anymore.
 
 Let us have a look at the number of operations involved-
@@ -129,7 +130,7 @@ Let us have a look at the number of operations involved-
 * comparisons = roll_windows
 
 i.e., O(roll_windows + summations + comparisons)
-![operations_vs_sections](../images/google_kickstart/mural/mural_ops_improved.png)
+![operations_vs_sections]({{ site.baseurl }}/images/google_kickstart/mural/mural_ops_improved.png "Reduced operations using dynamic programming and log formula comparision")
 
 Based on the graphs it is clear that we see an improvement from
 **O(10^(2log(N))) to O(10^log(N))**
@@ -157,7 +158,7 @@ def solve_b(sections, bs):
 
 ### Time comparisons
 ***
-![time comparisons](../images/google_kickstart/mural/runtimes.png)
+![time comparisons]({{ site.baseurl }}/images/google_kickstart/mural/runtimes.png "Time comparision of two methods")
 
 | Slow(time in seconds) | Fast(time in seconds) | Improvement factor (times x) | Wall sections |
 | :---------------:| :---------------:|:---------------: |:---------------:|
@@ -177,7 +178,7 @@ see and learn!!
 
 Here is the [link to Test input](https://github.com/logicatcore/logicatcore.github.io/blob/master/assets/resources/mural_2018_H.txt) 
 and the test results if you want to cross check
-```commandline
+```shell
 Case #1: 6
 Case #2: 14
 Case #3: 7
