@@ -1,8 +1,7 @@
 ---
 layout: post
 title: Google kickstart Mural coding question(2018 RoundH)
-subtitle: Reusing the results to speed up the calculations
-image: /images/google_kickstart/mural/mural.png)
+description: Reusing the results to speed up the calculations
 comments: true
 search_exclude: false
 tags: [python, coding competition]

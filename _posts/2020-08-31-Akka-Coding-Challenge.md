@@ -1,8 +1,7 @@
 ---
 layout: post
 title: Topology constrained search
-subtitle: Dealing with finding factors of large numbers ~10^30
-image: /images/akka/ProblemExplanation.png
+description: Dealing with finding factors of large numbers ~10^30
 comments: true
 search_exclude: false
 tags: [MATLAB, programming competition]

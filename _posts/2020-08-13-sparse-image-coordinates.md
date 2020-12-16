@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Finding the coordinates of non-zero pixels in sparse images/matrices
-subtitle: Nested for loop v/s vectorization
+description: Nested for loop v/s vectorization
 image: /images/sparse_coords/intro_sparse.png
 comments: true
 search_exclude: false
