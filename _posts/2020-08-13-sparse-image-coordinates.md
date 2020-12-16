@@ -2,9 +2,9 @@
 layout: post
 title: Finding the coordinates of non-zero pixels in sparse images/matrices
 subtitle: Nested for loop v/s vectorization
-thumbnail-img: /images/sparse_coords/sparse_image.png
-share-img: /images/sparse_coords/intro_sparse.png
+image: /images/sparse_coords/intro_sparse.png
 comments: true
+search_exclude: false
 tags: [python, algorithms]
 ---
 
@@ -12,7 +12,7 @@ Sparse images/matrices are those in which the contained useful information is le
 
 To begin with, we will look at an example image/matrix, the output we need and the main take aways from this post.
 
-![summary image](../images/sparse_coords/intro_sparse.png)
+![summary image]({{ site.baseurl }}/images/sparse_coords/intro_sparse.png)
 
 __Task:__ To determine the (row, column) values of all the non zero pixels in a matrix or an image. Typical example
 would be text in a image. If you are familiar with the well known MNIST Handwritten digits dataset, that could be 
@@ -22,11 +22,11 @@ another good example of a sparse image
 
 ### Example images that we will be working with
 ***
-![10x10 sparse image](../images/sparse_coords/sparse_image.png)
+![10x10 sparse image]({{ site.baseurl }}/images/sparse_coords/sparse_image.png  "Sparse image example 1")
 
-![100x100 sparse image](../images/sparse_coords/sparse_image_100.png)
+![100x100 sparse image]({{ site.baseurl }}/images/sparse_coords/sparse_image_100.png  "Sparse image example 2")
 
-![1000x1000 sparse image](../images/sparse_coords/sparse_image_1000.png)
+![1000x1000 sparse image]({{ site.baseurl }}/images/sparse_coords/sparse_image_1000.png  "Sparse image example 3")
 
 We will be going through two approaches in this short tutorial and also see how the methods compare in execution time
 
