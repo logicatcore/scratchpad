@@ -13,10 +13,11 @@
 <link rel="canonical" href="https://logicatcore.github.io/scratchpad/2020/09/10/Google-kickstart-Mural-coding-question-2018-round-H.html" />
 <meta property="og:url" content="https://logicatcore.github.io/scratchpad/2020/09/10/Google-kickstart-Mural-coding-question-2018-round-H.html" />
 <meta property="og:site_name" content="Scratchpad" />
+<meta property="og:image" content="https://logicatcore.github.io/scratchpad/images/google_kickstart/mural/mural.png)" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-09-10T00:00:00-05:00" />
 <script type="application/ld+json">
-{"description":"Importance of reusing the results (Dynamic programming)","url":"https://logicatcore.github.io/scratchpad/2020/09/10/Google-kickstart-Mural-coding-question-2018-round-H.html","@type":"BlogPosting","headline":"Google kickstart Mural coding question(2018 RoundH)","dateModified":"2020-09-10T00:00:00-05:00","datePublished":"2020-09-10T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://logicatcore.github.io/scratchpad/2020/09/10/Google-kickstart-Mural-coding-question-2018-round-H.html"},"@context":"https://schema.org"}</script>
+{"description":"Importance of reusing the results (Dynamic programming)","url":"https://logicatcore.github.io/scratchpad/2020/09/10/Google-kickstart-Mural-coding-question-2018-round-H.html","@type":"BlogPosting","headline":"Google kickstart Mural coding question(2018 RoundH)","dateModified":"2020-09-10T00:00:00-05:00","datePublished":"2020-09-10T00:00:00-05:00","image":"https://logicatcore.github.io/scratchpad/images/google_kickstart/mural/mural.png)","mainEntityOfPage":{"@type":"WebPage","@id":"https://logicatcore.github.io/scratchpad/2020/09/10/Google-kickstart-Mural-coding-question-2018-round-H.html"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/scratchpad/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://logicatcore.github.io/scratchpad/feed.xml" title="Scratchpad" /><!-- the google_analytics_id gets auto inserted from the config file -->
 
@@ -85,7 +86,7 @@ window.onload = wrap_img;
           </span>
         </label>
 
-        <div class="trigger"><a class="page-link" href="/scratchpad/about/">About Me</a><a class="page-link" href="/scratchpad/search/">Search</a><a class="page-link" href="/scratchpad/categories/">Tags</a></div>
+        <div class="trigger"><a class="page-link" href="/scratchpad/_pages/about.html">About me</a><a class="page-link" href="/scratchpad/search/">Search</a><a class="page-link" href="/scratchpad/categories/">Tags</a></div>
       </nav></div>
 </header>
 <main class="page-content" aria-label="Content">
@@ -112,7 +113,7 @@ window.onload = wrap_img;
 
 <h2 id="problem-statement-summary">Problem statement: Summary</h2>
 <hr />
-<p><img src="../images/google_kickstart/mural/mural.png" alt="Problem_explanation" />
+<p><img src="/scratchpad/images/google_kickstart/mural/mural.png" alt="Problem_explanation" title="Problem visualisation" />
 There are <strong>N</strong> sections on a wall and you can paint only one of the sections in a day, the next day 
 you are allowed to paint the section which is adjacent to a painted one only. Also, everyday one section gets destroyed
 and the section which gets destroyed are <strong>always at the ends</strong> (adjacent to unpainted ones)</p>
@@ -267,13 +268,14 @@ in a pandas Series-</p>
 </ul>
 
 <p>i.e., O(roll_windows + summations + comparisons)
-<img src="../images/google_kickstart/mural/mural_ops.png" alt="operations_vs_sections" />
+<img src="search_exclude: false
+/images/google_kickstart/mural/mural_ops.png" alt="operations_vs_sections" title="Number of operations and log formula comparision" />
 <strong>Note: The scales are in log</strong></p>
 
 <h3 id="improved-solution-making-use-of-previous-results">Improved solution, making use of previous results</h3>
 <p>Based on the operations breakdown we have seen just now, I see that a substantial number of summations can be avoided by
 utilizing the concept that every successive roll window overlaps the previous roll window except one element/beauty score
-<img src="../images/google_kickstart/mural/roll_window.png" alt="roll_window" />
+<img src="/scratchpad/images/google_kickstart/mural/roll_window.png" alt="roll_window" title="Rolling window visualised" />
 To save on computations, we just have to add the beauty score of the new section and subtract which we do not want anymore.</p>
 
 <p>Let us have a look at the number of operations involved-</p>
@@ -284,7 +286,7 @@ To save on computations, we just have to add the beauty score of the new section
 </ul>
 
 <p>i.e., O(roll_windows + summations + comparisons)
-<img src="../images/google_kickstart/mural/mural_ops_improved.png" alt="operations_vs_sections" /></p>
+<img src="/scratchpad/images/google_kickstart/mural/mural_ops_improved.png" alt="operations_vs_sections" title="Reduced operations using dynamic programming and log formula comparision" /></p>
 
 <p>Based on the graphs it is clear that we see an improvement from
 <strong>O(10^(2log(N))) to O(10^log(N))</strong></p>
@@ -311,7 +313,7 @@ To save on computations, we just have to add the beauty score of the new section
 
 <h3 id="time-comparisons">Time comparisons</h3>
 <hr />
-<p><img src="../images/google_kickstart/mural/runtimes.png" alt="time comparisons" /></p>
+<p><img src="/scratchpad/images/google_kickstart/mural/runtimes.png" alt="time comparisons" title="Time comparision of two methods" /></p>
 
 <table>
   <thead>
@@ -381,15 +383,15 @@ see and learn!!</p>
 
 <p>Here is the <a href="https://github.com/logicatcore/logicatcore.github.io/blob/master/assets/resources/mural_2018_H.txt">link to Test input</a> 
 and the test results if you want to cross check</p>
-<pre><code class="language-commandline">Case #1: 6
-Case #2: 14
-Case #3: 7
-Case #4: 31
-Case #5: 1012
-Case #6: 10129
-Case #7: 100501
-Case #8: 1001276
-</code></pre>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Case <span class="c">#1: 6</span>
+Case <span class="c">#2: 14</span>
+Case <span class="c">#3: 7</span>
+Case <span class="c">#4: 31</span>
+Case <span class="c">#5: 1012</span>
+Case <span class="c">#6: 10129</span>
+Case <span class="c">#7: 100501</span>
+Case <span class="c">#8: 1001276</span>
+</code></pre></div></div>
 
 
   </div><!-- from https://github.com/utterance/utterances -->
