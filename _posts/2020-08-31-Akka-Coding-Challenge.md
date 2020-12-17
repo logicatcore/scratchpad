@@ -7,6 +7,8 @@ search_exclude: false
 tags: [MATLAB, programming competition]
 ---
 
+## Topology constrained search
+***
 ### Objective
 ***
 ![Problem_snap]({{ site.baseurl }}/images/akka/ProblemExplanation.png "Problem explanation")
