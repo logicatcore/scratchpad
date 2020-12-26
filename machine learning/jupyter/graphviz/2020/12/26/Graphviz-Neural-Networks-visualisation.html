@@ -1,0 +1,2126 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Graphviz Artifical Neural Networks visualisation | Scratchpad</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Graphviz Artifical Neural Networks visualisation" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Graphviz scripts to create simple visualisations of feed-forward and recurrent neural networks" />
+<meta property="og:description" content="Graphviz scripts to create simple visualisations of feed-forward and recurrent neural networks" />
+<link rel="canonical" href="https://logicatcore.github.io/scratchpad/machine%20learning/jupyter/graphviz/2020/12/26/Graphviz-Neural-Networks-visualisation.html" />
+<meta property="og:url" content="https://logicatcore.github.io/scratchpad/machine%20learning/jupyter/graphviz/2020/12/26/Graphviz-Neural-Networks-visualisation.html" />
+<meta property="og:site_name" content="Scratchpad" />
+<meta property="og:image" content="https://logicatcore.github.io/scratchpad/images/graphviz_dotnets/example_network.jpeg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-12-26T00:00:00-06:00" />
+<script type="application/ld+json">
+{"url":"https://logicatcore.github.io/scratchpad/machine%20learning/jupyter/graphviz/2020/12/26/Graphviz-Neural-Networks-visualisation.html","@type":"BlogPosting","headline":"Graphviz Artifical Neural Networks visualisation","dateModified":"2020-12-26T00:00:00-06:00","datePublished":"2020-12-26T00:00:00-06:00","image":"https://logicatcore.github.io/scratchpad/images/graphviz_dotnets/example_network.jpeg","mainEntityOfPage":{"@type":"WebPage","@id":"https://logicatcore.github.io/scratchpad/machine%20learning/jupyter/graphviz/2020/12/26/Graphviz-Neural-Networks-visualisation.html"},"description":"Graphviz scripts to create simple visualisations of feed-forward and recurrent neural networks","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/scratchpad/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://logicatcore.github.io/scratchpad/feed.xml" title="Scratchpad" /><link rel="shortcut icon" type="image/x-icon" href="/scratchpad/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/scratchpad/">Scratchpad</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/scratchpad/_pages/about.html">About me</a><a class="page-link" href="/scratchpad/search/">Search</a><a class="page-link" href="/scratchpad/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Graphviz Artifical Neural Networks visualisation</h1><p class="page-description">Graphviz scripts to create simple visualisations of feed-forward and recurrent neural networks</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-12-26T00:00:00-06:00" itemprop="datePublished">
+        Dec 26, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      7 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/scratchpad/categories/#machine learning">machine learning</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/scratchpad/categories/#jupyter">jupyter</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/scratchpad/categories/#graphviz">graphviz</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          <div class="px-2">
+
+    <a href="https://github.com/logicatcore/scratchpad/tree/master/_notebooks/2020-12-26-Graphviz-Neural-Networks-visualisation.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/scratchpad/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/logicatcore/scratchpad/master?filepath=_notebooks%2F2020-12-26-Graphviz-Neural-Networks-visualisation.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/scratchpad/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/logicatcore/scratchpad/blob/master/_notebooks/2020-12-26-Graphviz-Neural-Networks-visualisation.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/scratchpad/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2020-12-26-Graphviz-Neural-Networks-visualisation.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Graphviz-scripts-to-create-simple-visualisations-of-neural-networks">Graphviz scripts to create simple visualisations of neural networks<a class="anchor-link" href="#Graphviz-scripts-to-create-simple-visualisations-of-neural-networks"> </a></h1><hr />
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Simple-feed-forward-neural-networks">Simple feed forward neural networks<a class="anchor-link" href="#Simple-feed-forward-neural-networks"> </a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Often while working with neural networks in Deep Learning and Machine Learning fields it is often easy to picturise the network architecture into a concise diagram which conveys lot of useful information. In what follows are some scripts that are inspired from <a href="https://github.com/martisak/dotnets">martisak dotnets</a> github repo including a rudementry graphing script which generates a DOT lannguage script interpretable by <a href="https://graphviz.readthedocs.io/en/stable/">graphviz</a>. The script found on the github repo was later ported to <a href="https://graphviz.readthedocs.io/en/stable/">graphviz</a> and expanded to add more functionalities to the script. The added functionalities enable activation function annotations and recurrent neural networks representation.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Firstly the <a href="https://graphviz.readthedocs.io/en/stable/">graphviz</a> module is imported and some global variables are set</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">graphviz</span> <span class="k">as</span> <span class="nn">G</span>
+<span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ModuleNotFoundError: &quot;graphviz&quot; package not available, install it with &quot;pip install graphviz&quot;&#39;</span><span class="p">)</span>
+
+
+<span class="c1"># boolean variables to denote dense or sparse connections between layers</span>
+<span class="n">DENSE</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">SPARSE</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="n">PENWIDTH</span> <span class="o">=</span> <span class="s1">&#39;15&#39;</span>
+<span class="n">FONT</span> <span class="o">=</span> <span class="s1">&#39;Hilda 10&#39;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now the network architecture details are defined based on which a neural network will be graphed. The details include the number of nodes/perceptrons present in each layer, the type of connections between two layers. Since the connections are in-between layers, the length of <em>connections</em> list has to be 1 less than the length of <em>layers</em> list.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">layer_nodes</span> <span class="o">=</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="n">connections</span> <span class="o">=</span> <span class="p">[</span><span class="n">DENSE</span><span class="p">,</span> <span class="n">DENSE</span><span class="p">,</span> <span class="n">SPARSE</span><span class="p">]</span> 
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">connections</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">layer_nodes</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span> <span class="s1">&#39;&quot;connections&quot; array should be 1 less than the #layers&#39;</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">type_of_connections</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">connections</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">type_of_connections</span> <span class="o">==</span> <span class="n">SPARSE</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">layer_nodes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">layer_nodes</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;If connection type is SPARSE then the number of nodes in the adjacent layers must be equal&quot;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>A graph in <em>graphviz</em> mainly consists of three components, namely, nodes, edges, and the graph itself. Just like defining a <em>class</em> while programming before creating an object, overhere the <em>graphviz</em> library provides a generic <strong>Digraph</strong> class which is to be instantiated with our desired object presets. The following piece of code instantiates a <em>directed graph</em> with some nodes, edges, and graph attributes based on which the graph will be drawn.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dot</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">Digraph</span><span class="p">(</span><span class="n">comment</span><span class="o">=</span><span class="s1">&#39;Neural Network&#39;</span><span class="p">,</span> 
+                <span class="n">graph_attr</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;nodesep&#39;</span><span class="p">:</span><span class="s1">&#39;0.04&#39;</span><span class="p">,</span> <span class="s1">&#39;ranksep&#39;</span><span class="p">:</span><span class="s1">&#39;0.05&#39;</span><span class="p">,</span> <span class="s1">&#39;bgcolor&#39;</span><span class="p">:</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="s1">&#39;splines&#39;</span><span class="p">:</span><span class="s1">&#39;line&#39;</span><span class="p">,</span> <span class="s1">&#39;rankdir&#39;</span><span class="p">:</span><span class="s1">&#39;LR&#39;</span><span class="p">,</span> <span class="s1">&#39;fontname&#39;</span><span class="p">:</span><span class="n">FONT</span><span class="p">},</span>
+                <span class="n">node_attr</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;fixedsize&#39;</span><span class="p">:</span><span class="s1">&#39;true&#39;</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">:</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s1">&#39;style&#39;</span><span class="p">:</span><span class="s1">&#39;filled&#39;</span><span class="p">,</span> <span class="s1">&#39;color&#39;</span><span class="p">:</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="s1">&#39;fillcolor&#39;</span><span class="p">:</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="s1">&#39;shape&#39;</span><span class="p">:</span><span class="s1">&#39;circle&#39;</span><span class="p">,</span> <span class="s1">&#39;penwidth&#39;</span><span class="p">:</span><span class="n">PENWIDTH</span><span class="p">,</span> <span class="s1">&#39;width&#39;</span><span class="p">:</span><span class="s1">&#39;0.4&#39;</span><span class="p">,</span> <span class="s1">&#39;height&#39;</span><span class="p">:</span><span class="s1">&#39;0.4&#39;</span><span class="p">},</span>
+                <span class="n">edge_attr</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;color&#39;</span><span class="p">:</span><span class="s1">&#39;gray30&#39;</span><span class="p">,</span> <span class="s1">&#39;arrowsize&#39;</span><span class="p">:</span><span class="s1">&#39;.4&#39;</span><span class="p">})</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Create-nodes">Create nodes<a class="anchor-link" href="#Create-nodes"> </a></h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">layer_no</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">layer_nodes</span><span class="p">)):</span>
+    <span class="k">with</span> <span class="n">dot</span><span class="o">.</span><span class="n">subgraph</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;cluster_&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">layer_no</span><span class="p">))</span> <span class="k">as</span> <span class="n">c</span><span class="p">:</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;transparent&#39;</span><span class="p">)</span> <span class="c1"># comment this if graph background is needed</span>
+        <span class="k">if</span> <span class="n">layer_no</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>                 <span class="c1"># first layer</span>
+            <span class="n">c</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Input&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">layer_no</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">layer_nodes</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span>   <span class="c1"># last layer</span>
+            <span class="n">c</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Output&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>                      <span class="c1"># layers in between</span>
+            <span class="n">c</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Hidden&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">layer_nodes</span><span class="p">[</span><span class="n">layer_no</span><span class="p">]):</span>
+            <span class="k">if</span> <span class="n">layer_no</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="c1"># or i == len(layers)-1: # first or last layer</span>
+                <span class="n">c</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;l&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">layer_no</span><span class="p">)</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">fillcolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span><span class="c1">#, fontcolor=&#39;white&#39;</span>
+            <span class="k">if</span> <span class="n">layer_no</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">layer_nodes</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="n">c</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;l&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">layer_no</span><span class="p">)</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">fontcolor</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="n">fillcolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span><span class="c1">#, fontcolor=&#39;white&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># unicode characters can be used to inside the nodes as follows</span>
+                <span class="c1"># for a list of unicode characters refer this https://pythonforundergradengineers.com/unicode-characters-in-python.html</span>
+                <span class="n">c</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;l&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">layer_no</span><span class="p">)</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="s1">&#39;</span><span class="se">\u03C3</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;12&#39;</span><span class="p">)</span> <span class="c1"># to place &quot;sigma&quot; inside the nodes of a layer</span>
+                
+                <span class="c1"># for normal textual representation like &#39;relu&#39; and &#39;tanh&#39;, the following approach can be taken</span>
+                <span class="c1"># c.node(&#39;l&#39;+str(layer_no)+str(a), &#39;relu&#39;, fontsize=&#39;12&#39;)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Create-edges">Create edges<a class="anchor-link" href="#Create-edges"> </a></h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">layer_no</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">layer_nodes</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">node_no</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">layer_nodes</span><span class="p">[</span><span class="n">layer_no</span><span class="p">]):</span>
+        <span class="k">if</span> <span class="n">connections</span><span class="p">[</span><span class="n">layer_no</span><span class="p">]</span> <span class="o">==</span> <span class="n">DENSE</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">layer_nodes</span><span class="p">[</span><span class="n">layer_no</span><span class="o">+</span><span class="mi">1</span><span class="p">]):</span>
+                <span class="n">dot</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;l&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">layer_no</span><span class="p">)</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">node_no</span><span class="p">),</span> <span class="s1">&#39;l&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">layer_no</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">b</span><span class="p">),)</span>
+        <span class="k">elif</span> <span class="n">connections</span><span class="p">[</span><span class="n">layer_no</span><span class="p">]</span> <span class="o">==</span> <span class="n">SPARSE</span><span class="p">:</span>
+            <span class="n">dot</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;l&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">layer_no</span><span class="p">)</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">node_no</span><span class="p">),</span> <span class="s1">&#39;l&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">layer_no</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">node_no</span><span class="p">))</span>                
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Render">Render<a class="anchor-link" href="#Render"> </a></h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dot</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_svg output_subarea output_execute_result">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+&lt;!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"&gt;
+<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+ -->
+<!-- Title: %3 Pages: 1 -->
+<svg width="288pt" height="253pt" viewBox="0.00 0.00 288.00 253.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 249)">
+<title>%3</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-249 284,-249 284,4 -4,4" />
+<g id="clust1" class="cluster">
+<title>cluster_0</title>
+<polygon fill="#ffffff" stroke="transparent" points="4,-8 4,-237 57,-237 57,-8 4,-8" />
+<text text-anchor="middle" x="30.5" y="-221.8" font-family="Hilda 10" font-size="14.00" fill="#000000">Input</text>
+</g>
+<g id="clust2" class="cluster">
+<title>cluster_1</title>
+<polygon fill="#ffffff" stroke="transparent" points="65,-40 65,-205 132,-205 132,-40 65,-40" />
+<text text-anchor="middle" x="98.5" y="-189.8" font-family="Hilda 10" font-size="14.00" fill="#000000">Hidden</text>
+</g>
+<g id="clust3" class="cluster">
+<title>cluster_2</title>
+<polygon fill="#ffffff" stroke="transparent" points="140,-40 140,-205 207,-205 207,-40 140,-40" />
+<text text-anchor="middle" x="173.5" y="-189.8" font-family="Hilda 10" font-size="14.00" fill="#000000">Hidden</text>
+</g>
+<g id="clust4" class="cluster">
+<title>cluster_3</title>
+<polygon fill="#ffffff" stroke="transparent" points="215,-40 215,-205 280,-205 280,-40 215,-40" />
+<text text-anchor="middle" x="247.5" y="-189.8" font-family="Hilda 10" font-size="14.00" fill="#000000">Output</text>
+</g>
+<!-- l00 -->
+<g id="node1" class="node">
+<title>l00</title>
+<ellipse fill="#000000" stroke="transparent" stroke-width="15" cx="30.5" cy="-63" rx="14.5" ry="14.5" />
+<text text-anchor="middle" x="30.5" y="-59.9" font-family="Times,serif" font-size="12.00" fill="#000000">σ</text>
+</g>
+<!-- l10 -->
+<g id="node7" class="node">
+<title>l10</title>
+<ellipse fill="#c0c0c0" stroke="transparent" stroke-width="15" cx="98.5" cy="-159" rx="14.5" ry="14.5" />
+<text text-anchor="middle" x="98.5" y="-155.9" font-family="Times,serif" font-size="12.00" fill="#000000">σ</text>
+</g>
+<!-- l00&#45;&gt;l10 -->
+<g id="edge1" class="edge">
+<title>l00&#45;&gt;l10</title>
+<path fill="none" stroke="#4d4d4d" d="M39.1122,-75.1585C51.3748,-92.4704 73.8739,-124.2337 87.3817,-143.3036" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="86.5031,-144.4854 89.9577,-146.9403 88.788,-142.8669 86.5031,-144.4854" />
+</g>
+<!-- l11 -->
+<g id="node8" class="node">
+<title>l11</title>
+<ellipse fill="#c0c0c0" stroke="transparent" stroke-width="15" cx="98.5" cy="-127" rx="14.5" ry="14.5" />
+<text text-anchor="middle" x="98.5" y="-123.9" font-family="Times,serif" font-size="12.00" fill="#000000">σ</text>
+</g>
+<!-- l00&#45;&gt;l11 -->
+<g id="edge2" class="edge">
+<title>l00&#45;&gt;l11</title>
+<path fill="none" stroke="#4d4d4d" d="M41.125,-73C52.833,-84.0193 71.7084,-101.7844 84.5879,-113.9063" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="83.8529,-115.137 87.7252,-116.859 85.7719,-113.098 83.8529,-115.137" />
+</g>
+<!-- l12 -->
+<g id="node9" class="node">
+<title>l12</title>
+<ellipse fill="#c0c0c0" stroke="transparent" stroke-width="15" cx="98.5" cy="-95" rx="14.5" ry="14.5" />
+<text text-anchor="middle" x="98.5" y="-91.9" font-family="Times,serif" font-size="12.00" fill="#000000">σ</text>
+</g>
+<!-- l00&#45;&gt;l12 -->
+<g id="edge3" class="edge">
+<title>l00&#45;&gt;l12</title>
+<path fill="none" stroke="#4d4d4d" d="M43.9346,-69.3222C54.6452,-74.3624 69.7171,-81.4551 81.3075,-86.9094" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="80.8779,-88.2545 85.0933,-88.691 82.0701,-85.721 80.8779,-88.2545" />
+</g>
+<!-- l13 -->
+<g id="node10" class="node">
+<title>l13</title>
+<ellipse fill="#c0c0c0" stroke="transparent" stroke-width="15" cx="98.5" cy="-63" rx="14.5" ry="14.5" />
+<text text-anchor="middle" x="98.5" y="-59.9" font-family="Times,serif" font-size="12.00" fill="#000000">σ</text>
+</g>
+<!-- l00&#45;&gt;l13 -->
+<g id="edge4" class="edge">
+<title>l00&#45;&gt;l13</title>
+<path fill="none" stroke="#4d4d4d" d="M45.255,-63C55.3242,-63 68.7513,-63 79.6026,-63" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="79.7738,-64.4001 83.7738,-63 79.7738,-61.6001 79.7738,-64.4001" />
+</g>
+<!-- l01 -->
+<g id="node2" class="node">
+<title>l01</title>
+<ellipse fill="#000000" stroke="transparent" stroke-width="15" cx="30.5" cy="-31" rx="14.5" ry="14.5" />
+<text text-anchor="middle" x="30.5" y="-27.9" font-family="Times,serif" font-size="12.00" fill="#000000">σ</text>
+</g>
+<!-- l01&#45;&gt;l10 -->
+<g id="edge5" class="edge">
+<title>l01&#45;&gt;l10</title>
+<path fill="none" stroke="#4d4d4d" d="M37.5211,-44.2161C50.0054,-67.716 76.0338,-116.7107 89.6955,-142.4269" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="88.5054,-143.1707 91.6184,-146.0464 90.9781,-141.8571 88.5054,-143.1707" />
+</g>
+<!-- l01&#45;&gt;l11 -->
+<g id="edge6" class="edge">
+<title>l01&#45;&gt;l11</title>
+<path fill="none" stroke="#4d4d4d" d="M39.1122,-43.1585C51.3748,-60.4704 73.8739,-92.2337 87.3817,-111.3036" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="86.5031,-112.4854 89.9577,-114.9403 88.788,-110.8669 86.5031,-112.4854" />
+</g>
+<!-- l01&#45;&gt;l12 -->
+<g id="edge7" class="edge">
+<title>l01&#45;&gt;l12</title>
+<path fill="none" stroke="#4d4d4d" d="M41.125,-41C52.833,-52.0193 71.7084,-69.7844 84.5879,-81.9063" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="83.8529,-83.137 87.7252,-84.859 85.7719,-81.098 83.8529,-83.137" />
+</g>
+<!-- l01&#45;&gt;l13 -->
+<g id="edge8" class="edge">
+<title>l01&#45;&gt;l13</title>
+<path fill="none" stroke="#4d4d4d" d="M43.9346,-37.3222C54.6452,-42.3624 69.7171,-49.4551 81.3075,-54.9094" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="80.8779,-56.2545 85.0933,-56.691 82.0701,-53.721 80.8779,-56.2545" />
+</g>
+<!-- l02 -->
+<g id="node3" class="node">
+<title>l02</title>
+<ellipse fill="#000000" stroke="transparent" stroke-width="15" cx="30.5" cy="-191" rx="14.5" ry="14.5" />
+<text text-anchor="middle" x="30.5" y="-187.9" font-family="Times,serif" font-size="12.00" fill="#000000">σ</text>
+</g>
+<!-- l02&#45;&gt;l10 -->
+<g id="edge9" class="edge">
+<title>l02&#45;&gt;l10</title>
+<path fill="none" stroke="#4d4d4d" d="M43.9346,-184.6778C54.6452,-179.6376 69.7171,-172.5449 81.3075,-167.0906" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="82.0701,-168.279 85.0933,-165.309 80.8779,-165.7455 82.0701,-168.279" />
+</g>
+<!-- l02&#45;&gt;l11 -->
+<g id="edge10" class="edge">
+<title>l02&#45;&gt;l11</title>
+<path fill="none" stroke="#4d4d4d" d="M41.125,-181C52.833,-169.9807 71.7084,-152.2156 84.5879,-140.0937" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="85.7719,-140.902 87.7252,-137.141 83.8529,-138.863 85.7719,-140.902" />
+</g>
+<!-- l02&#45;&gt;l12 -->
+<g id="edge11" class="edge">
+<title>l02&#45;&gt;l12</title>
+<path fill="none" stroke="#4d4d4d" d="M39.1122,-178.8415C51.3748,-161.5296 73.8739,-129.7663 87.3817,-110.6964" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="88.788,-111.1331 89.9577,-107.0597 86.5031,-109.5146 88.788,-111.1331" />
+</g>
+<!-- l02&#45;&gt;l13 -->
+<g id="edge12" class="edge">
+<title>l02&#45;&gt;l13</title>
+<path fill="none" stroke="#4d4d4d" d="M37.5211,-177.7839C50.0054,-154.284 76.0338,-105.2893 89.6955,-79.5731" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="90.9781,-80.1429 91.6184,-75.9536 88.5054,-78.8293 90.9781,-80.1429" />
+</g>
+<!-- l03 -->
+<g id="node4" class="node">
+<title>l03</title>
+<ellipse fill="#000000" stroke="transparent" stroke-width="15" cx="30.5" cy="-159" rx="14.5" ry="14.5" />
+<text text-anchor="middle" x="30.5" y="-155.9" font-family="Times,serif" font-size="12.00" fill="#000000">σ</text>
+</g>
+<!-- l03&#45;&gt;l10 -->
+<g id="edge13" class="edge">
+<title>l03&#45;&gt;l10</title>
+<path fill="none" stroke="#4d4d4d" d="M45.255,-159C55.3242,-159 68.7513,-159 79.6026,-159" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="79.7738,-160.4001 83.7738,-159 79.7738,-157.6001 79.7738,-160.4001" />
+</g>
+<!-- l03&#45;&gt;l11 -->
+<g id="edge14" class="edge">
+<title>l03&#45;&gt;l11</title>
+<path fill="none" stroke="#4d4d4d" d="M43.9346,-152.6778C54.6452,-147.6376 69.7171,-140.5449 81.3075,-135.0906" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="82.0701,-136.279 85.0933,-133.309 80.8779,-133.7455 82.0701,-136.279" />
+</g>
+<!-- l03&#45;&gt;l12 -->
+<g id="edge15" class="edge">
+<title>l03&#45;&gt;l12</title>
+<path fill="none" stroke="#4d4d4d" d="M41.125,-149C52.833,-137.9807 71.7084,-120.2156 84.5879,-108.0937" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="85.7719,-108.902 87.7252,-105.141 83.8529,-106.863 85.7719,-108.902" />
+</g>
+<!-- l03&#45;&gt;l13 -->
+<g id="edge16" class="edge">
+<title>l03&#45;&gt;l13</title>
+<path fill="none" stroke="#4d4d4d" d="M39.1122,-146.8415C51.3748,-129.5296 73.8739,-97.7663 87.3817,-78.6964" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="88.788,-79.1331 89.9577,-75.0597 86.5031,-77.5146 88.788,-79.1331" />
+</g>
+<!-- l04 -->
+<g id="node5" class="node">
+<title>l04</title>
+<ellipse fill="#000000" stroke="transparent" stroke-width="15" cx="30.5" cy="-127" rx="14.5" ry="14.5" />
+<text text-anchor="middle" x="30.5" y="-123.9" font-family="Times,serif" font-size="12.00" fill="#000000">σ</text>
+</g>
+<!-- l04&#45;&gt;l10 -->
+<g id="edge17" class="edge">
+<title>l04&#45;&gt;l10</title>
+<path fill="none" stroke="#4d4d4d" d="M43.9346,-133.3222C54.6452,-138.3624 69.7171,-145.4551 81.3075,-150.9094" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="80.8779,-152.2545 85.0933,-152.691 82.0701,-149.721 80.8779,-152.2545" />
+</g>
+<!-- l04&#45;&gt;l11 -->
+<g id="edge18" class="edge">
+<title>l04&#45;&gt;l11</title>
+<path fill="none" stroke="#4d4d4d" d="M45.255,-127C55.3242,-127 68.7513,-127 79.6026,-127" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="79.7738,-128.4001 83.7738,-127 79.7738,-125.6001 79.7738,-128.4001" />
+</g>
+<!-- l04&#45;&gt;l12 -->
+<g id="edge19" class="edge">
+<title>l04&#45;&gt;l12</title>
+<path fill="none" stroke="#4d4d4d" d="M43.9346,-120.6778C54.6452,-115.6376 69.7171,-108.5449 81.3075,-103.0906" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="82.0701,-104.279 85.0933,-101.309 80.8779,-101.7455 82.0701,-104.279" />
+</g>
+<!-- l04&#45;&gt;l13 -->
+<g id="edge20" class="edge">
+<title>l04&#45;&gt;l13</title>
+<path fill="none" stroke="#4d4d4d" d="M41.125,-117C52.833,-105.9807 71.7084,-88.2156 84.5879,-76.0937" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="85.7719,-76.902 87.7252,-73.141 83.8529,-74.863 85.7719,-76.902" />
+</g>
+<!-- l05 -->
+<g id="node6" class="node">
+<title>l05</title>
+<ellipse fill="#000000" stroke="transparent" stroke-width="15" cx="30.5" cy="-95" rx="14.5" ry="14.5" />
+<text text-anchor="middle" x="30.5" y="-91.9" font-family="Times,serif" font-size="12.00" fill="#000000">σ</text>
+</g>
+<!-- l05&#45;&gt;l10 -->
+<g id="edge21" class="edge">
+<title>l05&#45;&gt;l10</title>
+<path fill="none" stroke="#4d4d4d" d="M41.125,-105C52.833,-116.0193 71.7084,-133.7844 84.5879,-145.9063" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="83.8529,-147.137 87.7252,-148.859 85.7719,-145.098 83.8529,-147.137" />
+</g>
+<!-- l05&#45;&gt;l11 -->
+<g id="edge22" class="edge">
+<title>l05&#45;&gt;l11</title>
+<path fill="none" stroke="#4d4d4d" d="M43.9346,-101.3222C54.6452,-106.3624 69.7171,-113.4551 81.3075,-118.9094" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="80.8779,-120.2545 85.0933,-120.691 82.0701,-117.721 80.8779,-120.2545" />
+</g>
+<!-- l05&#45;&gt;l12 -->
+<g id="edge23" class="edge">
+<title>l05&#45;&gt;l12</title>
+<path fill="none" stroke="#4d4d4d" d="M45.255,-95C55.3242,-95 68.7513,-95 79.6026,-95" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="79.7738,-96.4001 83.7738,-95 79.7738,-93.6001 79.7738,-96.4001" />
+</g>
+<!-- l05&#45;&gt;l13 -->
+<g id="edge24" class="edge">
+<title>l05&#45;&gt;l13</title>
+<path fill="none" stroke="#4d4d4d" d="M43.9346,-88.6778C54.6452,-83.6376 69.7171,-76.5449 81.3075,-71.0906" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="82.0701,-72.279 85.0933,-69.309 80.8779,-69.7455 82.0701,-72.279" />
+</g>
+<!-- l20 -->
+<g id="node11" class="node">
+<title>l20</title>
+<ellipse fill="#c0c0c0" stroke="transparent" stroke-width="15" cx="173.5" cy="-159" rx="14.5" ry="14.5" />
+<text text-anchor="middle" x="173.5" y="-155.9" font-family="Times,serif" font-size="12.00" fill="#000000">σ</text>
+</g>
+<!-- l10&#45;&gt;l20 -->
+<g id="edge25" class="edge">
+<title>l10&#45;&gt;l20</title>
+<path fill="none" stroke="#4d4d4d" d="M113.3176,-159C125.2074,-159 141.9703,-159 154.7862,-159" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="154.9684,-160.4001 158.9684,-159 154.9684,-157.6001 154.9684,-160.4001" />
+</g>
+<!-- l21 -->
+<g id="node12" class="node">
+<title>l21</title>
+<ellipse fill="#c0c0c0" stroke="transparent" stroke-width="15" cx="173.5" cy="-127" rx="14.5" ry="14.5" />
+<text text-anchor="middle" x="173.5" y="-123.9" font-family="Times,serif" font-size="12.00" fill="#000000">σ</text>
+</g>
+<!-- l10&#45;&gt;l21 -->
+<g id="edge26" class="edge">
+<title>l10&#45;&gt;l21</title>
+<path fill="none" stroke="#4d4d4d" d="M111.9085,-153.279C124.2038,-148.0331 142.491,-140.2305 155.9461,-134.4897" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="156.825,-135.6368 159.9547,-132.7793 155.7262,-133.0614 156.825,-135.6368" />
+</g>
+<!-- l22 -->
+<g id="node13" class="node">
+<title>l22</title>
+<ellipse fill="#c0c0c0" stroke="transparent" stroke-width="15" cx="173.5" cy="-95" rx="14.5" ry="14.5" />
+<text text-anchor="middle" x="173.5" y="-91.9" font-family="Times,serif" font-size="12.00" fill="#000000">σ</text>
+</g>
+<!-- l10&#45;&gt;l22 -->
+<g id="edge27" class="edge">
+<title>l10&#45;&gt;l22</title>
+<path fill="none" stroke="#4d4d4d" d="M109.5665,-149.5566C122.7495,-138.3071 144.8001,-119.4906 159.2477,-107.162" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="160.2541,-108.1436 162.3881,-104.4822 158.4365,-106.0137 160.2541,-108.1436" />
+</g>
+<!-- l23 -->
+<g id="node14" class="node">
+<title>l23</title>
+<ellipse fill="#c0c0c0" stroke="transparent" stroke-width="15" cx="173.5" cy="-63" rx="14.5" ry="14.5" />
+<text text-anchor="middle" x="173.5" y="-59.9" font-family="Times,serif" font-size="12.00" fill="#000000">σ</text>
+</g>
+<!-- l10&#45;&gt;l23 -->
+<g id="edge28" class="edge">
+<title>l10&#45;&gt;l23</title>
+<path fill="none" stroke="#4d4d4d" d="M107.6965,-147.2285C121.3777,-129.7165 147.0755,-96.8233 161.9873,-77.7363" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="163.1032,-78.5819 164.4626,-74.5679 160.8967,-76.8581 163.1032,-78.5819" />
+</g>
+<!-- l11&#45;&gt;l20 -->
+<g id="edge29" class="edge">
+<title>l11&#45;&gt;l20</title>
+<path fill="none" stroke="#4d4d4d" d="M111.9085,-132.721C124.2038,-137.9669 142.491,-145.7695 155.9461,-151.5103" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="155.7262,-152.9386 159.9547,-153.2207 156.825,-150.3632 155.7262,-152.9386" />
+</g>
+<!-- l11&#45;&gt;l21 -->
+<g id="edge30" class="edge">
+<title>l11&#45;&gt;l21</title>
+<path fill="none" stroke="#4d4d4d" d="M113.3176,-127C125.2074,-127 141.9703,-127 154.7862,-127" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="154.9684,-128.4001 158.9684,-127 154.9684,-125.6001 154.9684,-128.4001" />
+</g>
+<!-- l11&#45;&gt;l22 -->
+<g id="edge31" class="edge">
+<title>l11&#45;&gt;l22</title>
+<path fill="none" stroke="#4d4d4d" d="M111.9085,-121.279C124.2038,-116.0331 142.491,-108.2305 155.9461,-102.4897" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="156.825,-103.6368 159.9547,-100.7793 155.7262,-101.0614 156.825,-103.6368" />
+</g>
+<!-- l11&#45;&gt;l23 -->
+<g id="edge32" class="edge">
+<title>l11&#45;&gt;l23</title>
+<path fill="none" stroke="#4d4d4d" d="M109.5665,-117.5566C122.7495,-106.3071 144.8001,-87.4906 159.2477,-75.162" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="160.2541,-76.1436 162.3881,-72.4822 158.4365,-74.0137 160.2541,-76.1436" />
+</g>
+<!-- l12&#45;&gt;l20 -->
+<g id="edge33" class="edge">
+<title>l12&#45;&gt;l20</title>
+<path fill="none" stroke="#4d4d4d" d="M109.5665,-104.4434C122.7495,-115.6929 144.8001,-134.5094 159.2477,-146.838" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="158.4365,-147.9863 162.3881,-149.5178 160.2541,-145.8564 158.4365,-147.9863" />
+</g>
+<!-- l12&#45;&gt;l21 -->
+<g id="edge34" class="edge">
+<title>l12&#45;&gt;l21</title>
+<path fill="none" stroke="#4d4d4d" d="M111.9085,-100.721C124.2038,-105.9669 142.491,-113.7695 155.9461,-119.5103" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="155.7262,-120.9386 159.9547,-121.2207 156.825,-118.3632 155.7262,-120.9386" />
+</g>
+<!-- l12&#45;&gt;l22 -->
+<g id="edge35" class="edge">
+<title>l12&#45;&gt;l22</title>
+<path fill="none" stroke="#4d4d4d" d="M113.3176,-95C125.2074,-95 141.9703,-95 154.7862,-95" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="154.9684,-96.4001 158.9684,-95 154.9684,-93.6001 154.9684,-96.4001" />
+</g>
+<!-- l12&#45;&gt;l23 -->
+<g id="edge36" class="edge">
+<title>l12&#45;&gt;l23</title>
+<path fill="none" stroke="#4d4d4d" d="M111.9085,-89.279C124.2038,-84.0331 142.491,-76.2305 155.9461,-70.4897" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="156.825,-71.6368 159.9547,-68.7793 155.7262,-69.0614 156.825,-71.6368" />
+</g>
+<!-- l13&#45;&gt;l20 -->
+<g id="edge37" class="edge">
+<title>l13&#45;&gt;l20</title>
+<path fill="none" stroke="#4d4d4d" d="M107.6965,-74.7715C121.3777,-92.2835 147.0755,-125.1767 161.9873,-144.2637" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="160.8967,-145.1419 164.4626,-147.4321 163.1032,-143.4181 160.8967,-145.1419" />
+</g>
+<!-- l13&#45;&gt;l21 -->
+<g id="edge38" class="edge">
+<title>l13&#45;&gt;l21</title>
+<path fill="none" stroke="#4d4d4d" d="M109.5665,-72.4434C122.7495,-83.6929 144.8001,-102.5094 159.2477,-114.838" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="158.4365,-115.9863 162.3881,-117.5178 160.2541,-113.8564 158.4365,-115.9863" />
+</g>
+<!-- l13&#45;&gt;l22 -->
+<g id="edge39" class="edge">
+<title>l13&#45;&gt;l22</title>
+<path fill="none" stroke="#4d4d4d" d="M111.9085,-68.721C124.2038,-73.9669 142.491,-81.7695 155.9461,-87.5103" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="155.7262,-88.9386 159.9547,-89.2207 156.825,-86.3632 155.7262,-88.9386" />
+</g>
+<!-- l13&#45;&gt;l23 -->
+<g id="edge40" class="edge">
+<title>l13&#45;&gt;l23</title>
+<path fill="none" stroke="#4d4d4d" d="M113.3176,-63C125.2074,-63 141.9703,-63 154.7862,-63" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="154.9684,-64.4001 158.9684,-63 154.9684,-61.6001 154.9684,-64.4001" />
+</g>
+<!-- l30 -->
+<g id="node15" class="node">
+<title>l30</title>
+<ellipse fill="#000000" stroke="transparent" stroke-width="15" cx="247.5" cy="-159" rx="14.5" ry="14.5" />
+</g>
+<!-- l20&#45;&gt;l30 -->
+<g id="edge41" class="edge">
+<title>l20&#45;&gt;l30</title>
+<path fill="none" stroke="#4d4d4d" d="M188.12,-159C199.7756,-159 216.1774,-159 228.7905,-159" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="228.9104,-160.4001 232.9104,-159 228.9103,-157.6001 228.9104,-160.4001" />
+</g>
+<!-- l31 -->
+<g id="node16" class="node">
+<title>l31</title>
+<ellipse fill="#000000" stroke="transparent" stroke-width="15" cx="247.5" cy="-127" rx="14.5" ry="14.5" />
+</g>
+<!-- l21&#45;&gt;l31 -->
+<g id="edge42" class="edge">
+<title>l21&#45;&gt;l31</title>
+<path fill="none" stroke="#4d4d4d" d="M188.12,-127C199.7756,-127 216.1774,-127 228.7905,-127" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="228.9104,-128.4001 232.9104,-127 228.9103,-125.6001 228.9104,-128.4001" />
+</g>
+<!-- l32 -->
+<g id="node17" class="node">
+<title>l32</title>
+<ellipse fill="#000000" stroke="transparent" stroke-width="15" cx="247.5" cy="-95" rx="14.5" ry="14.5" />
+</g>
+<!-- l22&#45;&gt;l32 -->
+<g id="edge43" class="edge">
+<title>l22&#45;&gt;l32</title>
+<path fill="none" stroke="#4d4d4d" d="M188.12,-95C199.7756,-95 216.1774,-95 228.7905,-95" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="228.9104,-96.4001 232.9104,-95 228.9103,-93.6001 228.9104,-96.4001" />
+</g>
+<!-- l33 -->
+<g id="node18" class="node">
+<title>l33</title>
+<ellipse fill="#000000" stroke="transparent" stroke-width="15" cx="247.5" cy="-63" rx="14.5" ry="14.5" />
+</g>
+<!-- l23&#45;&gt;l33 -->
+<g id="edge44" class="edge">
+<title>l23&#45;&gt;l33</title>
+<path fill="none" stroke="#4d4d4d" d="M188.12,-63C199.7756,-63 216.1774,-63 228.7905,-63" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="228.9104,-64.4001 232.9104,-63 228.9103,-61.6001 228.9104,-64.4001" />
+</g>
+</g>
+</svg>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Save/Export">Save/Export<a class="anchor-link" href="#Save/Export"> </a></h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dot</span><span class="o">.</span><span class="n">format</span> <span class="o">=</span> <span class="s1">&#39;JPEG&#39;</span> <span class="c1"># or PDF, SVG, JPEG, PNG, etc. </span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dot</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s1">&#39;./example_network&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&#39;./example_network.jpeg&#39;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Recurrent-neural-network">Recurrent neural network<a class="anchor-link" href="#Recurrent-neural-network"> </a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The previously used code can be modified and adapted easily for variuous architectures, for adding additional details, for customizing, and much more. The same code if now modified to represent recurrent neural networks instead.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">layer_nodes</span> <span class="o">=</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="n">connections</span> <span class="o">=</span> <span class="p">[</span><span class="n">DENSE</span><span class="p">,</span> <span class="n">DENSE</span><span class="p">,</span> <span class="n">DENSE</span><span class="p">]</span>
+<span class="c1"># additional variable to denote which layers consist of recurrent units</span>
+<span class="n">recurrent</span> <span class="o">=</span> <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">]</span>
+
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">connections</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">layer_nodes</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span> <span class="s1">&#39;&quot;connections&quot; array should be 1 less than the #layers&#39;</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">type_of_connections</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">connections</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">type_of_connections</span> <span class="o">==</span> <span class="n">SPARSE</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">layer_nodes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">layer_nodes</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;If connection type is SPARSE then the number of nodes in the adjacent layers must be equal&quot;</span>
+
+<span class="n">dot</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">Digraph</span><span class="p">(</span><span class="n">comment</span><span class="o">=</span><span class="s1">&#39;Neural Network&#39;</span><span class="p">,</span> 
+                <span class="n">graph_attr</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;nodesep&#39;</span><span class="p">:</span><span class="s1">&#39;0.04&#39;</span><span class="p">,</span> <span class="s1">&#39;ranksep&#39;</span><span class="p">:</span><span class="s1">&#39;0.05&#39;</span><span class="p">,</span> <span class="s1">&#39;bgcolor&#39;</span><span class="p">:</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="s1">&#39;splines&#39;</span><span class="p">:</span><span class="s1">&#39;line&#39;</span><span class="p">,</span> <span class="s1">&#39;rankdir&#39;</span><span class="p">:</span><span class="s1">&#39;LR&#39;</span><span class="p">,</span> <span class="s1">&#39;fontname&#39;</span><span class="p">:</span><span class="n">FONT</span><span class="p">},</span>
+                <span class="n">node_attr</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;fixedsize&#39;</span><span class="p">:</span><span class="s1">&#39;true&#39;</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">:</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s1">&#39;style&#39;</span><span class="p">:</span><span class="s1">&#39;filled&#39;</span><span class="p">,</span> <span class="s1">&#39;color&#39;</span><span class="p">:</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="s1">&#39;fillcolor&#39;</span><span class="p">:</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="s1">&#39;shape&#39;</span><span class="p">:</span><span class="s1">&#39;circle&#39;</span><span class="p">,</span> <span class="s1">&#39;penwidth&#39;</span><span class="p">:</span><span class="n">PENWIDTH</span><span class="p">,</span> <span class="s1">&#39;width&#39;</span><span class="p">:</span><span class="s1">&#39;0.4&#39;</span><span class="p">,</span> <span class="s1">&#39;height&#39;</span><span class="p">:</span><span class="s1">&#39;0.4&#39;</span><span class="p">},</span>
+                <span class="n">edge_attr</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;color&#39;</span><span class="p">:</span><span class="s1">&#39;gray30&#39;</span><span class="p">,</span> <span class="s1">&#39;arrowsize&#39;</span><span class="p">:</span><span class="s1">&#39;.4&#39;</span><span class="p">})</span>
+
+<span class="k">for</span> <span class="n">layer_no</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">layer_nodes</span><span class="p">)):</span>
+    <span class="k">with</span> <span class="n">dot</span><span class="o">.</span><span class="n">subgraph</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;cluster_&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">layer_no</span><span class="p">))</span> <span class="k">as</span> <span class="n">c</span><span class="p">:</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;transparent&#39;</span><span class="p">)</span> <span class="c1"># comment this if graph background is needed</span>
+        <span class="k">if</span> <span class="n">layer_no</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>                 <span class="c1"># first layer</span>
+            <span class="n">c</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Input&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">layer_no</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">layer_nodes</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span>   <span class="c1"># last layer</span>
+            <span class="n">c</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Output&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>                      <span class="c1"># layers in between</span>
+            <span class="n">c</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Hidden&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">layer_nodes</span><span class="p">[</span><span class="n">layer_no</span><span class="p">]):</span>
+            <span class="k">if</span> <span class="n">layer_no</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="c1"># or i == len(layers)-1: # first or last layer</span>
+                <span class="n">c</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;l&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">layer_no</span><span class="p">)</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">fillcolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span><span class="c1">#, fontcolor=&#39;white&#39;</span>
+            <span class="k">if</span> <span class="n">layer_no</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">layer_nodes</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="n">c</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;l&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">layer_no</span><span class="p">)</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">fontcolor</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="n">fillcolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span><span class="c1">#, fontcolor=&#39;white&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># unicode characters can be used to inside the nodes as follows</span>
+                <span class="c1"># for a list of unicode characters refer this https://pythonforundergradengineers.com/unicode-characters-in-python.html</span>
+                <span class="c1"># c.node(&#39;l&#39;+str(layer_no)+str(a), &#39;\u03C3&#39;, fontsize=&#39;12&#39;) # to place &quot;sigma&quot; inside the nodes of a layer</span>
+                
+                <span class="c1"># for normal textual representation like &#39;relu&#39; and &#39;tanh&#39;, the following approach can be taken</span>
+                <span class="n">c</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;l&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">layer_no</span><span class="p">)</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="s1">&#39;tanh&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;12&#39;</span><span class="p">)</span>
+                
+<span class="k">for</span> <span class="n">layer_no</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">layer_nodes</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">node_no</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">layer_nodes</span><span class="p">[</span><span class="n">layer_no</span><span class="p">]):</span>
+        <span class="k">if</span> <span class="n">connections</span><span class="p">[</span><span class="n">layer_no</span><span class="p">]</span> <span class="o">==</span> <span class="n">DENSE</span><span class="p">:</span>
+            <span class="c1"># to place recuurent units</span>
+            <span class="c1"># change the label &#39;x10&#39; to denote the number of time steps into which the recurrent unit unrolls in time</span>
+            <span class="k">if</span> <span class="n">recurrent</span><span class="p">[</span><span class="n">layer_no</span><span class="p">]:</span>
+                <span class="n">dot</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;l&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">layer_no</span><span class="p">)</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">node_no</span><span class="p">),</span> <span class="s1">&#39;l&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">layer_no</span><span class="p">)</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">node_no</span><span class="p">),</span> <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;x10&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">fontcolor</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">layer_nodes</span><span class="p">[</span><span class="n">layer_no</span><span class="o">+</span><span class="mi">1</span><span class="p">]):</span>
+                <span class="n">dot</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;l&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">layer_no</span><span class="p">)</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">node_no</span><span class="p">),</span> <span class="s1">&#39;l&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">layer_no</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">b</span><span class="p">),)</span>
+        <span class="k">elif</span> <span class="n">connections</span><span class="p">[</span><span class="n">layer_no</span><span class="p">]</span> <span class="o">==</span> <span class="n">SPARSE</span><span class="p">:</span>
+            <span class="n">dot</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;l&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">layer_no</span><span class="p">)</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">node_no</span><span class="p">),</span> <span class="s1">&#39;l&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">layer_no</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">node_no</span><span class="p">))</span>                
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dot</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_svg output_subarea output_execute_result">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+&lt;!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"&gt;
+<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+ -->
+<!-- Title: %3 Pages: 1 -->
+<svg width="288pt" height="261pt" viewBox="0.00 0.00 288.00 261.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 257)">
+<title>%3</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-257 284,-257 284,4 -4,4" />
+<g id="clust1" class="cluster">
+<title>cluster_0</title>
+<polygon fill="#ffffff" stroke="transparent" points="4,-8 4,-237 57,-237 57,-8 4,-8" />
+<text text-anchor="middle" x="30.5" y="-221.8" font-family="Hilda 10" font-size="14.00" fill="#000000">Input</text>
+</g>
+<g id="clust2" class="cluster">
+<title>cluster_1</title>
+<polygon fill="#ffffff" stroke="transparent" points="65,-8 65,-245 132,-245 132,-8 65,-8" />
+<text text-anchor="middle" x="98.5" y="-229.8" font-family="Hilda 10" font-size="14.00" fill="#000000">Hidden</text>
+</g>
+<g id="clust3" class="cluster">
+<title>cluster_2</title>
+<polygon fill="#ffffff" stroke="transparent" points="140,-8 140,-245 207,-245 207,-8 140,-8" />
+<text text-anchor="middle" x="173.5" y="-229.8" font-family="Hilda 10" font-size="14.00" fill="#000000">Hidden</text>
+</g>
+<g id="clust4" class="cluster">
+<title>cluster_3</title>
+<polygon fill="#ffffff" stroke="transparent" points="215,-35 215,-200 280,-200 280,-35 215,-35" />
+<text text-anchor="middle" x="247.5" y="-184.8" font-family="Hilda 10" font-size="14.00" fill="#000000">Output</text>
+</g>
+<!-- l00 -->
+<g id="node1" class="node">
+<title>l00</title>
+<ellipse fill="#000000" stroke="transparent" stroke-width="15" cx="30.5" cy="-63" rx="14.5" ry="14.5" />
+<text text-anchor="middle" x="30.5" y="-59.9" font-family="Times,serif" font-size="12.00" fill="#000000">tanh</text>
+</g>
+<!-- l10 -->
+<g id="node7" class="node">
+<title>l10</title>
+<ellipse fill="#c0c0c0" stroke="transparent" stroke-width="15" cx="98.5" cy="-181" rx="14.5" ry="14.5" />
+<text text-anchor="middle" x="98.5" y="-177.9" font-family="Times,serif" font-size="12.00" fill="#000000">tanh</text>
+</g>
+<!-- l00&#45;&gt;l10 -->
+<g id="edge1" class="edge">
+<title>l00&#45;&gt;l10</title>
+<path fill="none" stroke="#4d4d4d" d="M37.7772,-75.6281C50.1356,-97.0735 75.2189,-140.6004 88.964,-164.4523" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="87.8587,-165.3383 91.069,-168.105 90.2848,-163.9402 87.8587,-165.3383" />
+</g>
+<!-- l11 -->
+<g id="node8" class="node">
+<title>l11</title>
+<ellipse fill="#c0c0c0" stroke="transparent" stroke-width="15" cx="98.5" cy="-131" rx="14.5" ry="14.5" />
+<text text-anchor="middle" x="98.5" y="-127.9" font-family="Times,serif" font-size="12.00" fill="#000000">tanh</text>
+</g>
+<!-- l00&#45;&gt;l11 -->
+<g id="edge2" class="edge">
+<title>l00&#45;&gt;l11</title>
+<path fill="none" stroke="#4d4d4d" d="M40.8277,-73.3277C52.71,-85.21 72.25,-104.75 85.2451,-117.7451" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="84.2567,-118.7366 88.0751,-120.5751 86.2366,-116.7567 84.2567,-118.7366" />
+</g>
+<!-- l12 -->
+<g id="node9" class="node">
+<title>l12</title>
+<ellipse fill="#c0c0c0" stroke="transparent" stroke-width="15" cx="98.5" cy="-81" rx="14.5" ry="14.5" />
+<text text-anchor="middle" x="98.5" y="-77.9" font-family="Times,serif" font-size="12.00" fill="#000000">tanh</text>
+</g>
+<!-- l00&#45;&gt;l12 -->
+<g id="edge3" class="edge">
+<title>l00&#45;&gt;l12</title>
+<path fill="none" stroke="#4d4d4d" d="M44.5896,-66.7296C54.9837,-69.481 69.2107,-73.247 80.4397,-76.2193" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="80.2033,-77.6049 84.4284,-77.2752 80.9199,-74.8981 80.2033,-77.6049" />
+</g>
+<!-- l13 -->
+<g id="node10" class="node">
+<title>l13</title>
+<ellipse fill="#c0c0c0" stroke="transparent" stroke-width="15" cx="98.5" cy="-31" rx="14.5" ry="14.5" />
+<text text-anchor="middle" x="98.5" y="-27.9" font-family="Times,serif" font-size="12.00" fill="#000000">tanh</text>
+</g>
+<!-- l00&#45;&gt;l13 -->
+<g id="edge4" class="edge">
+<title>l00&#45;&gt;l13</title>
+<path fill="none" stroke="#4d4d4d" d="M43.9346,-56.6778C54.6452,-51.6376 69.7171,-44.5449 81.3075,-39.0906" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="82.0701,-40.279 85.0933,-37.309 80.8779,-37.7455 82.0701,-40.279" />
+</g>
+<!-- l01 -->
+<g id="node2" class="node">
+<title>l01</title>
+<ellipse fill="#000000" stroke="transparent" stroke-width="15" cx="30.5" cy="-31" rx="14.5" ry="14.5" />
+<text text-anchor="middle" x="30.5" y="-27.9" font-family="Times,serif" font-size="12.00" fill="#000000">tanh</text>
+</g>
+<!-- l01&#45;&gt;l10 -->
+<g id="edge5" class="edge">
+<title>l01&#45;&gt;l10</title>
+<path fill="none" stroke="#4d4d4d" d="M36.5345,-44.3115C48.8531,-71.4848 76.8862,-133.3224 90.6205,-163.6187" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="89.4545,-164.4376 92.3812,-167.5027 92.0047,-163.2815 89.4545,-164.4376" />
+</g>
+<!-- l01&#45;&gt;l11 -->
+<g id="edge6" class="edge">
+<title>l01&#45;&gt;l11</title>
+<path fill="none" stroke="#4d4d4d" d="M38.8381,-43.262C51.14,-61.3529 74.1574,-95.2021 87.7246,-115.1538" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="86.8991,-116.4296 90.3061,-118.9501 89.2145,-114.8551 86.8991,-116.4296" />
+</g>
+<!-- l01&#45;&gt;l12 -->
+<g id="edge7" class="edge">
+<title>l01&#45;&gt;l12</title>
+<path fill="none" stroke="#4d4d4d" d="M42.3447,-39.7093C53.7531,-48.0978 71.0559,-60.8205 83.4381,-69.9251" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="82.7391,-71.1488 86.791,-72.3905 84.3978,-68.893 82.7391,-71.1488" />
+</g>
+<!-- l01&#45;&gt;l13 -->
+<g id="edge8" class="edge">
+<title>l01&#45;&gt;l13</title>
+<path fill="none" stroke="#4d4d4d" d="M45.255,-31C55.3242,-31 68.7513,-31 79.6026,-31" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="79.7738,-32.4001 83.7738,-31 79.7738,-29.6001 79.7738,-32.4001" />
+</g>
+<!-- l02 -->
+<g id="node3" class="node">
+<title>l02</title>
+<ellipse fill="#000000" stroke="transparent" stroke-width="15" cx="30.5" cy="-191" rx="14.5" ry="14.5" />
+<text text-anchor="middle" x="30.5" y="-187.9" font-family="Times,serif" font-size="12.00" fill="#000000">tanh</text>
+</g>
+<!-- l02&#45;&gt;l10 -->
+<g id="edge9" class="edge">
+<title>l02&#45;&gt;l10</title>
+<path fill="none" stroke="#4d4d4d" d="M44.9211,-188.8793C55.1086,-187.3811 68.8536,-185.3598 79.8711,-183.7395" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="80.346,-185.0848 84.0997,-183.1177 79.9386,-182.3146 80.346,-185.0848" />
+</g>
+<!-- l02&#45;&gt;l11 -->
+<g id="edge10" class="edge">
+<title>l02&#45;&gt;l11</title>
+<path fill="none" stroke="#4d4d4d" d="M41.4254,-181.36C53.0543,-171.0991 71.5021,-154.8217 84.262,-143.563" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="85.3027,-144.5117 87.3758,-140.8154 83.4502,-142.4122 85.3027,-144.5117" />
+</g>
+<!-- l02&#45;&gt;l12 -->
+<g id="edge11" class="edge">
+<title>l02&#45;&gt;l12</title>
+<path fill="none" stroke="#4d4d4d" d="M38.3005,-178.3816C50.7001,-158.3234 74.8959,-119.1831 88.5339,-97.1216" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="89.878,-97.6098 90.7905,-93.4712 87.4963,-96.1375 89.878,-97.6098" />
+</g>
+<!-- l02&#45;&gt;l13 -->
+<g id="edge12" class="edge">
+<title>l02&#45;&gt;l13</title>
+<path fill="none" stroke="#4d4d4d" d="M36.1807,-177.6337C48.45,-148.7647 77.4205,-80.5989 91.1009,-48.4096" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="92.4152,-48.8964 92.6913,-44.6674 89.8383,-47.8011 92.4152,-48.8964" />
+</g>
+<!-- l03 -->
+<g id="node4" class="node">
+<title>l03</title>
+<ellipse fill="#000000" stroke="transparent" stroke-width="15" cx="30.5" cy="-159" rx="14.5" ry="14.5" />
+<text text-anchor="middle" x="30.5" y="-155.9" font-family="Times,serif" font-size="12.00" fill="#000000">tanh</text>
+</g>
+<!-- l03&#45;&gt;l10 -->
+<g id="edge13" class="edge">
+<title>l03&#45;&gt;l10</title>
+<path fill="none" stroke="#4d4d4d" d="M44.5896,-163.5584C54.9837,-166.9212 69.2107,-171.5241 80.4397,-175.157" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="80.1917,-176.5481 84.4284,-176.4474 81.0536,-173.8841 80.1917,-176.5481" />
+</g>
+<!-- l03&#45;&gt;l11 -->
+<g id="edge14" class="edge">
+<title>l03&#45;&gt;l11</title>
+<path fill="none" stroke="#4d4d4d" d="M43.9346,-153.4681C54.5061,-149.1151 69.3264,-143.0127 80.8541,-138.2659" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="81.4608,-139.5303 84.6264,-136.7126 80.3947,-136.9411 81.4608,-139.5303" />
+</g>
+<!-- l03&#45;&gt;l12 -->
+<g id="edge15" class="edge">
+<title>l03&#45;&gt;l12</title>
+<path fill="none" stroke="#4d4d4d" d="M40.2427,-147.8245C52.2606,-134.0393 72.7154,-110.5765 85.9124,-95.4387" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="87.202,-96.0899 88.7753,-92.1548 85.0915,-94.2499 87.202,-96.0899" />
+</g>
+<!-- l03&#45;&gt;l13 -->
+<g id="edge16" class="edge">
+<title>l03&#45;&gt;l13</title>
+<path fill="none" stroke="#4d4d4d" d="M37.5211,-145.7839C50.0054,-122.284 76.0338,-73.2893 89.6955,-47.5731" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="90.9781,-48.1429 91.6184,-43.9536 88.5054,-46.8293 90.9781,-48.1429" />
+</g>
+<!-- l04 -->
+<g id="node5" class="node">
+<title>l04</title>
+<ellipse fill="#000000" stroke="transparent" stroke-width="15" cx="30.5" cy="-127" rx="14.5" ry="14.5" />
+<text text-anchor="middle" x="30.5" y="-123.9" font-family="Times,serif" font-size="12.00" fill="#000000">tanh</text>
+</g>
+<!-- l04&#45;&gt;l10 -->
+<g id="edge17" class="edge">
+<title>l04&#45;&gt;l10</title>
+<path fill="none" stroke="#4d4d4d" d="M42.0353,-136.1604C53.5343,-145.292 71.2386,-159.3513 83.7526,-169.2888" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="83.132,-170.5837 87.1351,-171.9749 84.8733,-168.391 83.132,-170.5837" />
+</g>
+<!-- l04&#45;&gt;l11 -->
+<g id="edge18" class="edge">
+<title>l04&#45;&gt;l11</title>
+<path fill="none" stroke="#4d4d4d" d="M45.255,-127.8679C55.3242,-128.4602 68.7513,-129.2501 79.6026,-129.8884" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="79.6985,-131.2964 83.7738,-130.1338 79.863,-128.5012 79.6985,-131.2964" />
+</g>
+<!-- l04&#45;&gt;l12 -->
+<g id="edge19" class="edge">
+<title>l04&#45;&gt;l12</title>
+<path fill="none" stroke="#4d4d4d" d="M42.657,-118.7761C53.9707,-111.1228 70.88,-99.6841 83.1263,-91.3998" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="83.9195,-92.5536 86.4482,-89.1527 82.3506,-90.2344 83.9195,-92.5536" />
+</g>
+<!-- l04&#45;&gt;l13 -->
+<g id="edge20" class="edge">
+<title>l04&#45;&gt;l13</title>
+<path fill="none" stroke="#4d4d4d" d="M39.1122,-114.8415C51.3748,-97.5296 73.8739,-65.7663 87.3817,-46.6964" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="88.788,-47.1331 89.9577,-43.0597 86.5031,-45.5146 88.788,-47.1331" />
+</g>
+<!-- l05 -->
+<g id="node6" class="node">
+<title>l05</title>
+<ellipse fill="#000000" stroke="transparent" stroke-width="15" cx="30.5" cy="-95" rx="14.5" ry="14.5" />
+<text text-anchor="middle" x="30.5" y="-91.9" font-family="Times,serif" font-size="12.00" fill="#000000">tanh</text>
+</g>
+<!-- l05&#45;&gt;l10 -->
+<g id="edge21" class="edge">
+<title>l05&#45;&gt;l10</title>
+<path fill="none" stroke="#4d4d4d" d="M39.6708,-106.5983C51.9059,-122.0721 73.5731,-149.4748 86.9211,-166.3561" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="85.8953,-167.3161 89.4745,-169.5854 88.0917,-165.5794 85.8953,-167.3161" />
+</g>
+<!-- l05&#45;&gt;l11 -->
+<g id="edge22" class="edge">
+<title>l05&#45;&gt;l11</title>
+<path fill="none" stroke="#4d4d4d" d="M43.6111,-101.9412C54.4294,-107.6685 69.8544,-115.8347 81.5992,-122.0525" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="81.2389,-123.4459 85.4292,-124.0801 82.5491,-120.9712 81.2389,-123.4459" />
+</g>
+<!-- l05&#45;&gt;l12 -->
+<g id="edge23" class="edge">
+<title>l05&#45;&gt;l12</title>
+<path fill="none" stroke="#4d4d4d" d="M44.9211,-92.031C55.1987,-89.915 69.0971,-87.0535 80.163,-84.7753" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="80.4642,-86.1427 84.0997,-83.9648 79.8996,-83.4002 80.4642,-86.1427" />
+</g>
+<!-- l05&#45;&gt;l13 -->
+<g id="edge24" class="edge">
+<title>l05&#45;&gt;l13</title>
+<path fill="none" stroke="#4d4d4d" d="M41.125,-85C52.833,-73.9807 71.7084,-56.2156 84.5879,-44.0937" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="85.7719,-44.902 87.7252,-41.141 83.8529,-42.863 85.7719,-44.902" />
+</g>
+<!-- l10&#45;&gt;l10 -->
+<g id="edge25" class="edge">
+<title>l10&#45;&gt;l10</title>
+<path fill="none" stroke="#0000ff" d="M86.3601,-189.4631C84.094,-194.1677 88.1406,-198.5 98.5,-198.5 105.6221,-198.5 109.7604,-196.4523 110.9149,-193.6438" />
+<polygon fill="#0000ff" stroke="#0000ff" points="112.2996,-193.3626 110.6399,-189.4631 109.5056,-193.5465 112.2996,-193.3626" />
+<text text-anchor="middle" x="87.2768" y="-201.7616" font-family="Times,serif" font-size="14.00" fill="#0000ff">x10</text>
+</g>
+<!-- l20 -->
+<g id="node11" class="node">
+<title>l20</title>
+<ellipse fill="#c0c0c0" stroke="transparent" stroke-width="15" cx="173.5" cy="-181" rx="14.5" ry="14.5" />
+<text text-anchor="middle" x="173.5" y="-177.9" font-family="Times,serif" font-size="12.00" fill="#000000">tanh</text>
+</g>
+<!-- l10&#45;&gt;l20 -->
+<g id="edge26" class="edge">
+<title>l10&#45;&gt;l20</title>
+<path fill="none" stroke="#4d4d4d" d="M113.3176,-181C125.2074,-181 141.9703,-181 154.7862,-181" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="154.9684,-182.4001 158.9684,-181 154.9684,-179.6001 154.9684,-182.4001" />
+</g>
+<!-- l21 -->
+<g id="node12" class="node">
+<title>l21</title>
+<ellipse fill="#c0c0c0" stroke="transparent" stroke-width="15" cx="173.5" cy="-131" rx="14.5" ry="14.5" />
+<text text-anchor="middle" x="173.5" y="-127.9" font-family="Times,serif" font-size="12.00" fill="#000000">tanh</text>
+</g>
+<!-- l10&#45;&gt;l21 -->
+<g id="edge27" class="edge">
+<title>l10&#45;&gt;l21</title>
+<path fill="none" stroke="#4d4d4d" d="M110.8847,-172.7435C123.7721,-164.1519 143.9835,-150.6777 157.9404,-141.3731" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="158.7941,-142.4866 161.3457,-139.1028 157.2409,-140.1568 158.7941,-142.4866" />
+</g>
+<!-- l22 -->
+<g id="node13" class="node">
+<title>l22</title>
+<ellipse fill="#c0c0c0" stroke="transparent" stroke-width="15" cx="173.5" cy="-81" rx="14.5" ry="14.5" />
+<text text-anchor="middle" x="173.5" y="-77.9" font-family="Times,serif" font-size="12.00" fill="#000000">tanh</text>
+</g>
+<!-- l10&#45;&gt;l22 -->
+<g id="edge28" class="edge">
+<title>l10&#45;&gt;l22</title>
+<path fill="none" stroke="#4d4d4d" d="M107.398,-169.136C121.043,-150.9426 147.127,-116.164 162.1262,-96.165" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="163.3335,-96.8886 164.6136,-92.8486 161.0935,-95.2086 163.3335,-96.8886" />
+</g>
+<!-- l23 -->
+<g id="node14" class="node">
+<title>l23</title>
+<ellipse fill="#c0c0c0" stroke="transparent" stroke-width="15" cx="173.5" cy="-31" rx="14.5" ry="14.5" />
+<text text-anchor="middle" x="173.5" y="-27.9" font-family="Times,serif" font-size="12.00" fill="#000000">tanh</text>
+</g>
+<!-- l10&#45;&gt;l23 -->
+<g id="edge29" class="edge">
+<title>l10&#45;&gt;l23</title>
+<path fill="none" stroke="#4d4d4d" d="M105.0246,-167.9509C118.5993,-140.8014 149.8741,-78.2517 165.0004,-47.9992" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="166.4004,-48.3296 166.9371,-44.1258 163.896,-47.0774 166.4004,-48.3296" />
+</g>
+<!-- l11&#45;&gt;l11 -->
+<g id="edge30" class="edge">
+<title>l11&#45;&gt;l11</title>
+<path fill="none" stroke="#0000ff" d="M86.3601,-139.4631C84.094,-144.1677 88.1406,-148.5 98.5,-148.5 105.6221,-148.5 109.7604,-146.4523 110.9149,-143.6438" />
+<polygon fill="#0000ff" stroke="#0000ff" points="112.2996,-143.3626 110.6399,-139.4631 109.5056,-143.5465 112.2996,-143.3626" />
+<text text-anchor="middle" x="87.2768" y="-151.7616" font-family="Times,serif" font-size="14.00" fill="#0000ff">x10</text>
+</g>
+<!-- l11&#45;&gt;l20 -->
+<g id="edge31" class="edge">
+<title>l11&#45;&gt;l20</title>
+<path fill="none" stroke="#4d4d4d" d="M110.8847,-139.2565C123.7721,-147.8481 143.9835,-161.3223 157.9404,-170.6269" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="157.2409,-171.8432 161.3457,-172.8972 158.7941,-169.5134 157.2409,-171.8432" />
+</g>
+<!-- l11&#45;&gt;l21 -->
+<g id="edge32" class="edge">
+<title>l11&#45;&gt;l21</title>
+<path fill="none" stroke="#4d4d4d" d="M113.3176,-131C125.2074,-131 141.9703,-131 154.7862,-131" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="154.9684,-132.4001 158.9684,-131 154.9684,-129.6001 154.9684,-132.4001" />
+</g>
+<!-- l11&#45;&gt;l22 -->
+<g id="edge33" class="edge">
+<title>l11&#45;&gt;l22</title>
+<path fill="none" stroke="#4d4d4d" d="M110.8847,-122.7435C123.7721,-114.1519 143.9835,-100.6777 157.9404,-91.3731" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="158.7941,-92.4866 161.3457,-89.1028 157.2409,-90.1568 158.7941,-92.4866" />
+</g>
+<!-- l11&#45;&gt;l23 -->
+<g id="edge34" class="edge">
+<title>l11&#45;&gt;l23</title>
+<path fill="none" stroke="#4d4d4d" d="M107.398,-119.136C121.043,-100.9426 147.127,-66.164 162.1262,-46.165" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="163.3335,-46.8886 164.6136,-42.8486 161.0935,-45.2086 163.3335,-46.8886" />
+</g>
+<!-- l12&#45;&gt;l12 -->
+<g id="edge35" class="edge">
+<title>l12&#45;&gt;l12</title>
+<path fill="none" stroke="#0000ff" d="M86.3601,-89.4631C84.094,-94.1677 88.1406,-98.5 98.5,-98.5 105.6221,-98.5 109.7604,-96.4523 110.9149,-93.6438" />
+<polygon fill="#0000ff" stroke="#0000ff" points="112.2996,-93.3626 110.6399,-89.4631 109.5056,-93.5465 112.2996,-93.3626" />
+<text text-anchor="middle" x="87.2768" y="-101.7616" font-family="Times,serif" font-size="14.00" fill="#0000ff">x10</text>
+</g>
+<!-- l12&#45;&gt;l20 -->
+<g id="edge36" class="edge">
+<title>l12&#45;&gt;l20</title>
+<path fill="none" stroke="#4d4d4d" d="M107.398,-92.864C121.043,-111.0574 147.127,-145.836 162.1262,-165.835" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="161.0935,-166.7914 164.6136,-169.1514 163.3335,-165.1114 161.0935,-166.7914" />
+</g>
+<!-- l12&#45;&gt;l21 -->
+<g id="edge37" class="edge">
+<title>l12&#45;&gt;l21</title>
+<path fill="none" stroke="#4d4d4d" d="M110.8847,-89.2565C123.7721,-97.8481 143.9835,-111.3223 157.9404,-120.6269" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="157.2409,-121.8432 161.3457,-122.8972 158.7941,-119.5134 157.2409,-121.8432" />
+</g>
+<!-- l12&#45;&gt;l22 -->
+<g id="edge38" class="edge">
+<title>l12&#45;&gt;l22</title>
+<path fill="none" stroke="#4d4d4d" d="M113.3176,-81C125.2074,-81 141.9703,-81 154.7862,-81" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="154.9684,-82.4001 158.9684,-81 154.9684,-79.6001 154.9684,-82.4001" />
+</g>
+<!-- l12&#45;&gt;l23 -->
+<g id="edge39" class="edge">
+<title>l12&#45;&gt;l23</title>
+<path fill="none" stroke="#4d4d4d" d="M110.8847,-72.7435C123.7721,-64.1519 143.9835,-50.6777 157.9404,-41.3731" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="158.7941,-42.4866 161.3457,-39.1028 157.2409,-40.1568 158.7941,-42.4866" />
+</g>
+<!-- l13&#45;&gt;l13 -->
+<g id="edge40" class="edge">
+<title>l13&#45;&gt;l13</title>
+<path fill="none" stroke="#0000ff" d="M86.3601,-39.4631C84.094,-44.1677 88.1406,-48.5 98.5,-48.5 105.6221,-48.5 109.7604,-46.4523 110.9149,-43.6438" />
+<polygon fill="#0000ff" stroke="#0000ff" points="112.2996,-43.3626 110.6399,-39.4631 109.5056,-43.5465 112.2996,-43.3626" />
+<text text-anchor="middle" x="87.2768" y="-51.7616" font-family="Times,serif" font-size="14.00" fill="#0000ff">x10</text>
+</g>
+<!-- l13&#45;&gt;l20 -->
+<g id="edge41" class="edge">
+<title>l13&#45;&gt;l20</title>
+<path fill="none" stroke="#4d4d4d" d="M105.0246,-44.0491C118.5993,-71.1986 149.8741,-133.7483 165.0004,-164.0008" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="163.896,-164.9226 166.9371,-167.8742 166.4004,-163.6704 163.896,-164.9226" />
+</g>
+<!-- l13&#45;&gt;l21 -->
+<g id="edge42" class="edge">
+<title>l13&#45;&gt;l21</title>
+<path fill="none" stroke="#4d4d4d" d="M107.398,-42.864C121.043,-61.0574 147.127,-95.836 162.1262,-115.835" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="161.0935,-116.7914 164.6136,-119.1514 163.3335,-115.1114 161.0935,-116.7914" />
+</g>
+<!-- l13&#45;&gt;l22 -->
+<g id="edge43" class="edge">
+<title>l13&#45;&gt;l22</title>
+<path fill="none" stroke="#4d4d4d" d="M110.8847,-39.2565C123.7721,-47.8481 143.9835,-61.3223 157.9404,-70.6269" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="157.2409,-71.8432 161.3457,-72.8972 158.7941,-69.5134 157.2409,-71.8432" />
+</g>
+<!-- l13&#45;&gt;l23 -->
+<g id="edge44" class="edge">
+<title>l13&#45;&gt;l23</title>
+<path fill="none" stroke="#4d4d4d" d="M113.3176,-31C125.2074,-31 141.9703,-31 154.7862,-31" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="154.9684,-32.4001 158.9684,-31 154.9684,-29.6001 154.9684,-32.4001" />
+</g>
+<!-- l20&#45;&gt;l20 -->
+<g id="edge45" class="edge">
+<title>l20&#45;&gt;l20</title>
+<path fill="none" stroke="#0000ff" d="M160.98,-188.3727C157.186,-193.4756 161.3594,-198.5 173.5,-198.5 182.2261,-198.5 186.8362,-195.9044 187.3305,-192.5496" />
+<polygon fill="#0000ff" stroke="#0000ff" points="188.5533,-191.7701 186.02,-188.3727 185.8817,-192.6084 188.5533,-191.7701" />
+<text text-anchor="middle" x="162.593" y="-201.9708" font-family="Times,serif" font-size="14.00" fill="#0000ff">x10</text>
+</g>
+<!-- l30 -->
+<g id="node15" class="node">
+<title>l30</title>
+<ellipse fill="#000000" stroke="transparent" stroke-width="15" cx="247.5" cy="-154" rx="14.5" ry="14.5" />
+</g>
+<!-- l20&#45;&gt;l30 -->
+<g id="edge46" class="edge">
+<title>l20&#45;&gt;l30</title>
+<path fill="none" stroke="#4d4d4d" d="M187.4188,-175.9215C199.4085,-171.5469 216.7821,-165.2079 229.7659,-160.4706" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="230.3658,-161.742 233.6436,-159.0557 229.406,-159.1116 230.3658,-161.742" />
+</g>
+<!-- l31 -->
+<g id="node16" class="node">
+<title>l31</title>
+<ellipse fill="#000000" stroke="transparent" stroke-width="15" cx="247.5" cy="-122" rx="14.5" ry="14.5" />
+</g>
+<!-- l20&#45;&gt;l31 -->
+<g id="edge47" class="edge">
+<title>l20&#45;&gt;l31</title>
+<path fill="none" stroke="#4d4d4d" d="M185.0625,-171.7813C197.8036,-161.6228 218.3445,-145.2456 232.3604,-134.0708" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="233.5196,-134.937 235.7745,-131.3487 231.7741,-132.7477 233.5196,-134.937" />
+</g>
+<!-- l32 -->
+<g id="node17" class="node">
+<title>l32</title>
+<ellipse fill="#000000" stroke="transparent" stroke-width="15" cx="247.5" cy="-90" rx="14.5" ry="14.5" />
+</g>
+<!-- l20&#45;&gt;l32 -->
+<g id="edge48" class="edge">
+<title>l20&#45;&gt;l32</title>
+<path fill="none" stroke="#4d4d4d" d="M182.8722,-169.4748C196.2167,-153.0645 220.701,-122.9556 235.4007,-104.8789" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="236.7665,-105.4184 238.2039,-101.4316 234.5941,-103.6518 236.7665,-105.4184" />
+</g>
+<!-- l33 -->
+<g id="node18" class="node">
+<title>l33</title>
+<ellipse fill="#000000" stroke="transparent" stroke-width="15" cx="247.5" cy="-58" rx="14.5" ry="14.5" />
+</g>
+<!-- l20&#45;&gt;l33 -->
+<g id="edge49" class="edge">
+<title>l20&#45;&gt;l33</title>
+<path fill="none" stroke="#4d4d4d" d="M181.1406,-168.3001C194.7264,-145.7182 223.0515,-98.6373 237.9187,-73.9257" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="239.1487,-74.5969 240.0112,-70.4476 236.7494,-73.1534 239.1487,-74.5969" />
+</g>
+<!-- l21&#45;&gt;l21 -->
+<g id="edge50" class="edge">
+<title>l21&#45;&gt;l21</title>
+<path fill="none" stroke="#0000ff" d="M160.98,-138.3727C157.186,-143.4756 161.3594,-148.5 173.5,-148.5 182.2261,-148.5 186.8362,-145.9044 187.3305,-142.5496" />
+<polygon fill="#0000ff" stroke="#0000ff" points="188.5533,-141.7701 186.02,-138.3727 185.8817,-142.6084 188.5533,-141.7701" />
+<text text-anchor="middle" x="162.593" y="-151.9708" font-family="Times,serif" font-size="14.00" fill="#0000ff">x10</text>
+</g>
+<!-- l21&#45;&gt;l30 -->
+<g id="edge51" class="edge">
+<title>l21&#45;&gt;l30</title>
+<path fill="none" stroke="#4d4d4d" d="M187.4188,-135.3261C199.4085,-139.0527 216.7821,-144.4525 229.7659,-148.488" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="229.4083,-149.8429 233.6436,-149.6933 230.2394,-147.1691 229.4083,-149.8429" />
+</g>
+<!-- l21&#45;&gt;l31 -->
+<g id="edge52" class="edge">
+<title>l21&#45;&gt;l31</title>
+<path fill="none" stroke="#4d4d4d" d="M188.12,-129.2219C199.7756,-127.8043 216.1774,-125.8095 228.7905,-124.2755" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="229.1087,-125.6472 232.9104,-123.7744 228.7706,-122.8677 229.1087,-125.6472" />
+</g>
+<!-- l21&#45;&gt;l32 -->
+<g id="edge53" class="edge">
+<title>l21&#45;&gt;l32</title>
+<path fill="none" stroke="#4d4d4d" d="M186.3898,-123.8583C198.8048,-116.9798 217.6344,-106.5472 231.1091,-99.0814" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="231.9375,-100.223 234.7579,-97.0598 230.5805,-97.7738 231.9375,-100.223" />
+</g>
+<!-- l21&#45;&gt;l33 -->
+<g id="edge54" class="edge">
+<title>l21&#45;&gt;l33</title>
+<path fill="none" stroke="#4d4d4d" d="M184.1024,-120.5409C197.1807,-107.6393 219.4403,-85.6805 233.8017,-71.5132" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="235.0528,-72.2455 236.9173,-68.4397 233.0864,-70.2522 235.0528,-72.2455" />
+</g>
+<!-- l22&#45;&gt;l22 -->
+<g id="edge55" class="edge">
+<title>l22&#45;&gt;l22</title>
+<path fill="none" stroke="#0000ff" d="M160.98,-88.3727C157.186,-93.4756 161.3594,-98.5 173.5,-98.5 182.2261,-98.5 186.8362,-95.9044 187.3305,-92.5496" />
+<polygon fill="#0000ff" stroke="#0000ff" points="188.5533,-91.7701 186.02,-88.3727 185.8817,-92.6084 188.5533,-91.7701" />
+<text text-anchor="middle" x="162.593" y="-101.9708" font-family="Times,serif" font-size="14.00" fill="#0000ff">x10</text>
+</g>
+<!-- l22&#45;&gt;l30 -->
+<g id="edge56" class="edge">
+<title>l22&#45;&gt;l30</title>
+<path fill="none" stroke="#4d4d4d" d="M184.1024,-91.4591C197.1807,-104.3607 219.4403,-126.3195 233.8017,-140.4868" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="233.0864,-141.7478 236.9173,-143.5603 235.0528,-139.7545 233.0864,-141.7478" />
+</g>
+<!-- l22&#45;&gt;l31 -->
+<g id="edge57" class="edge">
+<title>l22&#45;&gt;l31</title>
+<path fill="none" stroke="#4d4d4d" d="M186.3898,-88.1417C198.8048,-95.0202 217.6344,-105.4528 231.1091,-112.9186" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="230.5805,-114.2262 234.7579,-114.9402 231.9375,-111.777 230.5805,-114.2262" />
+</g>
+<!-- l22&#45;&gt;l32 -->
+<g id="edge58" class="edge">
+<title>l22&#45;&gt;l32</title>
+<path fill="none" stroke="#4d4d4d" d="M188.12,-82.7781C199.7756,-84.1957 216.1774,-86.1905 228.7905,-87.7245" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="228.7706,-89.1323 232.9104,-88.2256 229.1087,-86.3528 228.7706,-89.1323" />
+</g>
+<!-- l22&#45;&gt;l33 -->
+<g id="edge59" class="edge">
+<title>l22&#45;&gt;l33</title>
+<path fill="none" stroke="#4d4d4d" d="M187.4188,-76.6739C199.4085,-72.9473 216.7821,-67.5475 229.7659,-63.512" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="230.2394,-64.8309 233.6436,-62.3067 229.4083,-62.1571 230.2394,-64.8309" />
+</g>
+<!-- l23&#45;&gt;l23 -->
+<g id="edge60" class="edge">
+<title>l23&#45;&gt;l23</title>
+<path fill="none" stroke="#0000ff" d="M160.98,-38.3727C157.186,-43.4756 161.3594,-48.5 173.5,-48.5 182.2261,-48.5 186.8362,-45.9044 187.3305,-42.5496" />
+<polygon fill="#0000ff" stroke="#0000ff" points="188.5533,-41.7701 186.02,-38.3727 185.8817,-42.6084 188.5533,-41.7701" />
+<text text-anchor="middle" x="162.593" y="-51.9708" font-family="Times,serif" font-size="14.00" fill="#0000ff">x10</text>
+</g>
+<!-- l23&#45;&gt;l30 -->
+<g id="edge61" class="edge">
+<title>l23&#45;&gt;l30</title>
+<path fill="none" stroke="#4d4d4d" d="M181.1406,-43.6999C194.7264,-66.2818 223.0515,-113.3627 237.9187,-138.0743" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="236.7494,-138.8466 240.0112,-141.5524 239.1487,-137.4031 236.7494,-138.8466" />
+</g>
+<!-- l23&#45;&gt;l31 -->
+<g id="edge62" class="edge">
+<title>l23&#45;&gt;l31</title>
+<path fill="none" stroke="#4d4d4d" d="M182.8722,-42.5252C196.2167,-58.9355 220.701,-89.0444 235.4007,-107.1211" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="234.5941,-108.3482 238.2039,-110.5684 236.7665,-106.5816 234.5941,-108.3482" />
+</g>
+<!-- l23&#45;&gt;l32 -->
+<g id="edge63" class="edge">
+<title>l23&#45;&gt;l32</title>
+<path fill="none" stroke="#4d4d4d" d="M185.0625,-40.2188C197.8036,-50.3772 218.3445,-66.7544 232.3604,-77.9292" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="231.7741,-79.2523 235.7745,-80.6513 233.5196,-77.063 231.7741,-79.2523" />
+</g>
+<!-- l23&#45;&gt;l33 -->
+<g id="edge64" class="edge">
+<title>l23&#45;&gt;l33</title>
+<path fill="none" stroke="#4d4d4d" d="M187.4188,-36.0785C199.4085,-40.4531 216.7821,-46.7921 229.7659,-51.5294" />
+<polygon fill="#4d4d4d" stroke="#4d4d4d" points="229.406,-52.8884 233.6436,-52.9443 230.3658,-50.258 229.406,-52.8884" />
+</g>
+</g>
+</svg>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Save/Export">Save/Export<a class="anchor-link" href="#Save/Export"> </a></h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dot</span><span class="o">.</span><span class="n">format</span> <span class="o">=</span> <span class="s1">&#39;pdf&#39;</span> <span class="c1"># or PDF, SVG, JPEG, PNG, etc. </span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dot</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s1">&#39;./example_recurrent_network&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&#39;./example_recurrent_network.pdf&#39;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Some-more-additional-scripts-that-are-useful">Some more additional scripts that are useful<a class="anchor-link" href="#Some-more-additional-scripts-that-are-useful"> </a></h2><hr />
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="1.Unrolled-representation-of-a-single-recurrent-unit">1.Unrolled representation of a single recurrent unit<a class="anchor-link" href="#1.Unrolled-representation-of-a-single-recurrent-unit"> </a></h2>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">TIMESTEPS</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="n">TIME_OFFSET</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="n">unrolled</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">Digraph</span><span class="p">(</span><span class="n">node_attr</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;shape&#39;</span><span class="p">:</span><span class="s1">&#39;circle&#39;</span><span class="p">,</span> <span class="s1">&#39;fixedsize&#39;</span><span class="p">:</span><span class="s1">&#39;true&#39;</span><span class="p">},</span> <span class="n">graph_attr</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;style&#39;</span><span class="p">:</span><span class="s1">&#39;invis&#39;</span><span class="p">,</span> <span class="s1">&#39;rankdir&#39;</span><span class="p">:</span><span class="s1">&#39;BT&#39;</span><span class="p">,</span> <span class="s1">&#39;color&#39;</span><span class="p">:</span><span class="s1">&#39;transparent&#39;</span><span class="p">})</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">TIMESTEPS</span><span class="o">+</span><span class="mi">2</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">step</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">step</span> <span class="o">==</span> <span class="n">TIMESTEPS</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">unrolled</span><span class="o">.</span><span class="n">subgraph</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;cluster_&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span> <span class="k">as</span> <span class="n">c</span><span class="p">:</span>
+            <span class="n">c</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">step</span><span class="p">),</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;transparent&#39;</span><span class="p">)</span>
+            <span class="n">c</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">step</span><span class="p">),</span> <span class="s1">&#39;...&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;transparent&#39;</span><span class="p">)</span> 
+            <span class="n">c</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">step</span><span class="p">),</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;transparent&#39;</span><span class="p">)</span>
+            <span class="n">c</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">step</span><span class="p">),</span> <span class="s1">&#39;b&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">step</span><span class="p">),</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;invis&#39;</span><span class="p">)</span> 
+            <span class="n">c</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">step</span><span class="p">),</span> <span class="s1">&#39;c&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">step</span><span class="p">),</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;invis&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">unrolled</span><span class="o">.</span><span class="n">subgraph</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;cluster_&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span> <span class="k">as</span> <span class="n">c</span><span class="p">:</span>
+            <span class="n">c</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">step</span><span class="p">),</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;transparent&#39;</span><span class="p">)</span>
+            <span class="n">c</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">step</span><span class="p">),</span> <span class="s1">&#39;t&#39;</span><span class="o">+</span><span class="s1">&#39;</span><span class="si">{:=+d}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">TIME_OFFSET</span><span class="o">-</span><span class="n">step</span><span class="p">)</span> <span class="k">if</span> <span class="n">TIME_OFFSET</span><span class="o">-</span><span class="n">step</span> <span class="k">else</span> <span class="s1">&#39;t&#39;</span><span class="p">)</span> 
+            <span class="n">c</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">step</span><span class="p">),</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;transparent&#39;</span><span class="p">);</span>
+            <span class="n">c</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">step</span><span class="p">),</span> <span class="s1">&#39;b&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">step</span><span class="p">));</span> <span class="n">c</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">step</span><span class="p">),</span> <span class="s1">&#39;c&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">step</span><span class="p">));</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">TIMESTEPS</span><span class="o">+</span><span class="mi">2</span><span class="p">):</span>
+    <span class="n">unrolled</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">step</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="s1">&#39;b&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">step</span><span class="p">),</span> <span class="n">constraint</span><span class="o">=</span><span class="s1">&#39;false&#39;</span><span class="p">,</span> <span class="nb">dir</span><span class="o">=</span><span class="s1">&#39;back&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">unrolled</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_svg output_subarea output_execute_result">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+&lt;!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"&gt;
+<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+ -->
+<!-- Title: %3 Pages: 1 -->
+<svg width="454pt" height="220pt" viewBox="0.00 0.00 454.00 220.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 216)">
+<title>%3</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-216 450,-216 450,4 -4,4" />
+<g id="clust1" class="cluster">
+<title>cluster_2</title>
+</g>
+<!-- a0 -->
+<g id="node1" class="node">
+<title>a0</title>
+<ellipse fill="none" stroke="transparent" cx="412" cy="-34" rx="18" ry="18" />
+</g>
+<!-- b0 -->
+<g id="node2" class="node">
+<title>b0</title>
+<ellipse fill="none" stroke="transparent" cx="412" cy="-106" rx="18" ry="18" />
+<text text-anchor="middle" x="412" y="-102.3" font-family="Times,serif" font-size="14.00" fill="#000000">...</text>
+</g>
+<!-- a0&#45;&gt;b0 -->
+<!-- c0 -->
+<g id="node3" class="node">
+<title>c0</title>
+<ellipse fill="none" stroke="transparent" cx="412" cy="-178" rx="18" ry="18" />
+</g>
+<!-- b0&#45;&gt;c0 -->
+<!-- b1 -->
+<g id="node5" class="node">
+<title>b1</title>
+<ellipse fill="none" stroke="#000000" cx="358" cy="-106" rx="18" ry="18" />
+<text text-anchor="middle" x="358" y="-102.3" font-family="Times,serif" font-size="14.00" fill="#000000">t+2</text>
+</g>
+<!-- b0&#45;&gt;b1 -->
+<g id="edge17" class="edge">
+<title>b0&#45;&gt;b1</title>
+<path fill="none" stroke="#0000ff" d="M383.5865,-106C381.1046,-106 378.6226,-106 376.1406,-106" />
+<polygon fill="#0000ff" stroke="#0000ff" points="383.7902,-109.5001 393.7902,-106 383.7901,-102.5001 383.7902,-109.5001" />
+</g>
+<!-- a1 -->
+<g id="node4" class="node">
+<title>a1</title>
+<ellipse fill="none" stroke="transparent" cx="358" cy="-34" rx="18" ry="18" />
+</g>
+<!-- a1&#45;&gt;b1 -->
+<g id="edge3" class="edge">
+<title>a1&#45;&gt;b1</title>
+<path fill="none" stroke="#000000" d="M358,-52.1686C358,-59.869 358,-69.0257 358,-77.5834" />
+<polygon fill="#000000" stroke="#000000" points="354.5001,-77.5867 358,-87.5867 361.5001,-77.5868 354.5001,-77.5867" />
+</g>
+<!-- c1 -->
+<g id="node6" class="node">
+<title>c1</title>
+<ellipse fill="none" stroke="transparent" cx="358" cy="-178" rx="18" ry="18" />
+</g>
+<!-- b1&#45;&gt;c1 -->
+<g id="edge4" class="edge">
+<title>b1&#45;&gt;c1</title>
+<path fill="none" stroke="#000000" d="M358,-124.1686C358,-131.869 358,-141.0257 358,-149.5834" />
+<polygon fill="#000000" stroke="#000000" points="354.5001,-149.5867 358,-159.5867 361.5001,-149.5868 354.5001,-149.5867" />
+</g>
+<!-- b2 -->
+<g id="node8" class="node">
+<title>b2</title>
+<ellipse fill="none" stroke="#000000" cx="304" cy="-106" rx="18" ry="18" />
+<text text-anchor="middle" x="304" y="-102.3" font-family="Times,serif" font-size="14.00" fill="#000000">t+1</text>
+</g>
+<!-- b1&#45;&gt;b2 -->
+<g id="edge18" class="edge">
+<title>b1&#45;&gt;b2</title>
+<path fill="none" stroke="#0000ff" d="M329.5865,-106C327.1046,-106 324.6226,-106 322.1406,-106" />
+<polygon fill="#0000ff" stroke="#0000ff" points="329.7902,-109.5001 339.7902,-106 329.7901,-102.5001 329.7902,-109.5001" />
+</g>
+<!-- a2 -->
+<g id="node7" class="node">
+<title>a2</title>
+<ellipse fill="none" stroke="transparent" cx="304" cy="-34" rx="18" ry="18" />
+</g>
+<!-- a2&#45;&gt;b2 -->
+<g id="edge5" class="edge">
+<title>a2&#45;&gt;b2</title>
+<path fill="none" stroke="#000000" d="M304,-52.1686C304,-59.869 304,-69.0257 304,-77.5834" />
+<polygon fill="#000000" stroke="#000000" points="300.5001,-77.5867 304,-87.5867 307.5001,-77.5868 300.5001,-77.5867" />
+</g>
+<!-- c2 -->
+<g id="node9" class="node">
+<title>c2</title>
+<ellipse fill="none" stroke="transparent" cx="304" cy="-178" rx="18" ry="18" />
+</g>
+<!-- b2&#45;&gt;c2 -->
+<g id="edge6" class="edge">
+<title>b2&#45;&gt;c2</title>
+<path fill="none" stroke="#000000" d="M304,-124.1686C304,-131.869 304,-141.0257 304,-149.5834" />
+<polygon fill="#000000" stroke="#000000" points="300.5001,-149.5867 304,-159.5867 307.5001,-149.5868 300.5001,-149.5867" />
+</g>
+<!-- b3 -->
+<g id="node11" class="node">
+<title>b3</title>
+<ellipse fill="none" stroke="#000000" cx="250" cy="-106" rx="18" ry="18" />
+<text text-anchor="middle" x="250" y="-102.3" font-family="Times,serif" font-size="14.00" fill="#000000">t</text>
+</g>
+<!-- b2&#45;&gt;b3 -->
+<g id="edge19" class="edge">
+<title>b2&#45;&gt;b3</title>
+<path fill="none" stroke="#0000ff" d="M275.5865,-106C273.1046,-106 270.6226,-106 268.1406,-106" />
+<polygon fill="#0000ff" stroke="#0000ff" points="275.7902,-109.5001 285.7902,-106 275.7901,-102.5001 275.7902,-109.5001" />
+</g>
+<!-- a3 -->
+<g id="node10" class="node">
+<title>a3</title>
+<ellipse fill="none" stroke="transparent" cx="250" cy="-34" rx="18" ry="18" />
+</g>
+<!-- a3&#45;&gt;b3 -->
+<g id="edge7" class="edge">
+<title>a3&#45;&gt;b3</title>
+<path fill="none" stroke="#000000" d="M250,-52.1686C250,-59.869 250,-69.0257 250,-77.5834" />
+<polygon fill="#000000" stroke="#000000" points="246.5001,-77.5867 250,-87.5867 253.5001,-77.5868 246.5001,-77.5867" />
+</g>
+<!-- c3 -->
+<g id="node12" class="node">
+<title>c3</title>
+<ellipse fill="none" stroke="transparent" cx="250" cy="-178" rx="18" ry="18" />
+</g>
+<!-- b3&#45;&gt;c3 -->
+<g id="edge8" class="edge">
+<title>b3&#45;&gt;c3</title>
+<path fill="none" stroke="#000000" d="M250,-124.1686C250,-131.869 250,-141.0257 250,-149.5834" />
+<polygon fill="#000000" stroke="#000000" points="246.5001,-149.5867 250,-159.5867 253.5001,-149.5868 246.5001,-149.5867" />
+</g>
+<!-- b4 -->
+<g id="node14" class="node">
+<title>b4</title>
+<ellipse fill="none" stroke="#000000" cx="196" cy="-106" rx="18" ry="18" />
+<text text-anchor="middle" x="196" y="-102.3" font-family="Times,serif" font-size="14.00" fill="#000000">t&#45;1</text>
+</g>
+<!-- b3&#45;&gt;b4 -->
+<g id="edge20" class="edge">
+<title>b3&#45;&gt;b4</title>
+<path fill="none" stroke="#0000ff" d="M221.5865,-106C219.1046,-106 216.6226,-106 214.1406,-106" />
+<polygon fill="#0000ff" stroke="#0000ff" points="221.7902,-109.5001 231.7902,-106 221.7901,-102.5001 221.7902,-109.5001" />
+</g>
+<!-- a4 -->
+<g id="node13" class="node">
+<title>a4</title>
+<ellipse fill="none" stroke="transparent" cx="196" cy="-34" rx="18" ry="18" />
+</g>
+<!-- a4&#45;&gt;b4 -->
+<g id="edge9" class="edge">
+<title>a4&#45;&gt;b4</title>
+<path fill="none" stroke="#000000" d="M196,-52.1686C196,-59.869 196,-69.0257 196,-77.5834" />
+<polygon fill="#000000" stroke="#000000" points="192.5001,-77.5867 196,-87.5867 199.5001,-77.5868 192.5001,-77.5867" />
+</g>
+<!-- c4 -->
+<g id="node15" class="node">
+<title>c4</title>
+<ellipse fill="none" stroke="transparent" cx="196" cy="-178" rx="18" ry="18" />
+</g>
+<!-- b4&#45;&gt;c4 -->
+<g id="edge10" class="edge">
+<title>b4&#45;&gt;c4</title>
+<path fill="none" stroke="#000000" d="M196,-124.1686C196,-131.869 196,-141.0257 196,-149.5834" />
+<polygon fill="#000000" stroke="#000000" points="192.5001,-149.5867 196,-159.5867 199.5001,-149.5868 192.5001,-149.5867" />
+</g>
+<!-- b5 -->
+<g id="node17" class="node">
+<title>b5</title>
+<ellipse fill="none" stroke="#000000" cx="142" cy="-106" rx="18" ry="18" />
+<text text-anchor="middle" x="142" y="-102.3" font-family="Times,serif" font-size="14.00" fill="#000000">t&#45;2</text>
+</g>
+<!-- b4&#45;&gt;b5 -->
+<g id="edge21" class="edge">
+<title>b4&#45;&gt;b5</title>
+<path fill="none" stroke="#0000ff" d="M167.5865,-106C165.1046,-106 162.6226,-106 160.1406,-106" />
+<polygon fill="#0000ff" stroke="#0000ff" points="167.7902,-109.5001 177.7902,-106 167.7901,-102.5001 167.7902,-109.5001" />
+</g>
+<!-- a5 -->
+<g id="node16" class="node">
+<title>a5</title>
+<ellipse fill="none" stroke="transparent" cx="142" cy="-34" rx="18" ry="18" />
+</g>
+<!-- a5&#45;&gt;b5 -->
+<g id="edge11" class="edge">
+<title>a5&#45;&gt;b5</title>
+<path fill="none" stroke="#000000" d="M142,-52.1686C142,-59.869 142,-69.0257 142,-77.5834" />
+<polygon fill="#000000" stroke="#000000" points="138.5001,-77.5867 142,-87.5867 145.5001,-77.5868 138.5001,-77.5867" />
+</g>
+<!-- c5 -->
+<g id="node18" class="node">
+<title>c5</title>
+<ellipse fill="none" stroke="transparent" cx="142" cy="-178" rx="18" ry="18" />
+</g>
+<!-- b5&#45;&gt;c5 -->
+<g id="edge12" class="edge">
+<title>b5&#45;&gt;c5</title>
+<path fill="none" stroke="#000000" d="M142,-124.1686C142,-131.869 142,-141.0257 142,-149.5834" />
+<polygon fill="#000000" stroke="#000000" points="138.5001,-149.5867 142,-159.5867 145.5001,-149.5868 138.5001,-149.5867" />
+</g>
+<!-- b6 -->
+<g id="node20" class="node">
+<title>b6</title>
+<ellipse fill="none" stroke="#000000" cx="88" cy="-106" rx="18" ry="18" />
+<text text-anchor="middle" x="88" y="-102.3" font-family="Times,serif" font-size="14.00" fill="#000000">t&#45;3</text>
+</g>
+<!-- b5&#45;&gt;b6 -->
+<g id="edge22" class="edge">
+<title>b5&#45;&gt;b6</title>
+<path fill="none" stroke="#0000ff" d="M113.5865,-106C111.1046,-106 108.6226,-106 106.1406,-106" />
+<polygon fill="#0000ff" stroke="#0000ff" points="113.7902,-109.5001 123.7902,-106 113.7901,-102.5001 113.7902,-109.5001" />
+</g>
+<!-- a6 -->
+<g id="node19" class="node">
+<title>a6</title>
+<ellipse fill="none" stroke="transparent" cx="88" cy="-34" rx="18" ry="18" />
+</g>
+<!-- a6&#45;&gt;b6 -->
+<g id="edge13" class="edge">
+<title>a6&#45;&gt;b6</title>
+<path fill="none" stroke="#000000" d="M88,-52.1686C88,-59.869 88,-69.0257 88,-77.5834" />
+<polygon fill="#000000" stroke="#000000" points="84.5001,-77.5867 88,-87.5867 91.5001,-77.5868 84.5001,-77.5867" />
+</g>
+<!-- c6 -->
+<g id="node21" class="node">
+<title>c6</title>
+<ellipse fill="none" stroke="transparent" cx="88" cy="-178" rx="18" ry="18" />
+</g>
+<!-- b6&#45;&gt;c6 -->
+<g id="edge14" class="edge">
+<title>b6&#45;&gt;c6</title>
+<path fill="none" stroke="#000000" d="M88,-124.1686C88,-131.869 88,-141.0257 88,-149.5834" />
+<polygon fill="#000000" stroke="#000000" points="84.5001,-149.5867 88,-159.5867 91.5001,-149.5868 84.5001,-149.5867" />
+</g>
+<!-- b7 -->
+<g id="node23" class="node">
+<title>b7</title>
+<ellipse fill="none" stroke="transparent" cx="34" cy="-106" rx="18" ry="18" />
+<text text-anchor="middle" x="34" y="-102.3" font-family="Times,serif" font-size="14.00" fill="#000000">...</text>
+</g>
+<!-- b6&#45;&gt;b7 -->
+<g id="edge23" class="edge">
+<title>b6&#45;&gt;b7</title>
+<path fill="none" stroke="#0000ff" d="M59.5865,-106C57.1046,-106 54.6226,-106 52.1406,-106" />
+<polygon fill="#0000ff" stroke="#0000ff" points="59.7902,-109.5001 69.7902,-106 59.7901,-102.5001 59.7902,-109.5001" />
+</g>
+<!-- a7 -->
+<g id="node22" class="node">
+<title>a7</title>
+<ellipse fill="none" stroke="transparent" cx="34" cy="-34" rx="18" ry="18" />
+</g>
+<!-- a7&#45;&gt;b7 -->
+<!-- c7 -->
+<g id="node24" class="node">
+<title>c7</title>
+<ellipse fill="none" stroke="transparent" cx="34" cy="-178" rx="18" ry="18" />
+</g>
+<!-- b7&#45;&gt;c7 -->
+</g>
+</svg>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">unrolled</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s1">&#39;./unrolled&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&#39;./unrolled.pdf&#39;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="2.Single-recurrent-unit">2.Single recurrent unit<a class="anchor-link" href="#2.Single-recurrent-unit"> </a></h2>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ru</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">Digraph</span><span class="p">(</span><span class="n">node_attr</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;shape&#39;</span><span class="p">:</span><span class="s1">&#39;circle&#39;</span><span class="p">,</span> <span class="s1">&#39;fixedsize&#39;</span><span class="p">:</span><span class="s1">&#39;true&#39;</span><span class="p">},</span> <span class="n">graph_attr</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;style&#39;</span><span class="p">:</span><span class="s1">&#39;invis&#39;</span><span class="p">,</span> <span class="s1">&#39;rankdir&#39;</span><span class="p">:</span><span class="s1">&#39;LR&#39;</span><span class="p">})</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ru</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;transparent&#39;</span><span class="p">)</span>
+<span class="n">ru</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;N&#39;</span><span class="p">)</span>
+<span class="n">ru</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;transparent&#39;</span><span class="p">)</span>
+<span class="n">ru</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">ru</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">)</span>
+<span class="n">ru</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ru</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_svg output_subarea output_execute_result">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+&lt;!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"&gt;
+<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+ -->
+<!-- Title: %3 Pages: 1 -->
+<svg width="188pt" height="62pt" viewBox="0.00 0.00 188.00 62.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 58)">
+<title>%3</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-58 184,-58 184,4 -4,4" />
+<!-- a -->
+<g id="node1" class="node">
+<title>a</title>
+<ellipse fill="none" stroke="transparent" cx="18" cy="-18" rx="18" ry="18" />
+</g>
+<!-- b -->
+<g id="node2" class="node">
+<title>b</title>
+<ellipse fill="none" stroke="#000000" cx="90" cy="-18" rx="18" ry="18" />
+<text text-anchor="middle" x="90" y="-14.3" font-family="Times,serif" font-size="14.00" fill="#000000">N</text>
+</g>
+<!-- a&#45;&gt;b -->
+<g id="edge1" class="edge">
+<title>a&#45;&gt;b</title>
+<path fill="none" stroke="#000000" d="M36.1686,-18C43.869,-18 53.0257,-18 61.5834,-18" />
+<polygon fill="#000000" stroke="#000000" points="61.5868,-21.5001 71.5867,-18 61.5867,-14.5001 61.5868,-21.5001" />
+</g>
+<!-- b&#45;&gt;b -->
+<g id="edge3" class="edge">
+<title>b&#45;&gt;b</title>
+<path fill="none" stroke="#0000ff" d="M78.2435,-32.0417C73.8468,-42.9126 77.7656,-54 90,-54 98.4111,-54 102.8919,-48.7595 103.4422,-41.9516" />
+<polygon fill="#0000ff" stroke="#0000ff" points="106.884,-41.3132 101.7565,-32.0417 99.9831,-42.4871 106.884,-41.3132" />
+</g>
+<!-- c -->
+<g id="node3" class="node">
+<title>c</title>
+<ellipse fill="none" stroke="transparent" cx="162" cy="-18" rx="18" ry="18" />
+</g>
+<!-- b&#45;&gt;c -->
+<g id="edge2" class="edge">
+<title>b&#45;&gt;c</title>
+<path fill="none" stroke="#000000" d="M108.1686,-18C115.869,-18 125.0257,-18 133.5834,-18" />
+<polygon fill="#000000" stroke="#000000" points="133.5868,-21.5001 143.5867,-18 133.5867,-14.5001 133.5868,-21.5001" />
+</g>
+</g>
+</svg>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ru</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s1">&#39;./rnn&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&#39;./rnn.pdf&#39;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="logicatcore/scratchpad"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/scratchpad/machine%20learning/jupyter/graphviz/2020/12/26/Graphviz-Neural-Networks-visualisation.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/scratchpad/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/scratchpad/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/scratchpad/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Time well spent</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/logicatcore" title="logicatcore"><svg class="svg-icon grey"><use xlink:href="/scratchpad/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://www.linkedin.com/in/saisharathk" title="saisharathk"><svg class="svg-icon grey"><use xlink:href="/scratchpad/assets/minima-social-icons.svg#linkedin"></use></svg></a></li><li><a rel="me" href="https://twitter.com/KakubalSaid+%2A" title="KakubalSaid *"><svg class="svg-icon grey"><use xlink:href="/scratchpad/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
