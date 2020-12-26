@@ -4,19 +4,20 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Title | Scratchpad</title>
+<title>Input data representation as 2D array of 3D blocks | Scratchpad</title>
 <meta name="generator" content="Jekyll v4.1.1" />
-<meta property="og:title" content="Title" />
+<meta property="og:title" content="Input data representation as 2D array of 3D blocks" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Time well spent" />
-<meta property="og:description" content="Time well spent" />
-<link rel="canonical" href="https://logicatcore.github.io/scratchpad/2020/12/26/Array-Visualiser.html" />
-<meta property="og:url" content="https://logicatcore.github.io/scratchpad/2020/12/26/Array-Visualiser.html" />
+<meta name="description" content="An easy way to represent input data to neural networks or any other machine learning algorithm in the form of 2D array of 3D-blocks" />
+<meta property="og:description" content="An easy way to represent input data to neural networks or any other machine learning algorithm in the form of 2D array of 3D-blocks" />
+<link rel="canonical" href="https://logicatcore.github.io/scratchpad/machine%20learning/jupyter/graphviz/2020/12/26/Array-Visualiser.html" />
+<meta property="og:url" content="https://logicatcore.github.io/scratchpad/machine%20learning/jupyter/graphviz/2020/12/26/Array-Visualiser.html" />
 <meta property="og:site_name" content="Scratchpad" />
+<meta property="og:image" content="https://logicatcore.github.io/scratchpad/images/array_visualiser/thumbnail.png" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-12-26T00:00:00-06:00" />
 <script type="application/ld+json">
-{"url":"https://logicatcore.github.io/scratchpad/2020/12/26/Array-Visualiser.html","@type":"BlogPosting","headline":"Title","dateModified":"2020-12-26T00:00:00-06:00","datePublished":"2020-12-26T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://logicatcore.github.io/scratchpad/2020/12/26/Array-Visualiser.html"},"description":"Time well spent","@context":"https://schema.org"}</script>
+{"url":"https://logicatcore.github.io/scratchpad/machine%20learning/jupyter/graphviz/2020/12/26/Array-Visualiser.html","@type":"BlogPosting","headline":"Input data representation as 2D array of 3D blocks","dateModified":"2020-12-26T00:00:00-06:00","datePublished":"2020-12-26T00:00:00-06:00","image":"https://logicatcore.github.io/scratchpad/images/array_visualiser/thumbnail.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://logicatcore.github.io/scratchpad/machine%20learning/jupyter/graphviz/2020/12/26/Array-Visualiser.html"},"description":"An easy way to represent input data to neural networks or any other machine learning algorithm in the form of 2D array of 3D-blocks","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/scratchpad/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://logicatcore.github.io/scratchpad/feed.xml" title="Scratchpad" /><link rel="shortcut icon" type="image/x-icon" href="/scratchpad/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -87,16 +88,29 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Title</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-12-26T00:00:00-06:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">Input data representation as 2D array of 3D blocks</h1><p class="page-description">An easy way to represent input data to neural networks or any other machine learning algorithm in the form of 2D array of 3D-blocks</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-12-26T00:00:00-06:00" itemprop="datePublished">
         Dec 26, 2020
       </time>
        • <span class="read-time" title="Estimated read time">
     
     
-      4 min read
+      3 min read
     
 </span></p>
 
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/scratchpad/categories/#machine learning">machine learning</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/scratchpad/categories/#jupyter">jupyter</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/scratchpad/categories/#graphviz">graphviz</a>
+        
+      
+      </p>
     
 
     
@@ -133,22 +147,6 @@ window.onload = wrap_img;
 
 <div class="container" id="notebook-container">
         
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Input-data-representation-as-2D-array-of-3D-blocks">Input data representation as 2D array of 3D blocks<a class="anchor-link" href="#Input-data-representation-as-2D-array-of-3D-blocks"> </a></h2><blockquote><p>An easy way to represent input data to neural networks or any other machine learning algorithm in the form of 2D array of 3D-blocks</p>
-</blockquote>
-<ul>
-<li>toc:false- branch: master</li>
-<li>badges: true</li>
-<li>comments: true</li>
-<li>categories: [machine learning, jupyter, graphviz]</li>
-<li>image: images/array_visualiser/thumbnail.png</li>
-<li>search_exclude: false</li>
-</ul>
-
-</div>
-</div>
-</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <hr />
@@ -208,7 +206,7 @@ window.onload = wrap_img;
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">ROW_NUMS</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="c1"># Layer numbers corresponding to the number of rows of array data (must be contiguous)</span>
-<span class="n">BLOCKS</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span> <span class="c1"># number of data fields in each row i.e., columns in each row</span>
+<span class="n">BLOCKS</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="c1"># number of data fields in each row i.e., columns in each row</span>
 
 <span class="n">diff</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="o">-</span> <span class="n">ROW_NUMS</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ROW_NUMS</span><span class="p">[</span><span class="mi">1</span><span class="p">:])]</span>
 <span class="k">assert</span> <span class="n">diff</span> <span class="o">==</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ROW_NUMS</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span> <span class="s1">&#39;&quot;layer_num&quot; should contain contiguous numbers only&#39;</span>
@@ -302,189 +300,63 @@ window.onload = wrap_img;
 <!-- Generated by graphviz version 2.40.1 (20161225.0304)
  -->
 <!-- Title: %3 Pages: 1 -->
-<svg width="807pt" height="88pt" viewBox="0.00 0.00 807.00 88.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="247pt" height="88pt" viewBox="0.00 0.00 247.00 88.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 84)">
 <title>%3</title>
 <!-- 10 -->
 <g id="node1" class="node">
 <title>10</title>
-<polygon fill="#d7d2cb" stroke="#000000" points="79,-80 4,-80 0,-76 0,-44 75,-44 79,-48 79,-80" />
+<polygon fill="#7951ad" stroke="#000000" points="79,-80 4,-80 0,-76 0,-44 75,-44 79,-48 79,-80" />
 <polyline fill="none" stroke="#000000" points="75,-76 0,-76 " />
 <polyline fill="none" stroke="#000000" points="75,-76 75,-44 " />
 <polyline fill="none" stroke="#000000" points="75,-76 79,-80 " />
-<text text-anchor="middle" x="39.5" y="-58.3" font-family="Times,serif" font-size="14.00" fill="#000000">∂(i)&#45;9</text>
+<text text-anchor="middle" x="39.5" y="-58.3" font-family="Times,serif" font-size="14.00" fill="#000000">∂(i)&#45;2</text>
 </g>
 <!-- 20 -->
-<g id="node11" class="node">
+<g id="node4" class="node">
 <title>20</title>
-<polygon fill="#f3987e" stroke="#000000" points="79,-36 4,-36 0,-32 0,0 75,0 79,-4 79,-36" />
+<polygon fill="#e47359" stroke="#000000" points="79,-36 4,-36 0,-32 0,0 75,0 79,-4 79,-36" />
 <polyline fill="none" stroke="#000000" points="75,-32 0,-32 " />
 <polyline fill="none" stroke="#000000" points="75,-32 75,0 " />
 <polyline fill="none" stroke="#000000" points="75,-32 79,-36 " />
-<text text-anchor="middle" x="39.5" y="-14.3" font-family="Times,serif" font-size="14.00" fill="#000000">∂(v)&#45;9</text>
+<text text-anchor="middle" x="39.5" y="-14.3" font-family="Times,serif" font-size="14.00" fill="#000000">∂(v)&#45;2</text>
 </g>
 <!-- 10&#45;&gt;20 -->
 <!-- 11 -->
 <g id="node2" class="node">
 <title>11</title>
-<polygon fill="#d7d2cb" stroke="#000000" points="159,-80 84,-80 80,-76 80,-44 155,-44 159,-48 159,-80" />
+<polygon fill="#7951ad" stroke="#000000" points="159,-80 84,-80 80,-76 80,-44 155,-44 159,-48 159,-80" />
 <polyline fill="none" stroke="#000000" points="155,-76 80,-76 " />
 <polyline fill="none" stroke="#000000" points="155,-76 155,-44 " />
 <polyline fill="none" stroke="#000000" points="155,-76 159,-80 " />
-<text text-anchor="middle" x="119.5" y="-58.3" font-family="Times,serif" font-size="14.00" fill="#000000">∂(i)&#45;8</text>
+<text text-anchor="middle" x="119.5" y="-58.3" font-family="Times,serif" font-size="14.00" fill="#000000">∂(i)&#45;1</text>
 </g>
 <!-- 12 -->
 <g id="node3" class="node">
 <title>12</title>
-<polygon fill="#d7d2cb" stroke="#000000" points="239,-80 164,-80 160,-76 160,-44 235,-44 239,-48 239,-80" />
+<polygon fill="#7951ad" stroke="#000000" points="239,-80 164,-80 160,-76 160,-44 235,-44 239,-48 239,-80" />
 <polyline fill="none" stroke="#000000" points="235,-76 160,-76 " />
 <polyline fill="none" stroke="#000000" points="235,-76 235,-44 " />
 <polyline fill="none" stroke="#000000" points="235,-76 239,-80 " />
-<text text-anchor="middle" x="199.5" y="-58.3" font-family="Times,serif" font-size="14.00" fill="#000000">∂(i)&#45;7</text>
-</g>
-<!-- 13 -->
-<g id="node4" class="node">
-<title>13</title>
-<polygon fill="#d7d2cb" stroke="#000000" points="319,-80 244,-80 240,-76 240,-44 315,-44 319,-48 319,-80" />
-<polyline fill="none" stroke="#000000" points="315,-76 240,-76 " />
-<polyline fill="none" stroke="#000000" points="315,-76 315,-44 " />
-<polyline fill="none" stroke="#000000" points="315,-76 319,-80 " />
-<text text-anchor="middle" x="279.5" y="-58.3" font-family="Times,serif" font-size="14.00" fill="#000000">∂(i)&#45;6</text>
-</g>
-<!-- 14 -->
-<g id="node5" class="node">
-<title>14</title>
-<polygon fill="#d7d2cb" stroke="#000000" points="399,-80 324,-80 320,-76 320,-44 395,-44 399,-48 399,-80" />
-<polyline fill="none" stroke="#000000" points="395,-76 320,-76 " />
-<polyline fill="none" stroke="#000000" points="395,-76 395,-44 " />
-<polyline fill="none" stroke="#000000" points="395,-76 399,-80 " />
-<text text-anchor="middle" x="359.5" y="-58.3" font-family="Times,serif" font-size="14.00" fill="#000000">∂(i)&#45;5</text>
-</g>
-<!-- 15 -->
-<g id="node6" class="node">
-<title>15</title>
-<polygon fill="#d7d2cb" stroke="#000000" points="479,-80 404,-80 400,-76 400,-44 475,-44 479,-48 479,-80" />
-<polyline fill="none" stroke="#000000" points="475,-76 400,-76 " />
-<polyline fill="none" stroke="#000000" points="475,-76 475,-44 " />
-<polyline fill="none" stroke="#000000" points="475,-76 479,-80 " />
-<text text-anchor="middle" x="439.5" y="-58.3" font-family="Times,serif" font-size="14.00" fill="#000000">∂(i)&#45;4</text>
-</g>
-<!-- 16 -->
-<g id="node7" class="node">
-<title>16</title>
-<polygon fill="#d7d2cb" stroke="#000000" points="559,-80 484,-80 480,-76 480,-44 555,-44 559,-48 559,-80" />
-<polyline fill="none" stroke="#000000" points="555,-76 480,-76 " />
-<polyline fill="none" stroke="#000000" points="555,-76 555,-44 " />
-<polyline fill="none" stroke="#000000" points="555,-76 559,-80 " />
-<text text-anchor="middle" x="519.5" y="-58.3" font-family="Times,serif" font-size="14.00" fill="#000000">∂(i)&#45;3</text>
-</g>
-<!-- 17 -->
-<g id="node8" class="node">
-<title>17</title>
-<polygon fill="#d7d2cb" stroke="#000000" points="639,-80 564,-80 560,-76 560,-44 635,-44 639,-48 639,-80" />
-<polyline fill="none" stroke="#000000" points="635,-76 560,-76 " />
-<polyline fill="none" stroke="#000000" points="635,-76 635,-44 " />
-<polyline fill="none" stroke="#000000" points="635,-76 639,-80 " />
-<text text-anchor="middle" x="599.5" y="-58.3" font-family="Times,serif" font-size="14.00" fill="#000000">∂(i)&#45;2</text>
-</g>
-<!-- 18 -->
-<g id="node9" class="node">
-<title>18</title>
-<polygon fill="#d7d2cb" stroke="#000000" points="719,-80 644,-80 640,-76 640,-44 715,-44 719,-48 719,-80" />
-<polyline fill="none" stroke="#000000" points="715,-76 640,-76 " />
-<polyline fill="none" stroke="#000000" points="715,-76 715,-44 " />
-<polyline fill="none" stroke="#000000" points="715,-76 719,-80 " />
-<text text-anchor="middle" x="679.5" y="-58.3" font-family="Times,serif" font-size="14.00" fill="#000000">∂(i)&#45;1</text>
-</g>
-<!-- 19 -->
-<g id="node10" class="node">
-<title>19</title>
-<polygon fill="#d7d2cb" stroke="#000000" points="799,-80 724,-80 720,-76 720,-44 795,-44 799,-48 799,-80" />
-<polyline fill="none" stroke="#000000" points="795,-76 720,-76 " />
-<polyline fill="none" stroke="#000000" points="795,-76 795,-44 " />
-<polyline fill="none" stroke="#000000" points="795,-76 799,-80 " />
-<text text-anchor="middle" x="759.5" y="-58.3" font-family="Times,serif" font-size="14.00" fill="#000000">∂(i)&#45;0</text>
+<text text-anchor="middle" x="199.5" y="-58.3" font-family="Times,serif" font-size="14.00" fill="#000000">∂(i)&#45;0</text>
 </g>
 <!-- 21 -->
-<g id="node12" class="node">
+<g id="node5" class="node">
 <title>21</title>
-<polygon fill="#f3987e" stroke="#000000" points="159,-36 84,-36 80,-32 80,0 155,0 159,-4 159,-36" />
+<polygon fill="#e47359" stroke="#000000" points="159,-36 84,-36 80,-32 80,0 155,0 159,-4 159,-36" />
 <polyline fill="none" stroke="#000000" points="155,-32 80,-32 " />
 <polyline fill="none" stroke="#000000" points="155,-32 155,0 " />
 <polyline fill="none" stroke="#000000" points="155,-32 159,-36 " />
-<text text-anchor="middle" x="119.5" y="-14.3" font-family="Times,serif" font-size="14.00" fill="#000000">∂(v)&#45;8</text>
+<text text-anchor="middle" x="119.5" y="-14.3" font-family="Times,serif" font-size="14.00" fill="#000000">∂(v)&#45;1</text>
 </g>
 <!-- 22 -->
-<g id="node13" class="node">
+<g id="node6" class="node">
 <title>22</title>
-<polygon fill="#f3987e" stroke="#000000" points="239,-36 164,-36 160,-32 160,0 235,0 239,-4 239,-36" />
+<polygon fill="#e47359" stroke="#000000" points="239,-36 164,-36 160,-32 160,0 235,0 239,-4 239,-36" />
 <polyline fill="none" stroke="#000000" points="235,-32 160,-32 " />
 <polyline fill="none" stroke="#000000" points="235,-32 235,0 " />
 <polyline fill="none" stroke="#000000" points="235,-32 239,-36 " />
-<text text-anchor="middle" x="199.5" y="-14.3" font-family="Times,serif" font-size="14.00" fill="#000000">∂(v)&#45;7</text>
-</g>
-<!-- 23 -->
-<g id="node14" class="node">
-<title>23</title>
-<polygon fill="#f3987e" stroke="#000000" points="319,-36 244,-36 240,-32 240,0 315,0 319,-4 319,-36" />
-<polyline fill="none" stroke="#000000" points="315,-32 240,-32 " />
-<polyline fill="none" stroke="#000000" points="315,-32 315,0 " />
-<polyline fill="none" stroke="#000000" points="315,-32 319,-36 " />
-<text text-anchor="middle" x="279.5" y="-14.3" font-family="Times,serif" font-size="14.00" fill="#000000">∂(v)&#45;6</text>
-</g>
-<!-- 24 -->
-<g id="node15" class="node">
-<title>24</title>
-<polygon fill="#f3987e" stroke="#000000" points="399,-36 324,-36 320,-32 320,0 395,0 399,-4 399,-36" />
-<polyline fill="none" stroke="#000000" points="395,-32 320,-32 " />
-<polyline fill="none" stroke="#000000" points="395,-32 395,0 " />
-<polyline fill="none" stroke="#000000" points="395,-32 399,-36 " />
-<text text-anchor="middle" x="359.5" y="-14.3" font-family="Times,serif" font-size="14.00" fill="#000000">∂(v)&#45;5</text>
-</g>
-<!-- 25 -->
-<g id="node16" class="node">
-<title>25</title>
-<polygon fill="#f3987e" stroke="#000000" points="479,-36 404,-36 400,-32 400,0 475,0 479,-4 479,-36" />
-<polyline fill="none" stroke="#000000" points="475,-32 400,-32 " />
-<polyline fill="none" stroke="#000000" points="475,-32 475,0 " />
-<polyline fill="none" stroke="#000000" points="475,-32 479,-36 " />
-<text text-anchor="middle" x="439.5" y="-14.3" font-family="Times,serif" font-size="14.00" fill="#000000">∂(v)&#45;4</text>
-</g>
-<!-- 26 -->
-<g id="node17" class="node">
-<title>26</title>
-<polygon fill="#f3987e" stroke="#000000" points="559,-36 484,-36 480,-32 480,0 555,0 559,-4 559,-36" />
-<polyline fill="none" stroke="#000000" points="555,-32 480,-32 " />
-<polyline fill="none" stroke="#000000" points="555,-32 555,0 " />
-<polyline fill="none" stroke="#000000" points="555,-32 559,-36 " />
-<text text-anchor="middle" x="519.5" y="-14.3" font-family="Times,serif" font-size="14.00" fill="#000000">∂(v)&#45;3</text>
-</g>
-<!-- 27 -->
-<g id="node18" class="node">
-<title>27</title>
-<polygon fill="#f3987e" stroke="#000000" points="639,-36 564,-36 560,-32 560,0 635,0 639,-4 639,-36" />
-<polyline fill="none" stroke="#000000" points="635,-32 560,-32 " />
-<polyline fill="none" stroke="#000000" points="635,-32 635,0 " />
-<polyline fill="none" stroke="#000000" points="635,-32 639,-36 " />
-<text text-anchor="middle" x="599.5" y="-14.3" font-family="Times,serif" font-size="14.00" fill="#000000">∂(v)&#45;2</text>
-</g>
-<!-- 28 -->
-<g id="node19" class="node">
-<title>28</title>
-<polygon fill="#f3987e" stroke="#000000" points="719,-36 644,-36 640,-32 640,0 715,0 719,-4 719,-36" />
-<polyline fill="none" stroke="#000000" points="715,-32 640,-32 " />
-<polyline fill="none" stroke="#000000" points="715,-32 715,0 " />
-<polyline fill="none" stroke="#000000" points="715,-32 719,-36 " />
-<text text-anchor="middle" x="679.5" y="-14.3" font-family="Times,serif" font-size="14.00" fill="#000000">∂(v)&#45;1</text>
-</g>
-<!-- 29 -->
-<g id="node20" class="node">
-<title>29</title>
-<polygon fill="#f3987e" stroke="#000000" points="799,-36 724,-36 720,-32 720,0 795,0 799,-4 799,-36" />
-<polyline fill="none" stroke="#000000" points="795,-32 720,-32 " />
-<polyline fill="none" stroke="#000000" points="795,-32 795,0 " />
-<polyline fill="none" stroke="#000000" points="795,-32 799,-36 " />
-<text text-anchor="middle" x="759.5" y="-14.3" font-family="Times,serif" font-size="14.00" fill="#000000">∂(v)&#45;0</text>
+<text text-anchor="middle" x="199.5" y="-14.3" font-family="Times,serif" font-size="14.00" fill="#000000">∂(v)&#45;0</text>
 </g>
 </g>
 </svg>
@@ -777,7 +649,15 @@ window.onload = wrap_img;
 
 
 
-  </div><a class="u-url" href="/scratchpad/2020/12/26/Array-Visualiser.html" hidden></a>
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="logicatcore/scratchpad"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/scratchpad/machine%20learning/jupyter/graphviz/2020/12/26/Array-Visualiser.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
