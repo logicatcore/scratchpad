@@ -4,19 +4,20 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Decision Tree | Scratchpad</title>
+<title>Vanilla Regression Decision Tree example | Scratchpad</title>
 <meta name="generator" content="Jekyll v4.1.1" />
-<meta property="og:title" content="Decision Tree" />
+<meta property="og:title" content="Vanilla Regression Decision Tree example" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Time well spent" />
-<meta property="og:description" content="Time well spent" />
-<link rel="canonical" href="https://logicatcore.github.io/scratchpad/2021/01/11/Regression-Decision-Tree.html" />
-<meta property="og:url" content="https://logicatcore.github.io/scratchpad/2021/01/11/Regression-Decision-Tree.html" />
+<meta name="description" content="Finding the decision boundary to correctly regress a mixture of data points belonging to two distinct groups" />
+<meta property="og:description" content="Finding the decision boundary to correctly regress a mixture of data points belonging to two distinct groups" />
+<link rel="canonical" href="https://logicatcore.github.io/scratchpad/machine%20learning/jupyter/2021/01/11/Regression-Decision-Tree.html" />
+<meta property="og:url" content="https://logicatcore.github.io/scratchpad/machine%20learning/jupyter/2021/01/11/Regression-Decision-Tree.html" />
 <meta property="og:site_name" content="Scratchpad" />
+<meta property="og:image" content="https://logicatcore.github.io/scratchpad/images/decision_tree/result.png" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2021-01-11T00:00:00-06:00" />
 <script type="application/ld+json">
-{"url":"https://logicatcore.github.io/scratchpad/2021/01/11/Regression-Decision-Tree.html","@type":"BlogPosting","headline":"Decision Tree","dateModified":"2021-01-11T00:00:00-06:00","datePublished":"2021-01-11T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://logicatcore.github.io/scratchpad/2021/01/11/Regression-Decision-Tree.html"},"description":"Time well spent","@context":"https://schema.org"}</script>
+{"url":"https://logicatcore.github.io/scratchpad/machine%20learning/jupyter/2021/01/11/Regression-Decision-Tree.html","@type":"BlogPosting","headline":"Vanilla Regression Decision Tree example","dateModified":"2021-01-11T00:00:00-06:00","datePublished":"2021-01-11T00:00:00-06:00","image":"https://logicatcore.github.io/scratchpad/images/decision_tree/result.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://logicatcore.github.io/scratchpad/machine%20learning/jupyter/2021/01/11/Regression-Decision-Tree.html"},"description":"Finding the decision boundary to correctly regress a mixture of data points belonging to two distinct groups","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/scratchpad/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://logicatcore.github.io/scratchpad/feed.xml" title="Scratchpad" /><link rel="shortcut icon" type="image/x-icon" href="/scratchpad/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -87,16 +88,26 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Decision Tree</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-01-11T00:00:00-06:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">Vanilla Regression Decision Tree example</h1><p class="page-description">Finding the decision boundary to correctly regress a mixture of data points belonging to two distinct groups</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-01-11T00:00:00-06:00" itemprop="datePublished">
         Jan 11, 2021
       </time>
        • <span class="read-time" title="Estimated read time">
     
     
-      4 min read
+      5 min read
     
 </span></p>
 
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/scratchpad/categories/#machine learning">machine learning</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/scratchpad/categories/#jupyter">jupyter</a>
+        
+      
+      </p>
     
 
     
@@ -133,31 +144,22 @@ window.onload = wrap_img;
 
 <div class="container" id="notebook-container">
         
-    
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">&gt;</span> <span class="n">Finding</span> <span class="n">the</span> <span class="n">decision</span> <span class="n">boundary</span> <span class="n">to</span> <span class="n">correctly</span> <span class="n">regress</span> <span class="n">a</span> <span class="n">mixture</span> <span class="n">of</span> <span class="n">points</span> <span class="n">belonging</span> <span class="n">to</span> <span class="n">two</span> <span class="n">distinct</span> <span class="n">groups</span> <span class="n">i</span><span class="o">.</span><span class="n">e</span><span class="o">.</span> <span class="n">into</span> <span class="n">two</span> <span class="n">leaf</span> <span class="n">nodes</span> <span class="n">of</span> <span class="n">a</span> <span class="n">decision</span> <span class="n">tree</span> <span class="n">by</span> <span class="n">minimizing</span> <span class="n">the</span> <span class="n">Mean</span> <span class="n">Squared</span> <span class="n">Error</span>
-
-<span class="o">-</span> <span class="n">toc</span><span class="p">:</span> <span class="n">false</span>
-<span class="o">-</span> <span class="n">branch</span><span class="p">:</span> <span class="n">master</span>
-<span class="o">-</span> <span class="n">badges</span><span class="p">:</span> <span class="n">true</span>
-<span class="o">-</span> <span class="n">comments</span><span class="p">:</span> <span class="n">true</span>
-<span class="o">-</span> <span class="n">categories</span><span class="p">:</span> <span class="p">[</span><span class="n">machine</span> <span class="n">learning</span><span class="p">,</span> <span class="n">jupyter</span><span class="p">]</span>
-<span class="o">-</span> <span class="n">image</span><span class="p">:</span> <span class="n">images</span><span class="o">/</span><span class="n">decision_tree</span><span class="o">/</span><span class="n">result</span><span class="o">.</span><span class="n">png</span>
-<span class="o">-</span> <span class="n">search_exclude</span><span class="p">:</span> <span class="n">false</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Decision-Tree">Decision Tree<a class="anchor-link" href="#Decision-Tree"> </a></h1><h2 id="What-is-a-decision-tree?">What is a decision tree?<a class="anchor-link" href="#What-is-a-decision-tree?"> </a></h2><p>Well, a decision tree is the most simplistic way of reasoning to find order in chaos or a system. Although very rudimentry in nature, decision trees and its varients(bagging methods and boosting methods) are capable of mapping i.e. finding the order in data to a very high degree of accuracy. Decision trees are mainly  binary tress comprising of <code>if-else</code> statements that determine the split lines, planes or hyperplanes which breaks down the data space in $\mathbb{R}^n$ dimensions into rectangles, cuboids or hyper cuboids.</p>
+<h2 id="What-are-we-trying-to-do-here?">What are we trying to do here?<a class="anchor-link" href="#What-are-we-trying-to-do-here?"> </a></h2><p>This post/jupyter notebook is meant for visualising how the decision line for data in $\mathbb(R)^2$ space.</p>
+<h2 id="Approximated-algorithm-of-Regression-Decision-Tree-implemented-here">Approximated algorithm of Regression Decision Tree implemented here<a class="anchor-link" href="#Approximated-algorithm-of-Regression-Decision-Tree-implemented-here"> </a></h2><ol>
+<li>Divide one of the two dimensions in $\mathbb{R}^2$ space into equally spaced intervals</li>
+<li>At each interval compute the mean of all the points to the left and to the right of the interval</li>
+<li>Compute the Mean Squared Error(MSE) of all the points to the left of the interval with respect to the mean obtained in step 2 and do the same respectively for the points to the right of the interval.</li>
+<li>Add up the MSE's and keep track of them</li>
+<li>Repeat steps 2 to 4 at all the intervals </li>
+<li>Determine the interval where the MSE was minimum, this interval point is the optimal point which classifies the input data into two groups</li>
+</ol>
 
 </div>
-    
-
+</div>
+</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Code-start">Code start<a class="anchor-link" href="#Code-start"> </a></h3><hr />
@@ -393,7 +395,15 @@ window.onload = wrap_img;
 
 
 
-  </div><a class="u-url" href="/scratchpad/2021/01/11/Regression-Decision-Tree.html" hidden></a>
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="logicatcore/scratchpad"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/scratchpad/machine%20learning/jupyter/2021/01/11/Regression-Decision-Tree.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
