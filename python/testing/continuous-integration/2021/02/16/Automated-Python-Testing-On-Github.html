@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Automated python testing on Github | Scratchpad</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Automated python testing on Github" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Setup your own CI(continuous integration) workflow on Github" />
+<meta property="og:description" content="Setup your own CI(continuous integration) workflow on Github" />
+<link rel="canonical" href="https://logicatcore.github.io/scratchpad/python/testing/continuous-integration/2021/02/16/Automated-Python-Testing-On-Github.html" />
+<meta property="og:url" content="https://logicatcore.github.io/scratchpad/python/testing/continuous-integration/2021/02/16/Automated-Python-Testing-On-Github.html" />
+<meta property="og:site_name" content="Scratchpad" />
+<meta property="og:image" content="https://logicatcore.github.io/scratchpad/images/CI/continuous-integration-2.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-02-16T00:00:00-06:00" />
+<script type="application/ld+json">
+{"url":"https://logicatcore.github.io/scratchpad/python/testing/continuous-integration/2021/02/16/Automated-Python-Testing-On-Github.html","@type":"BlogPosting","headline":"Automated python testing on Github","dateModified":"2021-02-16T00:00:00-06:00","datePublished":"2021-02-16T00:00:00-06:00","image":"https://logicatcore.github.io/scratchpad/images/CI/continuous-integration-2.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://logicatcore.github.io/scratchpad/python/testing/continuous-integration/2021/02/16/Automated-Python-Testing-On-Github.html"},"description":"Setup your own CI(continuous integration) workflow on Github","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/scratchpad/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://logicatcore.github.io/scratchpad/feed.xml" title="Scratchpad" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-175305916-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+<link rel="shortcut icon" type="image/x-icon" href="/scratchpad/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/scratchpad/">Scratchpad</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/scratchpad/_pages/about.html">About me</a><a class="page-link" href="/scratchpad/search/">Search</a><a class="page-link" href="/scratchpad/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Automated python testing on Github</h1><p class="page-description">Setup your own CI(continuous integration) workflow on Github</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-02-16T00:00:00-06:00" itemprop="datePublished">
+        Feb 16, 2021
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      6 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/scratchpad/categories/#python">python</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/scratchpad/categories/#testing">testing</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/scratchpad/categories/#continuous-integration">continuous-integration</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          <div class="px-2">
+
+    <a href="https://github.com/logicatcore/scratchpad/tree/master/_notebooks/2021-02-16-Automated-Python-Testing-On-Github.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/scratchpad/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/logicatcore/scratchpad/master?filepath=_notebooks%2F2021-02-16-Automated-Python-Testing-On-Github.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/scratchpad/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/logicatcore/scratchpad/blob/master/_notebooks/2021-02-16-Automated-Python-Testing-On-Github.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/scratchpad/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2021-02-16-Automated-Python-Testing-On-Github.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>To beging with, let us go through some basic definition of what Continuous Integration is and what we want to achieve with the tools that are available.</p>
+<h1 id="What-is-CI(continuous-integration)?">What is CI(continuous integration)?<a class="anchor-link" href="#What-is-CI(continuous-integration)?"> </a></h1><p>While there are plenty of excellent resources online to read about whta CI is and what are its advantages. Continuous Integration (CI) in its simplest interpretation is a development practice where developers integrate their work (code) into a shared repository frequently, preferably several times a day. With each integration being verified by an automated build and tests.</p>
+<p>One of the key benefits of integrating regularly is that errors can be easily detected and located. CI has become a best practice for software development and is guided by a set of key principles. Among them are revision control, build automation and automated testing.</p>
+<p>“Continuous Integration doesn’t get rid of bugs, but it does make them dramatically easier to find and remove.” -Martin Fowler, Chief Scientist, ThoughtWorks</p>
+<h1 id="Sounds-good,-how-to-proceed-next?">Sounds good, how to proceed next?<a class="anchor-link" href="#Sounds-good,-how-to-proceed-next?"> </a></h1><p>Well, their are multiple solutions/ways in which one can setup CI. Perhaps you have heard of <a href="https://www.jenkins.io/">jenkins</a>, which "is a free and open source automation server that helps automate the parts of software development related to building, testing, and deploying, facilitating continuous integration and continuous delivery".</p>
+<p>But, <a href="https://www.github.com/">Github</a> also offers the necessary tools required to achieve what <em>jenkins</em> perhaps (not from experience) makes it easy since it has been specifically developed for automation. Github enables setting up workflows which can in turn be used create custom continuous integration (CI) and continuous deployment (CD) workflows directly in one's GitHub repository with GitHub Actions.</p>
+<p>In this post we will be mainly looking at how to make use of Github actions to setup a Continuous integrations workflow where tests are performed upon each pull request and the test statistics are displayed right at the pull request which would help both the integrator and the code contributor to identify and rectify errors easily before the work can be merged into the main or development branch.</p>
+<h1 id="Python-testing-framework">Python testing framework<a class="anchor-link" href="#Python-testing-framework"> </a></h1><p><a href="https://docs.pytest.org/en/stable/">Pytest</a> is a python testing framework that we will be using. The pytest framework makes it easy to write small tests, yet scales to support complex functional testing for applications and libraries.</p>
+<p>An example of simple test:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">inc</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+
+
+<span class="k">def</span> <span class="nf">test_answer</span><span class="p">():</span>
+    <span class="k">assert</span> <span class="n">inc</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Pytest has neat feature using which all files of the form test_*.py or *_test.py in the current directory and its subdirectories can be run automatically. The results of the test can then be summarised into an <em>xml</em> file which can be read by an automated process to further generate easily interpretable graphs/graphics.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Generating-graphs/graphics">Generating graphs/graphics<a class="anchor-link" href="#Generating-graphs/graphics"> </a></h1><p>In the previous section we got to know about the testing framework which can run the tests on demand and also summarises the results into an <em>xml</em> which can be used by automated processes to generate easily interpretable graphs/graphics.</p>
+<p>For this purpose we will make use of an <a href="https://github.com/EnricoMi/publish-unit-test-result-action">Github-action</a> made by Enrico Minack which analyses Unit Test result files(<em>xml</em>) and publishes the results on GitHub. It supports the JUnit XML file format. Here is an example of a comment posted on the pull request of the commit that triggers the workflow, if one exists. In presence of failures or errors, the comment links to the respective check page with failure details:</p>
+<p><img src="/scratchpad/images/copied_from_nb/../images/CI/actions-bot.png" alt="Image" /></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Setting-up-Github-action-for-Python-testing">Setting up Github action for Python testing<a class="anchor-link" href="#Setting-up-Github-action-for-Python-testing"> </a></h1><p>If the reader is not familar with what Github actions are, I highly recommend spending some time to read through the following introduction <a href="https://docs.github.com/en/actions/learn-github-actions/introduction-to-github-actions">website</a> which explains introduces Github actions clearly and concisely.</p>
+<p>By default the github actions are meant to be stored inside a <em>.github/workflows</em> folder as <em>yml</em> files. This is where we will be creating a file named <em>python-testing.yml</em> and define all the relevant details regarding the automated workflow that we want to set up.</p>
+
+<pre><code>yml
+# This is a basic workflow to help you get started with Actions
+
+name: Binary-Tree-Python-Testing
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on pull request events but only for the devel branch
+  pull_request:
+    branches: [ devel ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "test"
+  test:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      # Pick the python version with which you want the tests to be carried out. 'x' allows github to pick the lastest stable version available
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8.x'
+      # Install pytest and pytest-cov (code coverage) in the virtual runner to run the tests. pytest also summarises the test results in an xml file which will be used by the action in the next step to generate some graphics and post as comment at the commit/pull request that triggers the automated tesing workflow
+      - name: Test with pytest
+        run: |
+          pip install pytest
+          pip install pytest-cov
+          pytest --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html
+      # Publish the results of testing as a graphical summary in the conversation of the pull request that triggered the action (from the previous section)
+      - name: Publish Unit Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v1
+        if: always()
+        with:
+          files: junit/test-results.xml
+          GITHUB_TOKEN: $</code></pre>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Automated-testing-in-action!!">Automated testing in action!!<a class="anchor-link" href="#Automated-testing-in-action!!"> </a></h1><p>Now that we have everything set up, we can see the automated testing workflow in action. Since the workflow has been configured to run upon a pull request being made to the <strong>devel</strong> (development) branch, any pull request that is made to the devel branch triggers the workflow and the results of the testing will be posted.</p>
+<p>Since I had started to work on creating a library of binary-tree data structure and the relevant algorithms, I have this workflow setup for my own repository which I have been using to integrate changes and updates to the library I am building. Here is the most recent pull request I myself made to the library that I am working on to emulate an actual development process/environment. In the pull request below, I have added priority queues functionatily along with relevant test cases which test the functionality.</p>
+<p><img src="/scratchpad/images/copied_from_nb/../images/CI/in-action.png" alt="in-action" /></p>
+<p>This form of testing enables a form of feeback loop to the developers who can be sure that the new changes do not break the old work and just build upon or expand the functionalities.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr />
+<p>If you have any questions or need any help do not hesitate to reach out to me via comments!</p>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="logicatcore/scratchpad"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/scratchpad/python/testing/continuous-integration/2021/02/16/Automated-Python-Testing-On-Github.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/scratchpad/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/scratchpad/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/scratchpad/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Time well spent</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/logicatcore" title="logicatcore"><svg class="svg-icon grey"><use xlink:href="/scratchpad/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://www.linkedin.com/in/saisharathk" title="saisharathk"><svg class="svg-icon grey"><use xlink:href="/scratchpad/assets/minima-social-icons.svg#linkedin"></use></svg></a></li><li><a rel="me" href="https://twitter.com/KakubalSaid+%2A" title="KakubalSaid *"><svg class="svg-icon grey"><use xlink:href="/scratchpad/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
