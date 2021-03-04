@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>git, a learn by doing attempt | Scratchpad</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="git, a learn by doing attempt" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Some things in life are best learnt by practise and git happens to be one such thing. With the current day internet and the plethora of resources available learning has never been more easy. This article introduces you how to learn while having fun." />
+<meta property="og:description" content="Some things in life are best learnt by practise and git happens to be one such thing. With the current day internet and the plethora of resources available learning has never been more easy. This article introduces you how to learn while having fun." />
+<link rel="canonical" href="https://logicatcore.github.io/scratchpad/git/2021/03/04/git-exercises.html" />
+<meta property="og:url" content="https://logicatcore.github.io/scratchpad/git/2021/03/04/git-exercises.html" />
+<meta property="og:site_name" content="Scratchpad" />
+<meta property="og:image" content="https://logicatcore.github.io/scratchpad/images/git_exercises/git.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-03-04T00:00:00-06:00" />
+<script type="application/ld+json">
+{"url":"https://logicatcore.github.io/scratchpad/git/2021/03/04/git-exercises.html","@type":"BlogPosting","headline":"git, a learn by doing attempt","dateModified":"2021-03-04T00:00:00-06:00","datePublished":"2021-03-04T00:00:00-06:00","image":"https://logicatcore.github.io/scratchpad/images/git_exercises/git.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://logicatcore.github.io/scratchpad/git/2021/03/04/git-exercises.html"},"description":"Some things in life are best learnt by practise and git happens to be one such thing. With the current day internet and the plethora of resources available learning has never been more easy. This article introduces you how to learn while having fun.","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/scratchpad/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://logicatcore.github.io/scratchpad/feed.xml" title="Scratchpad" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-175305916-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+<link rel="shortcut icon" type="image/x-icon" href="/scratchpad/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/scratchpad/">Scratchpad</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/scratchpad/_pages/about.html">About me</a><a class="page-link" href="/scratchpad/search/">Search</a><a class="page-link" href="/scratchpad/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">git, a learn by doing attempt</h1><p class="page-description">Some things in life are best learnt by practise and git happens to be one such thing. With the current day internet and the plethora of resources available learning has never been more easy. This article introduces you how to learn while having fun.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-03-04T00:00:00-06:00" itemprop="datePublished">
+        Mar 4, 2021
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      8 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/scratchpad/categories/#git">git</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          <div class="px-2">
+
+    <a href="https://github.com/logicatcore/scratchpad/tree/master/_notebooks/2021-03-04-git-exercises.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/scratchpad/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/logicatcore/scratchpad/master?filepath=_notebooks%2F2021-03-04-git-exercises.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/scratchpad/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/logicatcore/scratchpad/blob/master/_notebooks/2021-03-04-git-exercises.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/scratchpad/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2021-03-04-git-exercises.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="What-is-this-article-about?">What is this article about?<a class="anchor-link" href="#What-is-this-article-about?"> </a></h1><p>This article is my attempt at solving the 23 exercises from <a href="https://gitexercises.fracz.com/">https://gitexercises.fracz.com/</a>. While some of the solutions do match exactly with the solutions shown after one successfully solves the exercises, the following collection of solutions are bit detailed in their descriptions along with some links pointing to resources which I found to be helpful in learning and solving the exercises.</p>
+<p>Exercise 23 is the most interesting one and is also one of the solution I have spent some time working with <strong>gitpython</strong> module in developing an alternate method to find <strong>bug</strong>, in contrast to the <strong>git bisect</strong> solution presented on the main website.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Solutions">Solutions<a class="anchor-link" href="#Solutions"> </a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Exercise-1:-master">Exercise 1: master<a class="anchor-link" href="#Exercise-1:-master"> </a></h2><div class="highlight"><pre><span></span>$&gt; git start
+$&gt; git verify
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Exercise-2:-commit-one-file">Exercise 2: commit-one-file<a class="anchor-link" href="#Exercise-2:-commit-one-file"> </a></h2><div class="highlight"><pre><span></span>$&gt; git add A.txt
+<span class="c1"># or </span>
+$&gt; git add B.txt
+$&gt; git commit -m <span class="s2">&quot;add one file&quot;</span>
+$&gt; git verify
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Exercise-3:-commit-one-file-staged">Exercise 3: commit-one-file-staged<a class="anchor-link" href="#Exercise-3:-commit-one-file-staged"> </a></h2><div class="highlight"><pre><span></span>$&gt; git reset HEAD A.txt
+<span class="c1"># or</span>
+$&gt; git reset HEAD B.txt
+$&gt; git commit -m <span class="s2">&quot;destage one file&quot;</span>
+$&gt; git verify
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Exercise-4:-ignore-them">Exercise 4: ignore-them<a class="anchor-link" href="#Exercise-4:-ignore-them"> </a></h2><div class="highlight"><pre><span></span>$&gt; nano .gitignore
+</pre></div>
+<div class="highlight"><pre><span></span>*.exe
+*.o
+*.jar
+libraries/
+</pre></div>
+<div class="highlight"><pre><span></span>$&gt; git add .
+$&gt; git commit -m <span class="s2">&quot;commit useful files&quot;</span>
+$&gt; git verify
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Exercise-5:-chase-branch">Exercise 5: chase-branch<a class="anchor-link" href="#Exercise-5:-chase-branch"> </a></h2><div class="highlight"><pre><span></span>$&gt; git checkout chase-branch
+$&gt; git merge escaped
+$&gt; git verify
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Exercise-6:-merge-conflict">Exercise 6: merge-conflict<a class="anchor-link" href="#Exercise-6:-merge-conflict"> </a></h2><div class="highlight"><pre><span></span>$&gt; git checkout merge-conflict
+$&gt; git merge another-piece-of-work
+$&gt; nano equation.txt
+</pre></div>
+<div class="highlight"><pre><span></span>2 + 3 = 5
+</pre></div>
+<div class="highlight"><pre><span></span>$&gt; git add equation.txt
+$&gt; git commit -m <span class="s2">&quot;merge and resolve&quot;</span>
+$&gt; git verify
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Exercise-7:-save-your-work">Exercise 7: save-your-work<a class="anchor-link" href="#Exercise-7:-save-your-work"> </a></h2><p>To learn about stashing and cleaning <a href="https://git-scm.com/book/en/v2/Git-Tools-Stashing-and-Cleaning">https://git-scm.com/book/en/v2/Git-Tools-Stashing-and-Cleaning</a></p>
+<div class="highlight"><pre><span></span>$&gt; git stash
+<span class="c1"># or</span>
+$&gt; git stash push
+$&gt; nano bug.txt <span class="c1"># in the text editor delete the bud line</span>
+$&gt; git commit -am <span class="s2">&quot;remove bug&quot;</span>
+$&gt; git stash apply
+<span class="c1"># or</span>
+$&gt; git stash apply stash@<span class="o">{</span><span class="m">0</span><span class="o">}</span>
+$&gt; nano bug.txt <span class="c1"># in the text editor add the line &quot;Finally, finished it!&quot; to the end</span>
+$&gt; git commit -am <span class="s2">&quot;finish&quot;</span>
+$&gt; git verify
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Exercise-8:-change-branch-history">Exercise 8: change-branch-history<a class="anchor-link" href="#Exercise-8:-change-branch-history"> </a></h2><p>To learn about git rebase <a href="https://git-scm.com/docs/git-rebase">https://git-scm.com/docs/git-rebase</a></p>
+<div class="highlight"><pre><span></span>$&gt; git checkout change-branch-history
+$&gt; git rebase hot-bugfix
+$&gt; git verify
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Exercise-9:-remove-ignored">Exercise 9: remove-ignored<a class="anchor-link" href="#Exercise-9:-remove-ignored"> </a></h2><p>Solution and explanation <a href="https://stackoverflow.com/questions/1274057/how-to-make-git-forget-about-a-file-that-was-tracked-but-is-now-in-gitignore">https://stackoverflow.com/questions/1274057/how-to-make-git-forget-about-a-file-that-was-tracked-but-is-now-in-gitignore</a></p>
+<div class="highlight"><pre><span></span>$&gt; git rm --cached ignored.txt
+$&gt; git commit -am <span class="s2">&quot;untrack ignored.txt&quot;</span>
+$&gt; git verify
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Exercise-10:-case-sensitive-filename">Exercise 10: case-sensitive-filename<a class="anchor-link" href="#Exercise-10:-case-sensitive-filename"> </a></h2><div class="highlight"><pre><span></span>$&gt; git reset HEAD^
+$&gt; mv File.txt file.txt
+$&gt; git add file.txt
+$&gt; git commit -m <span class="s2">&quot;lowercase filename&quot;</span>
+$&gt; git verify
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Exercise-11:-fix-typo">Exercise 11: fix-typo<a class="anchor-link" href="#Exercise-11:-fix-typo"> </a></h2><p>Note: <strong>--amend</strong> replaces the  tip of the current branch by creating a new commit.</p>
+<div class="highlight"><pre><span></span><span class="c1"># fix typo in the file</span>
+$&gt; git commit -a --amend
+<span class="c1"># fix the typo in commit message</span>
+$&gt; git verify
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Exercise-12:-forge-date-(most-useless-exercise,-but-shows-that-git-is-not-a-monolith)">Exercise 12: forge-date (most useless exercise, but shows that git is not a monolith)<a class="anchor-link" href="#Exercise-12:-forge-date-(most-useless-exercise,-but-shows-that-git-is-not-a-monolith)"> </a></h2><div class="highlight"><pre><span></span>$&gt; git commit --amend --no-edit --date<span class="o">=</span><span class="s2">&quot;1987-08-03&quot;</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Exercise-13:-fix-old-typo">Exercise 13: fix-old-typo<a class="anchor-link" href="#Exercise-13:-fix-old-typo"> </a></h2><div class="highlight"><pre><span></span>$&gt; git rebase -i HEAD^^
+<span class="c1"># change &quot;pick&quot; to &quot;edit&quot; where the typo is in the commit message</span>
+<span class="c1"># fix the typo in the file</span>
+$&gt; git add file.txt
+$&gt; git rebase --continue
+<span class="c1"># fix the rebase conflict</span>
+$&gt; git add file.txt
+$&gt; git reabse --continue
+$&gt; git verify
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Exercise-14:-commit-lost">Exercise 14: commit-lost<a class="anchor-link" href="#Exercise-14:-commit-lost"> </a></h2><div class="highlight"><pre><span></span>$&gt; git reflog
+$&gt; git reset --hard HEAD@<span class="o">{</span><span class="m">1</span><span class="o">}</span>
+$&gt; git verify
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Exercise-15:-split-commit">Exercise 15: split-commit<a class="anchor-link" href="#Exercise-15:-split-commit"> </a></h2><div class="highlight"><pre><span></span>$&gt; git reset HEAD^
+$&gt; git add first.txt
+$&gt; git commit -m <span class="s2">&quot;First.txt&quot;</span>
+$&gt; git add second.txt
+$&gt; git commit -m <span class="s2">&quot;Second.txt&quot;</span>
+$&gt; git verify
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Exercise-16:-too-many-commits">Exercise 16: too-many-commits<a class="anchor-link" href="#Exercise-16:-too-many-commits"> </a></h2><div class="highlight"><pre><span></span>$&gt; git rebase -i HEAD~4
+<span class="c1"># replace &quot;pick&quot; with &quot;squash&quot; for the commit with the message &quot;Crap, I have forgotten to add this line.&quot; </span>
+<span class="c1"># leave a commit message same as the one with which the marked commit is getting squashed with i.e.,</span>
+<span class="c1"># &quot;Add file.txt&quot;</span>
+$&gt; git verify
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Exercise-17:-executable">Exercise 17: executable<a class="anchor-link" href="#Exercise-17:-executable"> </a></h2><p>Under the hood details <a href="https://stackoverflow.com/questions/40978921/how-to-add-chmod-permissions-to-file-in-git">https://stackoverflow.com/questions/40978921/how-to-add-chmod-permissions-to-file-in-git</a></p>
+<div class="highlight"><pre><span></span>$&gt; git update-index --chmod<span class="o">=</span>+x script.sh
+$&gt; git commit -m <span class="s2">&quot;make executable&quot;</span>
+$&gt; git verify
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Exercise-18:-commit-parts">Exercise 18: commit-parts<a class="anchor-link" href="#Exercise-18:-commit-parts"> </a></h2><div class="highlight"><pre><span></span>$&gt; git add --patch file.txt
+<span class="c1"># split the hunks with &#39;s&#39;</span>
+<span class="c1"># Stage this hunk [y,n,q,a,d,/,j,J,g,s,e,?]?</span>
+<span class="c1"># </span>
+<span class="c1"># Here is a description of each option:</span>
+<span class="c1"># </span>
+<span class="c1">#     y stage this hunk for the next commit</span>
+<span class="c1">#     n do not stage this hunk for the next commit</span>
+<span class="c1">#     q quit; do not stage this hunk or any of the remaining hunks</span>
+<span class="c1">#     a stage this hunk and all later hunks in the file</span>
+<span class="c1">#     d do not stage this hunk or any of the later hunks in the file</span>
+<span class="c1">#     g select a hunk to go to</span>
+<span class="c1">#     / search for a hunk matching the given regex</span>
+<span class="c1">#     j leave this hunk undecided, see next undecided hunk</span>
+<span class="c1">#     J leave this hunk undecided, see next hunk</span>
+<span class="c1">#     k leave this hunk undecided, see previous undecided hunk</span>
+<span class="c1">#     K leave this hunk undecided, see previous hunk</span>
+<span class="c1">#     s split the current hunk into smaller hunks</span>
+<span class="c1">#     e manually edit the current hunk</span>
+<span class="c1">#     ? print hunk help</span>
+
+<span class="c1"># select each hunk with &#39;y&#39; or &#39;n&#39;</span>
+$&gt; git commit -m <span class="s2">&quot;task 1 related&quot;</span>
+$&gt; git commit -am <span class="s2">&quot;rest of the content&quot;</span>
+$&gt; git verify
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Exercise-19:-pick-your-features">Exercise 19: pick-your-features<a class="anchor-link" href="#Exercise-19:-pick-your-features"> </a></h2><div class="highlight"><pre><span></span><span class="c1"># get an idea of the logs currently and know the SHA-1&#39;s needed</span>
+$&gt; git log --oneline --decorate --graph --all -8
+$&gt; git checkout pick-your-features
+
+$&gt; git cherry-pick feature-a 
+<span class="c1"># or</span>
+$&gt; git cherry pick SHA-1 of feature-a commit
+
+$&gt; git cherry-pick feature-b 
+<span class="c1"># or</span>
+$&gt; git cherry pick SHA-1 of feature-b commit
+
+$&gt; git merge --squash feature-c
+<span class="c1"># resolve conflict</span>
+$&gt; git commit -am <span class="s2">&quot;Complete Feature C&quot;</span>
+$&gt; git verify
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Exercise-20:-reabse-complex">Exercise 20: reabse-complex<a class="anchor-link" href="#Exercise-20:-reabse-complex"> </a></h2><p>Explanation from git-book <a href="https://git-scm.com/book/en/v2/Git-Branching-Rebasing">https://git-scm.com/book/en/v2/Git-Branching-Rebasing</a></p>
+<div class="highlight"><pre><span></span>$&gt; git rebase --onto your-master issue-555 rebase-complex 
+<span class="c1"># This basically says, “Take the rebase-complex branch, figure out the patches since it diverged from the issue-555 branch, </span>
+<span class="c1"># and replay these patches in the rebase-complex branch as if it was based directly off the your-master branch instead.” </span>
+$&gt; git verify
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Exercise-21:-invalid-order">Exercise 21: invalid-order<a class="anchor-link" href="#Exercise-21:-invalid-order"> </a></h2><div class="highlight"><pre><span></span>$&gt; git rebase -i HEAD~4
+<span class="c1"># reorder the commit messages as needed</span>
+$&gt; git verify
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Exercise-22:-find-swearwords">Exercise 22: find-swearwords<a class="anchor-link" href="#Exercise-22:-find-swearwords"> </a></h2><div class="highlight"><pre><span></span>$&gt; git log -S shit
+<span class="c1"># make a note of the commits where a word &quot;shit&quot; was introduced</span>
+$&gt; git rebase -i HEAD~105
+<span class="c1"># replace &#39;pick&#39; with &#39;edit&#39; for those commits</span>
+
+<span class="c1"># check which files were modified</span>
+$&gt; git log -p -1
+<span class="c1"># replace &#39;shit&#39; with &#39;flower&#39; in list.txt</span>
+$&gt; git add list.txt
+$&gt; git commit --amend
+$&gt; git rebase --continue
+
+<span class="c1"># check which files were modified</span>
+$&gt; git log -p -1
+<span class="c1"># replace &#39;shit&#39; with &#39;flower&#39; in words.txt</span>
+$&gt; git add words.txt
+$&gt; git commit --amend
+$&gt; git rebase --continue
+
+<span class="c1"># check which files were modified</span>
+$&gt; git log -p -1
+<span class="c1"># replace &#39;shit&#39; with &#39;flower&#39; in words.txt</span>
+$&gt; git add words.txt
+$&gt; git commit --amend
+$&gt; git rebase --continue
+
+$&gt; git verify
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Exercise-23:-find-bug">Exercise 23: find-bug<a class="anchor-link" href="#Exercise-23:-find-bug"> </a></h2><ol>
+<li>First method using <em>git bisect</em><div class="highlight"><pre><span></span>$&gt; git checkout find-bug
+$&gt; git bisect start
+$&gt; git bisect bad
+$&gt; git bisect good <span class="m">1</span>.0
+<span class="c1"># the grep documentation for -v flag doesn&#39;t make sense with what the author fracz mentioned and also</span>
+<span class="c1"># I couldn&#39;t see the binary output of &#39;1&#39; or &#39;0&#39; as given in the hints</span>
+$&gt; git bisect run sh -c <span class="s2">&quot;openssl enc -base64 -A -d &lt; home-screen-text.txt | grep -v jackass&quot;</span>
+$&gt; git push origin 4d2725ac4c874dbb207770001def27aed48e9ddb:find-bug
+</pre></div>
+</li>
+<li><p>Second method using <strong>gitpython</strong></p>
+<p>a. Brute-force method iterate through the commits one-by-one from oldest to the newest and break when the word 'jackass' got introduced</p>
+</li>
+</ol>
+<div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding:utf-8 -*-</span>
+
+<span class="kn">from</span> <span class="nn">git</span> <span class="kn">import</span> <span class="n">Repo</span>
+<span class="kn">import</span> <span class="nn">base64</span>
+
+<span class="c1"># create a repo object to query</span>
+<span class="n">repo</span> <span class="o">=</span> <span class="n">Repo</span><span class="p">(</span><span class="s2">&quot;./exercises/&quot;</span><span class="p">)</span>
+<span class="c1"># switch to the required branch</span>
+<span class="n">repo</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">checkout</span><span class="p">(</span><span class="s1">&#39;find-bug&#39;</span><span class="p">)</span>
+<span class="c1"># get all commits between HEAD and tag 1.0</span>
+<span class="n">commits</span> <span class="o">=</span> <span class="n">repo</span><span class="o">.</span><span class="n">iter_commits</span><span class="p">(</span><span class="s1">&#39;HEAD...1.0&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">commits</span><span class="p">)):</span>
+    <span class="c1"># move the head to the commit &#39;x&#39;</span>
+    <span class="n">repo</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">set_reference</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="c1"># get a tree object and query the blog based on the file name and read the content from it&#39;s data stream</span>
+    <span class="n">read_this</span> <span class="o">=</span> <span class="n">repo</span><span class="o">.</span><span class="n">tree</span><span class="p">(</span><span class="n">x</span><span class="p">)[</span><span class="s1">&#39;home-screen-text.txt&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data_stream</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+    <span class="c1"># reader = repo.config_reader()</span>
+    <span class="c1"># read_this = open(&#39;./exercises/home-screen-text.txt&#39;)</span>
+
+    <span class="c1"># decode the base64 bytes</span>
+    <span class="n">content</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">read_this</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;ascii&#39;</span><span class="p">)</span>
+    <span class="c1"># check if &#39;jackass&#39; is present in the file, if yes, print the SHA-1 and exit</span>
+    <span class="k">if</span> <span class="s1">&#39;jackass&#39;</span> <span class="ow">in</span> <span class="n">content</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The commit where the bug &#39;jackass&#39; was introduced is:&quot;</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">hexsha</span><span class="p">)</span>    
+        <span class="k">break</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+
+<pre><code>b. Binary search method (newest first), very similar to what the *git bisect* command does
+</code></pre>
+<div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding:utf-8 -*-</span>
+
+<span class="kn">from</span> <span class="nn">git</span> <span class="kn">import</span> <span class="n">Repo</span>
+<span class="kn">import</span> <span class="nn">base64</span>
+
+<span class="c1"># create a repo object to query</span>
+<span class="n">repo</span> <span class="o">=</span> <span class="n">Repo</span><span class="p">(</span><span class="s2">&quot;./exercises/&quot;</span><span class="p">)</span>
+<span class="c1"># switch to the required branch</span>
+<span class="n">repo</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">checkout</span><span class="p">(</span><span class="s1">&#39;find-bug&#39;</span><span class="p">)</span>
+<span class="c1"># get all commits between HEAD and tag 1.0</span>
+<span class="n">commits</span> <span class="o">=</span> <span class="n">repo</span><span class="o">.</span><span class="n">iter_commits</span><span class="p">(</span><span class="s1">&#39;HEAD...1.0&#39;</span><span class="p">)</span>
+
+<span class="n">commits</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">commits</span><span class="p">)</span>
+<span class="n">search_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">commits</span><span class="p">)</span>
+<span class="n">idx</span> <span class="o">=</span> <span class="n">search_length</span><span class="o">//</span><span class="mi">2</span>
+<span class="n">last_idx</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">found_at</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">search_length</span><span class="p">))):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;idx is:&#39;</span><span class="p">,</span> <span class="n">idx</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;last_idx is:&#39;</span><span class="p">,</span> <span class="n">last_idx</span><span class="p">)</span>
+    <span class="n">repo</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">set_reference</span><span class="p">(</span><span class="n">commits</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+    <span class="n">read_this</span> <span class="o">=</span> <span class="n">repo</span><span class="o">.</span><span class="n">tree</span><span class="p">(</span><span class="n">commits</span><span class="p">[</span><span class="n">idx</span><span class="p">])[</span><span class="s1">&#39;home-screen-text.txt&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data_stream</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="c1"># reader = repo.config_reader()</span>
+    <span class="c1"># read_this = open(&#39;./exercises/home-screen-text.txt&#39;)</span>
+    <span class="n">content</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">read_this</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;ascii&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s1">&#39;jackass&#39;</span> <span class="ow">in</span> <span class="n">content</span><span class="p">:</span>
+        <span class="n">found_at</span> <span class="o">=</span> <span class="n">idx</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">commits</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">hexsha</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">update</span> <span class="o">=</span> <span class="p">(</span><span class="n">search_length</span> <span class="o">-</span> <span class="n">idx</span><span class="p">)</span><span class="o">//</span><span class="mi">2</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">update</span> <span class="o">=</span> <span class="p">(</span><span class="n">last_idx</span> <span class="o">-</span> <span class="n">idx</span><span class="p">)</span><span class="o">//</span><span class="mi">2</span>
+        <span class="n">last_idx</span> <span class="o">=</span> <span class="n">idx</span>
+        <span class="n">idx</span> <span class="o">+=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">update</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">update</span> <span class="o">=</span> <span class="p">(</span><span class="n">idx</span> <span class="o">-</span> <span class="n">last_idx</span><span class="p">)</span><span class="o">//</span><span class="mi">2</span> 
+        <span class="n">last_idx</span> <span class="o">=</span> <span class="n">idx</span>
+        <span class="n">idx</span> <span class="o">-=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">update</span><span class="p">)</span> 
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The commit where the bug &#39;jackass&#39; was introduced is:&quot;</span><span class="p">,</span> <span class="n">commits</span><span class="p">[</span><span class="n">found_at</span><span class="p">]</span><span class="o">.</span><span class="n">hexsha</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="logicatcore/scratchpad"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/scratchpad/git/2021/03/04/git-exercises.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/scratchpad/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/scratchpad/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/scratchpad/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Time well spent</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/logicatcore" title="logicatcore"><svg class="svg-icon grey"><use xlink:href="/scratchpad/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://www.linkedin.com/in/saisharathk" title="saisharathk"><svg class="svg-icon grey"><use xlink:href="/scratchpad/assets/minima-social-icons.svg#linkedin"></use></svg></a></li><li><a rel="me" href="https://twitter.com/KakubalSaid+%2A" title="KakubalSaid *"><svg class="svg-icon grey"><use xlink:href="/scratchpad/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
