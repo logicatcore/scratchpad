@@ -100,7 +100,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      8 min read
+      7 min read
     
 </span></p>
 
@@ -558,13 +558,10 @@ $&gt; git push origin 4d2725ac4c874dbb207770001def27aed48e9ddb:find-bug
 <span class="n">found_at</span> <span class="o">=</span> <span class="kc">None</span>
 
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">search_length</span><span class="p">))):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;idx is:&#39;</span><span class="p">,</span> <span class="n">idx</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;last_idx is:&#39;</span><span class="p">,</span> <span class="n">last_idx</span><span class="p">)</span>
     <span class="n">repo</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">set_reference</span><span class="p">(</span><span class="n">commits</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
     <span class="n">read_this</span> <span class="o">=</span> <span class="n">repo</span><span class="o">.</span><span class="n">tree</span><span class="p">(</span><span class="n">commits</span><span class="p">[</span><span class="n">idx</span><span class="p">])[</span><span class="s1">&#39;home-screen-text.txt&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data_stream</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-    <span class="c1"># reader = repo.config_reader()</span>
-    <span class="c1"># read_this = open(&#39;./exercises/home-screen-text.txt&#39;)</span>
     <span class="n">content</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">read_this</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;ascii&#39;</span><span class="p">)</span>
+
     <span class="k">if</span> <span class="s1">&#39;jackass&#39;</span> <span class="ow">in</span> <span class="n">content</span><span class="p">:</span>
         <span class="n">found_at</span> <span class="o">=</span> <span class="n">idx</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">commits</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">hexsha</span><span class="p">)</span>
