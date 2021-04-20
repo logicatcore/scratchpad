@@ -419,6 +419,12 @@ window.onload = wrap_img;
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Translate-the-data-to-origin-and-compute-the-minimums-and-maximums-of-each-dimension">Translate the data to origin and compute the minimums and maximums of each dimension<a class="anchor-link" href="#Translate-the-data-to-origin-and-compute-the-minimums-and-maximums-of-each-dimension"> </a></h3>
+</div>
+</div>
+</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -426,8 +432,7 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">centerd_data</span> <span class="o">=</span> <span class="n">data</span> <span class="o">-</span> <span class="n">means</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="c1"># Translate the data to origin</span>
-<span class="c1"># compute the minimums and maximums of each dimension</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">centerd_data</span> <span class="o">=</span> <span class="n">data</span> <span class="o">-</span> <span class="n">means</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
 <span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">centerd_data</span><span class="p">[</span><span class="mi">0</span><span class="p">,:]),</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">centerd_data</span><span class="p">[</span><span class="mi">0</span><span class="p">,:]),</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">centerd_data</span><span class="p">[</span><span class="mi">1</span><span class="p">,:]),</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">centerd_data</span><span class="p">[</span><span class="mi">1</span><span class="p">,:])</span>
 </pre></div>
 
@@ -438,6 +443,12 @@ window.onload = wrap_img;
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Plot-the-translated-data-along-with-the-principal-components-i.e.-the-two-orthogonal-eigen-vectors">Plot the translated data along with the principal components i.e. the two orthogonal eigen vectors<a class="anchor-link" href="#Plot-the-translated-data-along-with-the-principal-components-i.e.-the-two-orthogonal-eigen-vectors"> </a></h3>
+</div>
+</div>
+</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -445,7 +456,7 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Simple max-min based bounding box&quot;</span><span class="p">)</span> <span class="c1"># Plot the translated data along with the principal components i.e. the two orthogonal eigen vectors</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Simple max-min based bounding box&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">centerd_data</span><span class="p">[</span><span class="mi">0</span><span class="p">,:],</span> <span class="n">centerd_data</span><span class="p">[</span><span class="mi">1</span><span class="p">,:])</span>
