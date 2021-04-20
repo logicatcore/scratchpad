@@ -100,7 +100,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      6 min read
+      7 min read
     
 </span></p>
 
@@ -159,7 +159,7 @@ window.onload = wrap_img;
 <h2 id="What-is-a-bounding-box?">What is a bounding box?<a class="anchor-link" href="#What-is-a-bounding-box?"> </a></h2><p>The answer to this question lies within the name but a bit of context is needed to make complete sense of it. "Bounding box" i.e. a box that bounds something, some object, or some living thing. We, as humans have a sense of this bounding box by which we imagine a bubble/sphere around an obstacle while driving, like the cat which always troubles me while crossing the road on my bicycle, I am thinking of naming that cat "The Interruptor!", cause you know why. Anyway, so humans, imagine, sphere, avoid, obstacles! That is it, that is the motive behind why we are interested in such a box that bounds. Wait, you ask why did we shift from sphere to box? I think one possible reason is computers/autonoumous systems are capable of reacting much faster than us and the second and probably most important reason is to establish a definite NO-GO area which can later be enlarged based on a factor of safety.</p>
 <h2 id="Where-do-we-use-them?">Where do we use them?<a class="anchor-link" href="#Where-do-we-use-them?"> </a></h2><p>That is a good question, isn't it? We use bounding boxes in autonoumous systems irrespective of the travel medium i.e. bounding boxes are used in self-driving cars, self-flying cars or copters etc.</p>
 <h2 id="What-data-are-we-working-with?">What data are we working with?<a class="anchor-link" href="#What-data-are-we-working-with?"> </a></h2><p>In this post we work with some random data that emulates LIDAR data. But bounding boxes are used with both LIDAR pointclouds and digital images from a camera.</p>
-<h2 id="Read-enough-and-want-to-see-what-is-the-fuss-about?">Read enough and want to see what is the fuss about?<a class="anchor-link" href="#Read-enough-and-want-to-see-what-is-the-fuss-about?"> </a></h2><p>Do not worry, I have got it covered for the skimmers (cause am also one of you (keep it a secret though 🤭)). In the following picture on the left we can see that though the box bounds the data but does so poorly by marking lot of empty space also as belonging to the data (imagine how bad one would feel if fatness was exaggerated, not good right!) and on the right we can see that the new oriented box bounds the data perfectly and only to the extent necessary hence proving the autonomous vehicle/entity enough space to steer through.</p>
+<h2 id="Read-enough-and-want-to-see-what-is-the-fuss-about?">Read enough and want to see what is the fuss about?<a class="anchor-link" href="#Read-enough-and-want-to-see-what-is-the-fuss-about?"> </a></h2><p>Do not worry, I have got it covered for the skimmers (cause am also one of you (keep it a secret though 🤫)). In the following picture on the left we can see that though the box bounds the data but does so poorly by marking lot of empty space also as belonging to the data (imagine how bad one would feel if fatness was exaggerated, not good right!) and on the right we can see that the new oriented box bounds the data perfectly and only to the extent necessary hence proving the autonomous vehicle/entity enough space to steer through.</p>
 <p><img src="/scratchpad/images/copied_from_nb/../images/2Dbox/2d_oriented_bounding_box.png" alt="overview" /></p>
 <hr />
 <p>In this post the simple and yet informative 2D case is discussed as we move on to a 3D case in the next post.</p>
@@ -190,6 +190,9 @@ window.onload = wrap_img;
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">numpy.linalg</span> <span class="k">as</span> <span class="nn">LA</span>
+
+<span class="c1"># %matplotlib widget # uncomment this if you want to work with this notebook</span>
+
 <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">22</span><span class="p">)</span>
 </pre></div>
 
@@ -269,7 +272,7 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">theta</span> <span class="o">=</span> <span class="mi">30</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">theta</span> <span class="o">=</span> <span class="mi">30</span> <span class="c1"># rotation angle</span>
 <span class="c1"># rotation matrix</span>
 <span class="n">rot</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">theta</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">theta</span><span class="p">)),</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">theta</span><span class="p">))],</span>
                               <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">theta</span><span class="p">)),</span>  <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">theta</span><span class="p">))]])</span>
@@ -344,7 +347,7 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">means</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">means</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># calculate the means</span>
 <span class="c1"># calculate the covariance matrix</span>
 <span class="n">cov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 <span class="c1"># Calculate the eigen values and eigen vectors of the covariance matrix</span>
@@ -423,7 +426,7 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">centerd_data</span> <span class="o">=</span> <span class="n">data</span> <span class="o">-</span> <span class="n">means</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">centerd_data</span> <span class="o">=</span> <span class="n">data</span> <span class="o">-</span> <span class="n">means</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="c1"># Translate the data to origin</span>
 <span class="c1"># compute the minimums and maximums of each dimension</span>
 <span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">centerd_data</span><span class="p">[</span><span class="mi">0</span><span class="p">,:]),</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">centerd_data</span><span class="p">[</span><span class="mi">0</span><span class="p">,:]),</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">centerd_data</span><span class="p">[</span><span class="mi">1</span><span class="p">,:]),</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">centerd_data</span><span class="p">[</span><span class="mi">1</span><span class="p">,:])</span>
 </pre></div>
@@ -442,7 +445,7 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Simple max-min based bounding box&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Simple max-min based bounding box&quot;</span><span class="p">)</span> <span class="c1"># Plot the translated data along with the principal components i.e. the two orthogonal eigen vectors</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">centerd_data</span><span class="p">[</span><span class="mi">0</span><span class="p">,:],</span> <span class="n">centerd_data</span><span class="p">[</span><span class="mi">1</span><span class="p">,:])</span>
@@ -518,8 +521,8 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># so we use the eigen vector in first column</span>
-<span class="n">theta_pc1</span> <span class="o">=</span> <span class="n">getEigenAngle</span><span class="p">(</span><span class="n">evec</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">theta_pc1</span> <span class="o">=</span> <span class="n">getEigenAngle</span><span class="p">(</span><span class="n">evec</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span> <span class="c1"># the eigen vectors are usually returned sorted based on their eigenvalues, </span>
+<span class="c1"># so we use the eigen vector in first column</span>
 <span class="n">theta_pc1</span>
 </pre></div>
 
@@ -577,6 +580,7 @@ window.onload = wrap_img;
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">aligned_coords</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]),</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">aligned_coords</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]),</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">aligned_coords</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]),</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">aligned_coords</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:])</span>
+<span class="c1"># compute the minimums and maximums of each dimension again</span>
 </pre></div>
 
     </div>
@@ -611,7 +615,7 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Aligned data&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Aligned data&quot;</span><span class="p">)</span> <span class="c1"># plot the rotated daa and its bounding box</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">aligned_coords</span><span class="p">[</span><span class="mi">0</span><span class="p">,:],</span> <span class="n">aligned_coords</span><span class="p">[</span><span class="mi">1</span><span class="p">,:])</span>
@@ -770,8 +774,7 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">rot</span><span class="p">(</span><span class="mi">90</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">],</span>
-                                 <span class="p">[</span><span class="mi">0</span><span class="p">]]))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">rot</span><span class="p">(</span><span class="mi">90</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">]]))</span> <span class="c1"># rotate the vecctor (2, 0) by 90 degrees anti-clockwise</span>
 </pre></div>
 
     </div>
