@@ -7,7 +7,7 @@ _site
 .jekyll-metadata
 *.xml
 vendor
-_notebooks/.ipynb_checkpoints/*
+**/.ipynb_checkpoints/*
 _examples/
 # Local Netlify folder
 .netlify
