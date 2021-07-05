@@ -170,12 +170,6 @@
   
 
   
-  
-
-  
-
-  
-  
 
   
   
@@ -189,10 +183,20 @@
   
 
   
+
+  
   
 
   
-      ,"page10": {
+  
+
+  
+
+  
+  
+
+  
+      ,"page12": {
           "title": "",
           "content": "Sitemap: {{ “sitemap.xml” | absolute_url }} | .",
           "url": "https://logicatcore.github.io/scratchpad/robots.txt",
