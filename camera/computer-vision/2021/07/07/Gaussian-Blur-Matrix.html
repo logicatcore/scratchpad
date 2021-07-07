@@ -4,19 +4,20 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Overview | Scratchpad</title>
+<title>Gaussian Matrix | Scratchpad</title>
 <meta name="generator" content="Jekyll v4.1.1" />
-<meta property="og:title" content="Overview" />
+<meta property="og:title" content="Gaussian Matrix" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Time well spent" />
-<meta property="og:description" content="Time well spent" />
-<link rel="canonical" href="https://logicatcore.github.io/scratchpad/2021/07/07/Gaussian-Blur-Matrix.html" />
-<meta property="og:url" content="https://logicatcore.github.io/scratchpad/2021/07/07/Gaussian-Blur-Matrix.html" />
+<meta name="description" content="Generating a Gaussian matrix for applying Gaussian Blur to an Image" />
+<meta property="og:description" content="Generating a Gaussian matrix for applying Gaussian Blur to an Image" />
+<link rel="canonical" href="https://logicatcore.github.io/scratchpad/camera/computer-vision/2021/07/07/Gaussian-Blur-Matrix.html" />
+<meta property="og:url" content="https://logicatcore.github.io/scratchpad/camera/computer-vision/2021/07/07/Gaussian-Blur-Matrix.html" />
 <meta property="og:site_name" content="Scratchpad" />
+<meta property="og:image" content="https://logicatcore.github.io/scratchpad/images/gaussian_blur/gaussian_blur_cover1.png" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2021-07-07T00:00:00-05:00" />
 <script type="application/ld+json">
-{"url":"https://logicatcore.github.io/scratchpad/2021/07/07/Gaussian-Blur-Matrix.html","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://logicatcore.github.io/scratchpad/2021/07/07/Gaussian-Blur-Matrix.html"},"headline":"Overview","dateModified":"2021-07-07T00:00:00-05:00","datePublished":"2021-07-07T00:00:00-05:00","description":"Time well spent","@context":"https://schema.org"}</script>
+{"url":"https://logicatcore.github.io/scratchpad/camera/computer-vision/2021/07/07/Gaussian-Blur-Matrix.html","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://logicatcore.github.io/scratchpad/camera/computer-vision/2021/07/07/Gaussian-Blur-Matrix.html"},"image":"https://logicatcore.github.io/scratchpad/images/gaussian_blur/gaussian_blur_cover1.png","headline":"Gaussian Matrix","dateModified":"2021-07-07T00:00:00-05:00","datePublished":"2021-07-07T00:00:00-05:00","description":"Generating a Gaussian matrix for applying Gaussian Blur to an Image","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/scratchpad/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://logicatcore.github.io/scratchpad/feed.xml" title="Scratchpad" /><!-- the google_analytics_id gets auto inserted from the config file -->
 
@@ -93,16 +94,26 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Overview</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-07-07T00:00:00-05:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">Gaussian Matrix</h1><p class="page-description">Generating a Gaussian matrix for applying Gaussian Blur to an Image</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-07-07T00:00:00-05:00" itemprop="datePublished">
         Jul 7, 2021
       </time>
        • <span class="read-time" title="Estimated read time">
     
     
-      1 min read
+      3 min read
     
 </span></p>
 
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/scratchpad/categories/#Camera">Camera</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/scratchpad/categories/#Computer-Vision">Computer-Vision</a>
+        
+      
+      </p>
     
 
     
@@ -139,31 +150,33 @@ window.onload = wrap_img;
 
 <div class="container" id="notebook-container">
         
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Overview">Overview<a class="anchor-link" href="#Overview"> </a></h1><p>In image processing, a Gaussian blur (also known as Gaussian smoothing) is the result of blurring an image by a Gaussian function (named after mathematician and scientist Carl Friedrich Gauss).</p>
+<p>It is a widely used effect in graphics software, typically to reduce image noise and reduce detail. The visual effect of this blurring technique is a smooth blur resembling that of viewing the image through a translucent screen.</p>
+<p>Gaussian smoothing is also used as a pre-processing stage in computer vision algorithms in order to enhance image structures at different scales—see scale space representation and scale space implementation.<a class="citation" href="#gaussian_blur">(Wikipedia contributors, 2021)</a></p>
+<p>The following is an example showing an unblurred image along with two levels of blurrings applied.</p>
+<p><figure>
+  
+    <img class="docimage" src="/scratchpad/images/copied_from_nb/../images/gaussian_blur/gaussian_blur_cover2.png" alt="" />
     
     
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">&gt;</span> <span class="n">Generating</span> <span class="n">a</span> <span class="n">Gaussian</span> <span class="n">matrix</span> <span class="k">for</span> <span class="n">applying</span> <span class="n">Gaussian</span> <span class="n">Blur</span> <span class="n">to</span> <span class="n">an</span> <span class="n">Image</span>
-
-<span class="o">-</span> <span class="n">toc</span><span class="p">:</span> <span class="n">false</span>
-<span class="o">-</span> <span class="n">branch</span><span class="p">:</span> <span class="n">master</span>
-<span class="o">-</span> <span class="n">badges</span><span class="p">:</span> <span class="n">true</span>
-<span class="o">-</span> <span class="n">comments</span><span class="p">:</span> <span class="n">true</span>
-<span class="o">-</span> <span class="n">categories</span><span class="p">:</span> <span class="p">[</span><span class="n">Camera</span><span class="p">,</span> <span class="n">Computer</span><span class="o">-</span><span class="n">Vision</span><span class="p">]</span>
-<span class="o">-</span> <span class="n">image</span><span class="p">:</span> <span class="n">images</span><span class="o">/</span><span class="n">gaussian_blur</span><span class="o">/</span><span class="n">gaussian_blur_cover1</span><span class="o">.</span><span class="n">png</span>
-<span class="o">-</span> <span class="n">search_exclude</span><span class="p">:</span> <span class="n">false</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
+</figure>
+</p>
+<h1 id="What-to-expect?">What to expect?<a class="anchor-link" href="#What-to-expect?"> </a></h1><p>In this article we will see how to create one such kernel/matrix which has it's entries in agreement with a Gaussian distribution. Using the generated matrix to convolve and produce a blurred version of a image is not covered in this article as this is a very common operation which is available in <em>numpy</em>, <em>scipy</em> and more.</p>
+<h1 id="Some-basics">Some basics<a class="anchor-link" href="#Some-basics"> </a></h1><p>The general form of its probability density function is, ${\displaystyle f(x)={\frac {1}{\sigma {\sqrt {2\pi }}}}e^{-{\frac {1}{2}}\left({\frac {x-\mu }{\sigma }}\right)^{2}}}$</p>
+<p>Now, we know the kind of distribution we need and we also have the necessary formula but what we need is an apporpriate way to place the entries in a $N x N$ matrix (where N is odd) with the entries values radially decreasing in all directions.</p>
+<p>When a 3D graph of the matrix entries is drawn using the information of entries positions in the matrix and their values, the resulting 3D graph should resembel a 3D Normal distribution curve. Which we will see at the end of this article.</p>
+<h1 id="Main-solution-Idea">Main solution Idea<a class="anchor-link" href="#Main-solution-Idea"> </a></h1><p>The general solution to the problem of correctly mapping the matrix locations to their respective likelihoods can be solved by noting that the resulting 3D Normal distribution graph will be symmetric in nature and an odd sized matrix has unique center element.</p>
+<p>In the code below, we breakdown an odd sized matrix into 4 quadrants and utilise the top left quadrant to generate the matrix entries. In the above formula, we will replace $x$ with (row No.+ column No.) i.e., ${\displaystyle f(R+C)={\frac {1}{\sigma {\sqrt {2\pi }}}}e^{-{\frac {1}{2}}\left({\frac {(R+C)-\mu }{\sigma }}\right)^{2}}}$ where-</p>
+<ul>
+<li>R - Row Number</li>
+<li>C - Column Number</li>
+</ul>
 
 </div>
-    
-
+</div>
+</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -317,7 +330,7 @@ window.onload = wrap_img;
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="References">References<a class="anchor-link" href="#References"> </a></h1><p><ol class="bibliography"></ol></p>
+<h1 id="References">References<a class="anchor-link" href="#References"> </a></h1><p><ol class="bibliography"><li><span id="gaussian_blur">Wikipedia contributors. (2021). <i>Gaussian blur — Wikipedia, The Free Encyclopedia</i>. https://en.wikipedia.org/w/index.php?title=Gaussian_blur&amp;oldid=1027662266</span></li></ol></p>
 
 </div>
 </div>
@@ -326,7 +339,15 @@ window.onload = wrap_img;
 
 
 
-  </div><a class="u-url" href="/scratchpad/2021/07/07/Gaussian-Blur-Matrix.html" hidden></a>
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="logicatcore/scratchpad"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/scratchpad/camera/computer-vision/2021/07/07/Gaussian-Blur-Matrix.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
